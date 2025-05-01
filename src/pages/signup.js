@@ -1,8 +1,11 @@
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 import { supabase } from '../lib/supabase'
+import useRedirectIfAuthenticated from '../hooks/useRedirectIfAuthenticated'
 
 export default function SignUp() {
+  useRedirectIfAuthenticated()
+  
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
@@ -49,7 +52,7 @@ export default function SignUp() {
 
     const user = data.user
     if (user) {
-      // Création du profil
+      // Création du profil avec rang et abonnement par défaut
       const { error: profileError } = await supabase
         .from('profiles')
         .insert([{
@@ -57,7 +60,10 @@ export default function SignUp() {
           email,
           nom,
           prenom,
-          username
+          username,
+          rank_id: 1,          // Rang par défaut
+          abonnement_id: 1,    // Abonnement gratuit
+          total_depot: 0      // Montant déposé initial
         }])
 
       if (profileError) {
