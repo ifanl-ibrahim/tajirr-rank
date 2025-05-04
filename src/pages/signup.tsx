@@ -1,3 +1,4 @@
+import React from 'react'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 import { supabase } from '../lib/supabase'
@@ -5,7 +6,7 @@ import useRedirectIfAuthenticated from '../hooks/useRedirectIfAuthenticated'
 
 export default function SignUp() {
   useRedirectIfAuthenticated()
-  
+
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
@@ -16,7 +17,7 @@ export default function SignUp() {
   const [errorMessage, setErrorMessage] = useState('')
   const router = useRouter()
 
-  const handleSignUp = async (e) => {
+  const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault()
     setErrorMessage('')
     setLoading(true)
@@ -90,9 +91,9 @@ export default function SignUp() {
 
       <form onSubmit={handleSignUp} className="space-y-4 w-full max-w-sm">
         <input type="text" placeholder="Nom" value={nom} onChange={(e) => setNom(e.target.value)}
-          className="w-full p-2 rounded text-black" required/>
+          className="w-full p-2 rounded text-black" required />
         <input type="text" placeholder="Prénom" value={prenom} onChange={(e) => setPrenom(e.target.value)}
-          className="w-full p-2 rounded text-black" required/>
+          className="w-full p-2 rounded text-black" required />
         <input type="text" placeholder="Nom d'utilisateur" value={username} onChange={(e) => setUsername(e.target.value)}
           className="w-full p-2 rounded text-black" />
         <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}
@@ -111,6 +112,15 @@ export default function SignUp() {
           {loading ? 'Création...' : 'Créer le compte'}
         </button>
       </form>
+      <p className="mt-4 text-sm text-gray-400 text-center">
+        Déjà inscrit ?{' '}
+        <span
+          onClick={() => router.push('/login')}
+          className="text-blue-400 hover:underline cursor-pointer"
+        >
+          Connecte-toi ici
+        </span>
+      </p>
     </div>
   )
 }

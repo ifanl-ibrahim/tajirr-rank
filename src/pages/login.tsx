@@ -19,7 +19,7 @@ export default function Login() {
     checkSession()
   }, [router])
 
-  const handleLogin = async (e) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
     setErrorMessage('')
     setLoading(true)
@@ -91,6 +91,15 @@ export default function Login() {
           {loading ? 'Connexion...' : 'Se connecter'}
         </button>
       </form>
+      <p className="mt-4 text-sm text-gray-400 text-center">
+        Pas encore de compte ?{' '}
+        <span
+          onClick={() => router.push('/signup')}
+          className="text-blue-400 hover:underline cursor-pointer"
+        >
+          Inscris-toi ici
+        </span>
+      </p>
     </div>
   )
 }
