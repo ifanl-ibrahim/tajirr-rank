@@ -75,7 +75,12 @@ export default function Dashboard() {
             userProfile={localProfile}
             onProfileUpdated={handleProfileUpdated}
           />
-          <button className="bg-purple-600 p-3 rounded-lg">Voir les offres</button>
+          <button
+            onClick={() => router.push('/abonnements')}
+            className="bg-blue-600 px-4 py-2 rounded hover:bg-blue-700"
+          >
+            Voir les offres
+          </button>
         </div>
       </div>
     </div>
