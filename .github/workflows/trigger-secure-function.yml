@@ -1,0 +1,17 @@
+name: Secure Trigger - Daily Scheduler
+
+on:
+  schedule:
+    - cron: '0 0 5 * *' # tous les mois le 5 à minuit (00h00)
+  workflow_dispatch: # Permet aussi de lancer manuellement depuis GitHub
+
+jobs:
+  call-secure-trigger:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call secure-trigger (Supabase Edge Function)
+        run: |
+          curl -X POST https://rdsxttvdekzinhdpfkoh.supabase.co/functions/v1/secure-trigger \
+            -H "Content-Type: application/json" \
+            -H "x-cron-secret: ${{ secrets.CRON_SECRET }}" \
+            -H "Authorization: Bearer ${{ secrets.SUPABASE_SERVICE_ROLE }}"
