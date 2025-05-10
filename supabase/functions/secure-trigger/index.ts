@@ -9,7 +9,7 @@ serve(async (req) => {
     return new Response("Unauthorized", { status: 401 })
   }
 
-  // Appel de la fonction "abonnement-cron"
+  // Appel de la fonction "abonnement-cron" 
   const projectId = Deno.env.get("PROJECT_ID")
   const serviceRoleKey = Deno.env.get("SERVICE_ROLE_KEY")
   const cronSecret = Deno.env.get("CRON_SECRET");
