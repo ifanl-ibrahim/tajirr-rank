@@ -12,19 +12,21 @@ serve(async (req) => {
   // Appel de la fonction "abonnement-cron"
   const projectId = Deno.env.get("PROJECT_ID")
   const serviceRoleKey = Deno.env.get("SERVICE_ROLE_KEY")
+  const cronSecret = Deno.env.get("CRON_SECRET");
 
   const res = await fetch(`https://${projectId}.supabase.co/functions/v1/abonnement-cron`, {
     method: "POST",
     headers: {
       "Authorization": `Bearer ${serviceRoleKey}`,
       "Content-Type": "application/json",
+      "x-cron-secret": cronSecret ?? "",
     },
     body: JSON.stringify({ source: "secure-trigger" }),
   })
 
   if (!res.ok) {
     const text = await res.text()
-    console.error("Erreur appel abonnement-cron:", text)
+    console.error("❌ Erreur lors de l'appel de abonnement-cron :", text)
     return new Response(`❌ Erreur: ${text}`, { status: 500 })
   }
 
