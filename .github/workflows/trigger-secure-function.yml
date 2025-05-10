@@ -14,4 +14,4 @@ jobs:
           curl -X POST https://rdsxttvdekzinhdpfkoh.supabase.co/functions/v1/secure-trigger \
             -H "Content-Type: application/json" \
             -H "x-cron-secret: ${{ secrets.CRON_SECRET }}" \
-            -H "Authorization: Bearer ${{ secrets.SUPABASE_SERVICE_ROLE }}"
+            -H "Authorization: Bearer ${{ secrets.SERVICE_ROLE_KEY }}"
