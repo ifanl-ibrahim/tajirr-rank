@@ -11,6 +11,7 @@ jobs:
     steps:
       - name: Call secure-trigger (Supabase Edge Function)
         run: |
+          echo "TOKEN: ${{ secrets.SUPABASE_SERVICE_ROLE }}"
           curl -X POST https://rdsxttvdekzinhdpfkoh.supabase.co/functions/v1/secure-trigger \
             -H "Content-Type: application/json" \
             -H "x-cron-secret: ${{ secrets.CRON_SECRET }}" \
