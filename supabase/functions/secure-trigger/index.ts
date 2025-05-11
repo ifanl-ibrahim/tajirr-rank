@@ -2,6 +2,12 @@
 import { serve } from 'https://deno.land/std@0.177.0/http/server.ts'
 
 serve(async (req) => {
+  const token = req.headers.get('Authorization')?.replace('Bearer ', '');
+  const { role } = supabase.auth.getUser(token); // optionnel
+  // Pas de filtre "if (role !== 'admin') ..."
+
+  console.log("Authorization header:", req.headers.get('Authorization'));
+
   const secret = Deno.env.get("CRON_SECRET")
   const incomingSecret = req.headers.get("x-cron-secret")
 
@@ -30,5 +36,6 @@ serve(async (req) => {
     return new Response(`❌ Erreur: ${text}`, { status: 500 })
   }
 
+  console.log('✅ Abonnement mensuel déclenché pour')
   return new Response("✅ abonnement-cron déclenché", { status: 200 })
 })
