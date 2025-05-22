@@ -8,7 +8,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') return res.status(405).end('Méthode non autorisée');
 
-  const { priceId, isSubscription, userId, abonnementId } = req.body;
+  const { priceId, isSubscription, userId, abonnementId, packId } = req.body;
 
   try {
     const session = await stripe.checkout.sessions.create({
@@ -20,6 +20,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         userId,
         priceId,
         abonnementId,
+        packId,
         isSubscription: isSubscription.toString(),
       },
       ...(isSubscription && {

@@ -26,6 +26,35 @@ export default function Packs() {
         fetchPacks()
     }, [])
 
+    const handlePurchase = async (pack: any) => {
+        const user = await supabase.auth.getUser()
+        const userId = user.data.user?.id
+
+        if (!userId) {
+            alert("Veuillez vous connecter.")
+            return
+        }
+
+        const res = await fetch('/api/create-checkout-session', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                priceId: pack.stripe_price_id,
+                packId: pack.id,
+                isSubscription: false,
+                userId,
+                abonnementId: ""
+            }),
+        })
+
+        const data = await res.json()
+        if (data.url) {
+            window.location.href = data.url
+        } else {
+            alert("Une erreur est survenue.")
+        }
+    }
+
     return (
         <div className="min-h-screen bg-gray-900 text-white p-6">
             <div className="flex justify-between items-center mb-6">
@@ -50,7 +79,10 @@ export default function Packs() {
                             <h2 className="text-lg font-semibold mb-2">{pack.nom}</h2>
                             <p className="text-gray-400">Prix : {pack.prix} €</p>
                             <p className="text-gray-400">Points offerts : {pack.points}</p>
-                            <button className="mt-4 w-full bg-green-600 hover:bg-green-700 py-2 rounded">
+                            <button
+                                onClick={() => handlePurchase(pack)}
+                                className="mt-4 w-full bg-green-600 hover:bg-green-700 py-2 rounded"
+                            >
                                 Acheter
                             </button>
                         </div>
