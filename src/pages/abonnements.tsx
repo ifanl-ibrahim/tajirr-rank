@@ -50,7 +50,26 @@ export default function Abonnements() {
                             <h2 className="text-lg font-semibold mb-2">{abonnement.nom}</h2>
                             <p className="text-gray-400">Prix : {abonnement.prix} € / mois</p>
                             <p className="text-gray-400">Points par mois : {abonnement.points}</p>
-                            <button className="mt-4 w-full bg-green-600 hover:bg-green-700 py-2 rounded">
+                            <button
+                                onClick={async () => {
+                                    const res = await fetch('../api/create-checkout-session', {
+                                        method: 'POST',
+                                        headers: { 'Content-Type': 'application/json' },
+                                        body: JSON.stringify({
+                                            priceId: abonnement.stripe_price_id,
+                                            abonnementId: abonnement.id,
+                                            isSubscription: true,
+                                            userId: (await supabase.auth.getUser()).data.user?.id, // ou passe-le comme prop
+                                        }),
+                                    })
+
+                                    const data = await res.json()
+                                    if (data.url) {
+                                        window.location.href = data.url
+                                    }
+                                }}
+                                className="mt-4 w-full bg-green-600 hover:bg-green-700 py-2 rounded"
+                            >
                                 S’abonner
                             </button>
                         </div>
