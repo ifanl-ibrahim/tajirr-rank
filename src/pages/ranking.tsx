@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import { useRouter } from 'next/router'
-import useRequireAuth from '../hooks/useRequireAuth'
+import useOptionalAuth from '../hooks/useOptionalAuth'
 import { Container, Header, Title, Button, Controls, SearchInput, ButtonGroup, UserList, UserItem, UserInfo, Username, Rank, Points, Pagination, PageButton, LoadingText } from '../styles/rankingStyles'
 
 type RankedUser = {
@@ -16,7 +16,7 @@ type RankedUser = {
 }
 
 export default function Ranking() {
-  const { user, userProfile } = useRequireAuth()
+  const { user, userProfile } = useOptionalAuth()
   const router = useRouter()
   const [users, setUsers] = useState<RankedUser[]>([])
   const [orderAsc, setOrderAsc] = useState(true)

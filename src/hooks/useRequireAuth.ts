@@ -32,8 +32,6 @@ export default function useRequireAuth() {
         .eq('id', currentUser.id)
         .maybeSingle()
 
-        console.log('Profil utilisateur récupéré:', profile)
-
       if (profileError || !profile) {
         console.error('Erreur récupération profil:', profileError)
         setIsError(true)

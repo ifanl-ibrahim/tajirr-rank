@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import { useRouter } from 'next/router'
+import useRequireAuth from '../hooks/useRequireAuth'
 import { Container, TopBar, Title, ReturnButton, Grid, Card, CardTitle, Text, SubscribeButton, BottomText, Highlight } from '../styles/abonnementStyles'
 
 export default function Abonnements() {
+    const { user, loading: loadingAuth } = useRequireAuth()
     const [abonnements, setAbonnements] = useState<any[]>([])
     const [loading, setLoading] = useState(true)
     const router = useRouter()

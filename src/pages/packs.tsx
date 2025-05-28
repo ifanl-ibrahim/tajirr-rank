@@ -2,9 +2,11 @@
 import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import { useRouter } from 'next/router'
+import useRequireAuth from '../hooks/useRequireAuth'
 import { PageContainer, Header, Title, BackButton, PacksGrid, PackCard, PackTitle, PackInfo, BuyButton, FooterText, LinkText } from '../styles/packsStyles'
 
 export default function Packs() {
+    const { userProfile, loading: authLoading } = useRequireAuth()
     const [packs, setPacks] = useState<any[]>([])
     const [loading, setLoading] = useState(true)
     const router = useRouter()
