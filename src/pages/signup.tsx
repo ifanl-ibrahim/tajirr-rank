@@ -1,8 +1,9 @@
-import React from 'react'
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 import { supabase } from '../lib/supabase'
 import useRedirectIfAuthenticated from '../hooks/useRedirectIfAuthenticated'
+
+import { SignUpWrapper, Title, Form, Input, ErrorMessage, Button, FooterText } from '../styles/signupStyles'
 
 export default function SignUp() {
   useRedirectIfAuthenticated()
@@ -22,7 +23,6 @@ export default function SignUp() {
     setErrorMessage('')
     setLoading(true)
 
-    // Vérifications locales
     if (password.length < 6) {
       setErrorMessage("Le mot de passe doit contenir au moins 6 caractères.")
       setLoading(false)
@@ -35,7 +35,6 @@ export default function SignUp() {
       return
     }
 
-    // Création de l'utilisateur dans Supabase Auth
     const { data, error } = await supabase.auth.signUp({
       email,
       password
@@ -53,7 +52,6 @@ export default function SignUp() {
 
     const user = data.user
     if (user) {
-      // Création du profil avec rang et abonnement par défaut
       const { error: profileError } = await supabase
         .from('profiles')
         .insert([{
@@ -62,9 +60,9 @@ export default function SignUp() {
           nom,
           prenom,
           username,
-          rank_id: 1,          // Rang par défaut
-          abonnement_id: 1,    // Abonnement gratuit
-          total_depot: 0      // Montant déposé initial
+          rank_id: 1,
+          abonnement_id: 1,
+          total_depot: 0
         }])
 
       if (profileError) {
@@ -77,7 +75,6 @@ export default function SignUp() {
         return
       }
 
-      // alert('Compte créé avec succès ! Vérifie ton e-mail.')
       alert('Compte créé avec succès !')
       router.push('/login')
     }
@@ -86,41 +83,29 @@ export default function SignUp() {
   }
 
   return (
-    <div className="flex flex-col justify-center items-center min-h-screen bg-gray-900 text-white px-4">
-      <h1 className="text-2xl font-bold mb-6">Créer un compte</h1>
+    <SignUpWrapper>
+      <Title>Créer un compte</Title>
+      <Form onSubmit={handleSignUp}>
+        <Input type="text" placeholder="Nom" value={nom} onChange={(e) => setNom(e.target.value)} required />
+        <Input type="text" placeholder="Prénom" value={prenom} onChange={(e) => setPrenom(e.target.value)} required />
+        <Input type="text" placeholder="Nom d'utilisateur" value={username} onChange={(e) => setUsername(e.target.value)} />
+        <Input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+        <Input type="password" placeholder="Mot de passe (min. 6 caractères)" value={password} onChange={(e) => setPassword(e.target.value)} required />
+        <Input type="password" placeholder="Confirmer le mot de passe" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
 
-      <form onSubmit={handleSignUp} className="space-y-4 w-full max-w-sm">
-        <input type="text" placeholder="Nom" value={nom} onChange={(e) => setNom(e.target.value)}
-          className="w-full p-2 rounded text-black" required />
-        <input type="text" placeholder="Prénom" value={prenom} onChange={(e) => setPrenom(e.target.value)}
-          className="w-full p-2 rounded text-black" required />
-        <input type="text" placeholder="Nom d'utilisateur" value={username} onChange={(e) => setUsername(e.target.value)}
-          className="w-full p-2 rounded text-black" />
-        <input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}
-          className="w-full p-2 rounded text-black" required />
-        <input type="password" placeholder="Mot de passe (min. 6 caractères)" value={password} onChange={(e) => setPassword(e.target.value)}
-          className="w-full p-2 rounded text-black" required />
-        <input type="password" placeholder="Confirmer le mot de passe" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}
-          className="w-full p-2 rounded text-black" required />
+        {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
 
-        {errorMessage && (
-          <div className="text-red-400 text-sm">{errorMessage}</div>
-        )}
-
-        <button type="submit" disabled={loading}
-          className="w-full bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded">
+        <Button type="submit" disabled={loading}>
           {loading ? 'Création...' : 'Créer le compte'}
-        </button>
-      </form>
-      <p className="mt-4 text-sm text-gray-400 text-center">
+        </Button>
+      </Form>
+
+      <FooterText>
         Déjà inscrit ?{' '}
-        <span
-          onClick={() => router.push('/login')}
-          className="text-blue-400 hover:underline cursor-pointer"
-        >
+        <span onClick={() => router.push('/login')}>
           Connecte-toi ici
         </span>
-      </p>
-    </div>
+      </FooterText>
+    </SignUpWrapper>
   )
 }

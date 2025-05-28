@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { supabase } from '../lib/supabase'
+import { LoginWrapper, Title, Form, Input, ErrorMessage, Button, FooterText } from '../styles/loginStyles'
 
 export default function Login() {
   const [emailOrUsername, setEmailOrUsername] = useState('')
@@ -26,7 +27,6 @@ export default function Login() {
 
     let emailToUse = emailOrUsername.trim()
 
-    // Si c’est un username (pas d’@)
     if (!emailToUse.includes('@')) {
       const { data, error } = await supabase
         .from('profiles')
@@ -58,48 +58,38 @@ export default function Login() {
   }
 
   return (
-    <div className="flex flex-col justify-center items-center min-h-screen bg-gray-900 text-white px-4">
-      <h1 className="text-2xl font-bold mb-6">Connexion</h1>
+    <LoginWrapper>
+      <Title>Connexion</Title>
 
-      <form onSubmit={handleLogin} className="space-y-4 w-full max-w-sm">
-        <input
+      <Form onSubmit={handleLogin}>
+        <Input
           type="text"
           placeholder="Email ou nom d'utilisateur"
           value={emailOrUsername}
           onChange={(e) => setEmailOrUsername(e.target.value)}
-          className="w-full p-2 rounded text-black"
           required
         />
-        <input
+        <Input
           type="password"
           placeholder="Mot de passe"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full p-2 rounded text-black"
           required
         />
 
-        {errorMessage && (
-          <div className="text-red-400 text-sm">{errorMessage}</div>
-        )}
+        {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
 
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded"
-        >
+        <Button type="submit" disabled={loading}>
           {loading ? 'Connexion...' : 'Se connecter'}
-        </button>
-      </form>
-      <p className="mt-4 text-sm text-gray-400 text-center">
+        </Button>
+      </Form>
+
+      <FooterText>
         Pas encore de compte ?{' '}
-        <span
-          onClick={() => router.push('/signup')}
-          className="text-blue-400 hover:underline cursor-pointer"
-        >
+        <span onClick={() => router.push('/signup')}>
           Inscris-toi ici
         </span>
-      </p>
-    </div>
+      </FooterText>
+    </LoginWrapper>
   )
 }

@@ -1,5 +1,9 @@
 import { useEffect } from 'react'
 import { supabase } from '../lib/supabase'
+import '../styles/globals.css'
+import GlobalStyle from '../styles/GlobalStyle'
+import { ThemeProvider } from 'styled-components'
+import { luxuryTheme } from '../styles/theme'
 
 function MyApp({ Component, pageProps }) {
 
@@ -14,11 +18,16 @@ function MyApp({ Component, pageProps }) {
     })
 
     return () => {
-      authListener?.unsubscribe()
+      authListener?.subscription?.unsubscribe()
     }
   }, [])
 
-  return <Component {...pageProps} />
+  return (
+    <ThemeProvider theme={luxuryTheme}>
+      <GlobalStyle />
+      <Component {...pageProps} />
+    </ThemeProvider>
+  )
 }
 
 export default MyApp

@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { supabase } from '../lib/supabase'
 import { useRouter } from 'next/router'
 import useRequireAuth from '../hooks/useRequireAuth'
+import { Container, Header, Title, Button, Controls, SearchInput, ButtonGroup, UserList, UserItem, UserInfo, Username, Rank, Points, Pagination, PageButton, LoadingText } from '../styles/rankingStyles'
 
 type RankedUser = {
   id: string
@@ -39,7 +40,6 @@ export default function Ranking() {
     if (error) {
       console.error(error)
     } else {
-      // ⚠️ Tri manuel sur le label du rang
       const typedData = (data ?? []) as RankedUser[]
       const sorted = typedData.sort((a, b) => {
         const nomA = a.rank_id?.nom || ''
@@ -73,77 +73,59 @@ export default function Ranking() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-4">
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="text-xl font-bold">Classement Général</h1>
-        <button
-          className="bg-blue-600 px-4 py-1 rounded hover:bg-blue-700"
-          onClick={() => router.push('/dashboard')}
-        >
+    <Container>
+      <Header>
+        <Title>Classement Général</Title>
+        <Button variant="primary" onClick={() => router.push('/dashboard')}>
           Retour au dashboard
-        </button>
-      </div>
+        </Button>
+      </Header>
 
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
-        <input
+      <Controls>
+        <SearchInput
           type="text"
           placeholder="Rechercher un utilisateur"
-          className="p-2 rounded text-black w-full sm:w-1/2"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
 
-        <div className="flex gap-2 items-center">
-          <button onClick={() => setOrderAsc(!orderAsc)} className="bg-gray-700 px-3 py-1 rounded">
+        <ButtonGroup>
+          <Button onClick={() => setOrderAsc(!orderAsc)}>
             {orderAsc ? 'Ordre décroissant' : 'Ordre croissant'}
-          </button>
-          <button onClick={goToUser} className="bg-green-600 px-3 py-1 rounded">
+          </Button>
+          <Button variant="primary" onClick={goToUser}>
             Me localiser
-          </button>
-        </div>
-      </div>
+          </Button>
+        </ButtonGroup>
+      </Controls>
 
       {loading ? (
-        <p>Chargement...</p>
+        <LoadingText>Chargement...</LoadingText>
       ) : (
-        <div className="space-y-2">
-          {displayedUsers.map((u, i) => (
-            <div
-              key={u.id}
-              className={`p-4 rounded bg-gray-800 flex items-center gap-4 ${u.id === user.id ? 'border border-yellow-400' : ''
-                }`}
-            >
-              {/* <img
-                src={`https://api.dicebear.com/7.x/identicon/svg?seed=${u.username}`}
-                alt="avatar"
-                className="w-10 h-10 rounded-full"
-              /> */}
-              <div>
-                <p className="font-semibold">
-                  {u.username || `${u.prenom} ${u.nom}`}
-                </p>
-                <p className="text-sm text-gray-400">Rang : {u.rank_id?.nom || 'N/A'}</p>
-              </div>
-              <div className="ml-auto text-right">
-                <p>{u.total_depot} points</p>
-              </div>
-            </div>
+        <UserList>
+          {displayedUsers.map((u) => (
+            <UserItem key={u.id} highlight={u.id === user.id}>
+              <UserInfo>
+                <Username>{u.username || `${u.prenom} ${u.nom}`}</Username>
+                <Rank>Rang : {u.rank_id?.nom || 'N/A'}</Rank>
+              </UserInfo>
+              <Points>{u.total_depot} points</Points>
+            </UserItem>
           ))}
 
-          <div className="flex justify-center gap-2 mt-6">
+          <Pagination>
             {[...Array(totalPages)].map((_, i) => (
-              <button
+              <PageButton
                 key={i}
+                active={currentPage === i + 1}
                 onClick={() => setCurrentPage(i + 1)}
-                className={`px-3 py-1 rounded ${currentPage === i + 1 ? 'bg-blue-600' : 'bg-gray-700'
-                  }`}
               >
                 {i + 1}
-              </button>
+              </PageButton>
             ))}
-          </div>
-        </div>
+          </Pagination>
+        </UserList>
       )}
-    </div>
+    </Container>
   )
 }

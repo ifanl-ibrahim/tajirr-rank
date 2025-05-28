@@ -3,23 +3,63 @@ import { supabase } from '../lib/supabase'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 import ProfileModal from './ProfileModal'
+import { useTheme } from 'styled-components'
+import { Container, Header, Brand, Button, Card, Avatar, FlexRow, ProgressBar, ProgressInner, RightText, ButtonGroup } from '../styles/dashboardStyles'
 
 export default function Dashboard() {
+  const theme = useTheme()
   const { user, userProfile, loading, isError } = useRequireAuth()
   const router = useRouter()
 
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [localProfile, setLocalProfile] = useState(null)
+  const [rankInfo, setRankInfo] = useState(null)
+  const [nextRank, setNextRank] = useState(null)
+  const [position, setPosition] = useState(null)
+  const [rankProgress, setRankProgress] = useState(0)
 
   const openModal = () => setIsModalOpen(true)
   const closeModal = () => setIsModalOpen(false)
 
   useEffect(() => {
-    if (userProfile) {
-      setLocalProfile(userProfile)
-    }
-  }, [userProfile])
+    const fetchData = async () => {
+      if (!userProfile) return
 
+      setLocalProfile(userProfile)
+
+      const { data: ranks } = await supabase
+        .from('ranks')
+        .select('*')
+        .order('seuil', { ascending: true })
+
+      const currentRank = ranks.find((r) => r.id === userProfile.rank_id)
+      const currentIndex = ranks.findIndex((r) => r.id === currentRank.id)
+      const upcomingRank = ranks[currentIndex + 1] || null
+
+      setRankInfo(currentRank)
+      setNextRank(upcomingRank)
+
+      if (upcomingRank) {
+        const percent = Math.min(
+          ((userProfile.total_depot - currentRank.seuil) / (upcomingRank.seuil - currentRank.seuil)) * 100,
+          100
+        )
+        setRankProgress(percent.toFixed(1))
+      } else {
+        setRankProgress(100)
+      }
+
+      const { data: allUsers } = await supabase
+        .from('profiles')
+        .select('id, total_depot')
+
+      const sorted = allUsers.sort((a, b) => b.total_depot - a.total_depot)
+      const rankIndex = sorted.findIndex((u) => u.id === userProfile.id) + 1
+      setPosition(rankIndex)
+    }
+
+    fetchData()
+  }, [userProfile])
 
   const handleProfileUpdated = (updatedProfile: any) => {
     setLocalProfile(updatedProfile)
@@ -27,62 +67,70 @@ export default function Dashboard() {
   }
 
   if (loading) return <div>Chargement du profil...</div>
-  if (isError) return <div>Erreur lors du chargement des informations</div>
-  if (!user || !userProfile) return <div>Utilisateur non trouvé</div>
-  if (!localProfile) return <div>Chargement du profil local...</div>
+  if (isError) return <div>Erreur lors du chargement</div>
+  if (!user || !userProfile || !localProfile) return <div>Utilisateur non trouvé</div>
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-6">
-      <div className="flex justify-between items-center mb-6">
-        <div className="text-2xl font-bold text-yellow-400">🌟 Tajirr</div>
-        <button
+    <Container>
+      <Header>
+        <Brand>🌙 TAJIRR</Brand>
+        <Button
           onClick={async () => {
             await supabase.auth.signOut()
             window.location.href = '/'
           }}
-          className="bg-red-500 px-4 py-2 rounded"
         >
           Déconnexion
-        </button>
-      </div>
+        </Button>
+      </Header>
 
-      <h1 className="text-3xl font-semibold mb-2">Bienvenue {localProfile.prenom} 👋</h1>
-      <p className="mb-6 text-gray-400">Tu es un investisseur dans l’âme 💸</p>
+      <Card>
+        <FlexRow>
+          <Avatar>{localProfile.username?.charAt(0) || 'U'}</Avatar>
+          <div>
+            <h2 style={{ fontSize: '1.5rem', margin: 0 }}>{localProfile.prenom} {localProfile.nom}</h2>
+            <p style={{ margin: 0, opacity: 0.8 }}>@{localProfile.username}</p>
+            <p style={{ marginTop: 8 }}>Rang : <strong>{rankInfo?.nom}</strong></p>
+          </div>
+        </FlexRow>
 
-      <div className="bg-gray-800 rounded-xl p-6 space-y-4 shadow-lg">
-        <div>
-          <p>🏅 Rang actuel : <strong>{localProfile.rank_name}</strong></p>
-          <p>📈 Position dans le classement : {localProfile.position || '—'}e</p>
-          <p>💰 Tu as acquis {localProfile.total_points || 0} points — tu es à {localProfile.rank_progress || 0}% du rang Or !</p>
+        <div style={{ marginTop: 24 }}>
+          <div>{localProfile.total_depot} / {nextRank?.seuil || rankInfo?.seuil} points</div>
+          <ProgressBar>
+            <ProgressInner percent={rankProgress} />
+          </ProgressBar>
+          <RightText>{rankProgress}%</RightText>
         </div>
 
-        <div className="grid grid-cols-2 gap-4 mt-4">
-          <button
-            onClick={() => router.push('/ranking')}
-            className="w-full bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded mt-4"
-          >
-            Voir le classement
-          </button>
-          <button
-            onClick={openModal}
-            className="w-full bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded"
-          >
-            Modifier mon profil
-          </button>
-          <ProfileModal
-            isOpen={isModalOpen}
-            closeModal={closeModal}
-            userProfile={localProfile}
-            onProfileUpdated={handleProfileUpdated}
-          />
-          <button
-            onClick={() => router.push('/abonnements')}
-            className="bg-blue-600 px-4 py-2 rounded hover:bg-blue-700"
-          >
-            Voir les offres
-          </button>
-        </div>
-      </div>
-    </div>
+        <Button onClick={openModal} style={{ marginTop: 24 }}>Modifier le profil</Button>
+      </Card>
+
+      <Card>
+        <h2 style={{ marginBottom: 16 }}>💰 Total de points</h2>
+        <p style={{ fontSize: '2rem', fontWeight: 'bold' }}>{localProfile.total_depot} pts</p>
+        <ButtonGroup>
+          <Button onClick={() => router.push('/packs')}>➕ Acheter un Pack</Button>
+          <Button onClick={() => router.push('/abonnements')}>🔁 S’abonner</Button>
+        </ButtonGroup>
+      </Card>
+
+      <Card>
+        <h2>🏆 Classement</h2>
+        <p>Tu es <strong style={{ color: theme.colors.gold }}>#{position}</strong></p>
+        <Button
+          style={{ marginTop: 16 }}
+          onClick={() => router.push('/ranking')}
+        >
+          Voir le classement global
+        </Button>
+      </Card>
+
+      <ProfileModal
+        isOpen={isModalOpen}
+        closeModal={closeModal}
+        userProfile={localProfile}
+        onProfileUpdated={handleProfileUpdated}
+      />
+    </Container>
   )
 }
