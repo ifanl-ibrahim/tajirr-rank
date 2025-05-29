@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { supabase } from '../lib/supabase'
+import { ModalOverlay, ModalContent, ModalTitle, ErrorText, Form, Input, ButtonRow, ButtonPrimary, ButtonSecondary } from '../styles/modalStyles'
 
 type ProfileModalProps = {
   isOpen: boolean
@@ -16,6 +17,37 @@ const ProfileModal = ({ isOpen, closeModal, userProfile, onProfileUpdated }: Pro
   const [password, setPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
+
+  const [visible, setVisible] = useState(false)
+  const [shouldRender, setShouldRender] = useState(isOpen)
+
+  useEffect(() => {
+    if (isOpen) {
+      setShouldRender(true)
+      setTimeout(() => setVisible(true), 10)
+    } else {
+      setVisible(false)
+      setTimeout(() => setShouldRender(false), 250) // correspond à l'animation CSS
+    }
+  }, [isOpen])
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') closeModal()
+    }
+
+    if (shouldRender) {
+      window.addEventListener('keydown', handleKeyDown)
+    }
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown)
+    }
+  }, [shouldRender])
+
+  const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target === e.currentTarget) closeModal()
+  }
 
   const handleProfileUpdate = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -77,77 +109,33 @@ const ProfileModal = ({ isOpen, closeModal, userProfile, onProfileUpdated }: Pro
     }
   }
 
-  if (!isOpen) return null
+  if (!shouldRender) return null
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 z-50">
-      <div className="bg-white p-6 rounded-lg w-96">
-        <h2 className="text-2xl font-bold mb-4">Modifier le Profil</h2>
+    <ModalOverlay onClick={handleOverlayClick} className={visible ? 'visible' : 'hidden'}>
+      <ModalContent className={visible ? 'visible' : 'hidden'}>
+        <ModalTitle>Modifier le Profil</ModalTitle>
 
-        {errorMessage && (
-          <div className="text-red-500 text-sm mb-4">{errorMessage}</div>
-        )}
+        {errorMessage && <ErrorText>{errorMessage}</ErrorText>}
 
-        <form onSubmit={handleProfileUpdate} className="space-y-4">
-          <input
-            type="text"
-            value={nom}
-            onChange={(e) => setNom(e.target.value)}
-            placeholder="Nom"
-            className="w-full p-2 rounded"
-            required
-          />
-          <input
-            type="text"
-            value={prenom}
-            onChange={(e) => setPrenom(e.target.value)}
-            placeholder="Prénom"
-            className="w-full p-2 rounded"
-            required
-          />
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            placeholder="Nom d'utilisateur"
-            className="w-full p-2 rounded"
-            required
-          />
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Email"
-            className="w-full p-2 rounded"
-            required
-          />
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            placeholder="Nouveau mot de passe (si vous souhaitez le modifier)"
-            className="w-full p-2 rounded"
-          />
+        <Form onSubmit={handleProfileUpdate}>
+          <Input value={nom} onChange={(e) => setNom(e.target.value)} placeholder="Nom" required />
+          <Input value={prenom} onChange={(e) => setPrenom(e.target.value)} placeholder="Prénom" required />
+          <Input value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Nom d'utilisateur" required />
+          <Input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required type="email" />
+          <Input value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Nouveau mot de passe (si vous souhaitez le modifier)" type="password" />
 
-          <div className="flex justify-between items-center">
-            <button
-              type="submit"
-              className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
-              disabled={isSubmitting}
-            >
+          <ButtonRow>
+            <ButtonPrimary type="submit" disabled={isSubmitting}>
               {isSubmitting ? 'Enregistrement...' : 'Sauvegarder'}
-            </button>
-            <button
-              type="button"
-              onClick={closeModal}
-              className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded"
-            >
+            </ButtonPrimary>
+            <ButtonSecondary type="button" onClick={closeModal}>
               Annuler
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
+            </ButtonSecondary>
+          </ButtonRow>
+        </Form>
+      </ModalContent>
+    </ModalOverlay>
   )
 }
 

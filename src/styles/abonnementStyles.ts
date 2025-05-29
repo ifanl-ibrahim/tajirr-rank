@@ -1,4 +1,4 @@
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 
 export const Container = styled.div`
     min-height: 100vh;
@@ -100,4 +100,98 @@ export const Highlight = styled.span`
     &:hover {
         color: #e0c26e;
     }
+`
+
+export const NoticeText = styled.p`
+  color: #999;
+  font-size: 0.85rem;
+  margin-top: 0.5rem;
+`
+
+export const UnsubscribeButton = styled.button`
+  background: none;
+  border: none;
+  color: #888;
+  font-size: 0.8rem;
+  margin: 1rem auto;
+  display: block;
+  cursor: pointer;
+  text-decoration: underline;
+  opacity: 0.6;
+  transition: opacity 0.2s ease;
+  
+  &:hover {
+    opacity: 1;
+  }
+`
+export const ConfirmationOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(10, 10, 10, 0.85);
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
+export const ConfirmationBox = styled.div`
+  background: #111;
+  border: 1px solid gold;
+  border-radius: 16px;
+  padding: 30px;
+  max-width: 400px;
+  width: 90%;
+  color: white;
+  box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+  text-align: center;
+`
+
+export const ConfirmationText = styled.p`
+  margin-bottom: 20px;
+  font-size: 1.1rem;
+`
+
+export const ConfirmationButton = styled.button`
+  background: gold;
+  color: black;
+  border: none;
+  padding: 10px 20px;
+  margin: 0 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s;
+
+  &:hover {
+    background: #ffd700c0;
+  }
+`
+
+export const CancelButton = styled(ConfirmationButton)`
+  background: #333;
+  color: white;
+  border: 1px solid gold;
+
+  &:hover {
+    background: #444;
+  }
+`
+
+const spin = keyframes`
+  to {
+    transform: rotate(360deg);
+  }
+`
+
+export const Spinner = styled.div`
+  border: 4px solid #333;
+  border-top: 4px solid gold;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  animation: ${spin} 1s linear infinite;
+  margin: 0 auto;
 `

@@ -31,11 +31,56 @@ export default async function handler(req: any, res: any) {
     return res.status(400).send(`Webhook Error: ${err.message}`);
   }
 
-  // 👇 Ici tu traites les événements Stripe
+  // 🎯 Gestion de l’événement abonnement terminé
+  if (event.type === 'customer.subscription.deleted') {
+    const subscription = event.data.object as Stripe.Subscription;
+    const customerId = subscription.customer as string;
+
+    const { data: profile, error } = await supabase
+      .from('profiles')
+      .select('id')
+      .eq('stripe_customer_id', customerId)
+      .single();
+
+    if (error || !profile) {
+      console.error('❌ Utilisateur non trouvé pour customer:', customerId);
+      return res.status(400).end();
+    }
+
+    const userId = profile.id;
+
+    const { error: updateError } = await supabase
+      .from('profiles')
+      .update({ abonnement_id: null })
+      .eq('id', userId);
+
+    if (updateError) {
+      console.error('❌ Échec suppression abonnement_id:', updateError);
+      return res.status(500).end();
+    }
+
+    console.log('✅ abonnement_id supprimé automatiquement pour user:', userId);
+    return res.status(200).end();
+  }
+
+  // 🎯 Gestion de l’événement achat (abonnement ou pack)
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object as Stripe.Checkout.Session;
-
     const { userId, priceId, abonnementId, isSubscription, packId } = session.metadata || {};
+
+    // Mise à jour stripe_customer_id si absent
+    if (session.customer && typeof session.customer === 'string') {
+      const { error: customerUpdateError } = await supabase
+        .from('profiles')
+        .update({ stripe_customer_id: session.customer })
+        .eq('id', userId);
+
+      if (customerUpdateError) {
+        console.error('❌ Erreur lors de la mise à jour de stripe_customer_id :', customerUpdateError);
+      } else {
+        console.log('✅ stripe_customer_id mis à jour pour user:', userId);
+      }
+    }
 
     if (!userId || !priceId) {
       console.error('❌ userId ou priceId manquant dans metadata');
