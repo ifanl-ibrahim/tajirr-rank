@@ -103,6 +103,12 @@ export default function Dashboard() {
         </div>
 
         <Button onClick={openModal} style={{ marginTop: 24 }}>Modifier le profil</Button>
+        <ProfileModal
+          isOpen={isModalOpen}
+          closeModal={closeModal}
+          userProfile={localProfile}
+          onProfileUpdated={handleProfileUpdated}
+        />
       </Card>
 
       <Card>
@@ -124,13 +130,6 @@ export default function Dashboard() {
           Voir le classement global
         </Button>
       </Card>
-
-      <ProfileModal
-        isOpen={isModalOpen}
-        closeModal={closeModal}
-        userProfile={localProfile}
-        onProfileUpdated={handleProfileUpdated}
-      />
     </Container>
   )
 }

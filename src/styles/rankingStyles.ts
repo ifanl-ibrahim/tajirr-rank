@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes, css } from 'styled-components'
 
 export const Container = styled.div`
   min-height: 100vh;
@@ -73,17 +73,36 @@ export const UserList = styled.div`
   gap: 12px;
 `;
 
-export const UserItem = styled.div<{ highlight?: boolean }>`
-  background-color: #1e1e1e;
-  padding: 16px;
-  border-radius: 10px;
+// Animation flash sur l'utilisateur localisé
+const flash = keyframes`
+  0%, 100% { background-color: #fff; }
+  50% { background-color: #ffeaa7; }
+`
+
+export const UserItem = styled.li<{ highlight?: boolean; topRank?: number }>`
+  padding: 1rem;
+  margin-bottom: 0.5rem;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   gap: 20px;
   border: ${({ highlight }) => (highlight ? '2px solid #f5d061' : 'none')};
   box-shadow: ${({ highlight }) => (highlight ? '0 0 10px #f5d061cc' : 'none')};
   transition: box-shadow 0.3s ease, border 0.3s ease;
-`;
+  background-color: ${({ topRank }) =>
+    topRank === 1 ? '#ffd700' : topRank === 2 ? '#c0c0c0' : topRank === 3 ? '#cd7f32' : '#1e1e1e'};
+  color: white;
+  ${({ highlight }) =>
+    highlight &&
+    css`
+      animation: ${flash} 1s ease-in-out;
+      border: 2px solid #ffeaa7;
+      cursor: pointer;
+      &:hover {
+        box-shadow: 0 0 15px #ffeaa7;
+      }
+    `}
+`
 
 export const UserInfo = styled.div`
   display: flex;
