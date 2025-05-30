@@ -122,6 +122,7 @@ export default async function handler(req: any, res: any) {
           .from('profiles')
           .update({
             abonnement_id: abonnementId, // 👈 UUID correct maintenant
+            derniere_recharge: new Date().toISOString(),
           })
           .eq('id', userId);
 
