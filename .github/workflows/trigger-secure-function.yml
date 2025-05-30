@@ -2,7 +2,7 @@ name: Secure Trigger - Daily Scheduler
 
 on:
   schedule:
-    - cron: '0 0 5 * *' # tous les mois le 5 à minuit (00h00)
+    - cron: '0 5 * * *'  # Tous les jours à 01h du matin (heure New York)
   workflow_dispatch: # Permet aussi de lancer manuellement depuis GitHub
 
 jobs:
