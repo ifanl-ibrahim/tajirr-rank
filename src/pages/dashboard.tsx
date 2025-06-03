@@ -17,9 +17,25 @@ export default function Dashboard() {
   const [nextRank, setNextRank] = useState(null)
   const [position, setPosition] = useState(null)
   const [rankProgress, setRankProgress] = useState(0)
+  const [badgeUrl, setBadgeUrl] = useState(null)
 
   const openModal = () => setIsModalOpen(true)
   const closeModal = () => setIsModalOpen(false)
+  
+  const [isBadgeModalOpen, setIsBadgeModalOpen] = useState(false)
+  const [isBadgeModalVisible, setIsBadgeModalVisible] = useState(false) // contrôle l'affichage réel
+
+  const openBadgeModal = () => {
+    setIsBadgeModalVisible(true)
+    // lancement animation fade-in via classe CSS
+    setTimeout(() => setIsBadgeModalOpen(true), 10) // léger delay pour forcer animation
+  }
+
+  const closeBadgeModal = () => {
+    setIsBadgeModalOpen(false)
+    // après la durée de l'animation, on retire le modal du DOM
+    setTimeout(() => setIsBadgeModalVisible(false), 300)
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -61,6 +77,13 @@ export default function Dashboard() {
     fetchData()
   }, [userProfile])
 
+  useEffect(() => {
+    if (!rankInfo?.badge_path) return
+
+    const publicUrl = `https://rdsxttvdekzinhdpfkoh.supabase.co/storage/v1/object/public/badges/${rankInfo.badge_path}`
+    setBadgeUrl(publicUrl)
+  }, [rankInfo])
+
   const handleProfileUpdated = (updatedProfile: any) => {
     setLocalProfile(updatedProfile)
     closeModal()
@@ -86,13 +109,77 @@ export default function Dashboard() {
 
       <Card>
         <FlexRow>
-          <Avatar>{localProfile.username?.charAt(0) || 'U'}</Avatar>
+          <Avatar>
+            {badgeUrl ? (
+              <img
+                src={badgeUrl}
+                alt={rankInfo?.nom}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  borderRadius: '50%',
+                }}
+                onClick={openBadgeModal}
+              />
+            ) : (
+              localProfile.username?.charAt(0) || 'U'
+            )}
+          </Avatar>
           <div>
             <h2 style={{ fontSize: '1.5rem', margin: 0 }}>{localProfile.prenom} {localProfile.nom}</h2>
             <p style={{ margin: 0, opacity: 0.8 }}>@{localProfile.username}</p>
             <p style={{ marginTop: 8 }}>Rang : <strong>{rankInfo?.nom}</strong></p>
           </div>
         </FlexRow>
+        {isBadgeModalVisible && (
+        <div
+          onClick={closeBadgeModal}
+          className={`backdrop ${isBadgeModalOpen ? 'fade-in' : 'fade-out'}`}
+          aria-modal="true"
+          role="dialog"
+          tabIndex={-1}
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{ position: 'relative' }}
+          >
+            <button
+              onClick={closeBadgeModal}
+              style={{
+                position: 'absolute',
+                top: -20,
+                right: -20,
+                backgroundColor: 'rgba(0,0,0,0.7)',
+                border: 'none',
+                borderRadius: '50%',
+                color: 'white',
+                width: 30,
+                height: 30,
+                fontSize: 20,
+                cursor: 'pointer',
+                zIndex: 10000,
+                lineHeight: 1,
+              }}
+              aria-label="Fermer la modale"
+            >
+              &times;
+            </button>
+            <img
+              src={badgeUrl}
+              alt={rankInfo?.nom}
+              style={{
+                borderRadius: '50%',
+                maxWidth: '80vw',
+                maxHeight: '80vh',
+                boxShadow: '0 0 20px rgba(255, 215, 0, 0.7)',
+                cursor: 'default',
+                display: 'block',
+              }}
+            />
+          </div>
+        </div>
+      )}
 
         <div style={{ marginTop: 24 }}>
           <div>{localProfile.total_depot} / {nextRank?.seuil || rankInfo?.seuil} points</div>

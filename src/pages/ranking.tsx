@@ -36,7 +36,7 @@ export default function Ranking() {
 
     const { data, error } = await supabase
       .from('profiles')
-      .select('id, username, nom, prenom, total_depot, rank_id(nom)')
+      .select('id, username, nom, prenom, total_depot, rank_id(nom, badge_path)')
 
     if (error) {
       console.error(error)
@@ -58,8 +58,6 @@ export default function Ranking() {
     setUsers(withPlaces)
     setLoading(false)
   }
-
-  console.log('Users rankedList:', users)
 
   const filteredUsers = users.filter((u) => {
     const fullName = `${u.prenom} ${u.nom}`.toLowerCase()
@@ -143,6 +141,24 @@ export default function Ranking() {
                   </Username>
                   <Rank>#{u.place} — Rang : {u.rank_id?.nom || 'N/A'}</Rank>
                 </UserInfo>
+                {u.rank_id?.badge_path && (
+                  <img
+                    src={`https://rdsxttvdekzinhdpfkoh.supabase.co/storage/v1/object/public/badges/${u.rank_id.badge_path}`}
+                    alt={`Badge de ${u.username}`}
+                    style={{
+                      width: 100,
+                      height: 100,
+                      borderRadius: '50%',
+                      objectFit: 'cover',
+                      marginRight: 10,
+                      border: '2px solid gold',
+                      marginLeft: 'auto',
+                      textAlign: 'right',
+                      fontWeight: 600,
+                      fontSize: '1.1rem',
+                    }}
+                  />
+                )}
                 <Points>{u.total_depot} points</Points>
               </UserItem>
             )

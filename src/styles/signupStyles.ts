@@ -15,6 +15,7 @@ export const SignUpWrapper = styled.div`
 export const Title = styled.h1`
   font-size: 2.5rem;
   font-weight: 700;
+  text-align: center;
   margin-bottom: 2rem;
   color: #d4af37; /* or doré */
   text-shadow: 0 0 8px #d4af37;
