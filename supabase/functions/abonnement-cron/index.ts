@@ -46,8 +46,10 @@ serve(async (_req) => {
       ? new Date(user.derniere_recharge)
       : null;
 
-    if (!lastRecharge || (today.getTime() - lastRecharge.getTime()) / (1000 * 60 * 60 * 24) < 30) {
-      continue; // 💤 Moins de 30 jours, on passe
+    if (!lastRecharge || (today.getTime() - lastRecharge.getTime()) / (1000 * 60 * 60 * 24) >= 30) {
+      // ✅ Ok, on peut créditer
+    } else {
+      continue; // ⏳ Trop tôt, on skip
     }
 
     if (!user.stripe_customer_id) {
