@@ -46,10 +46,13 @@ serve(async (_req) => {
       ? new Date(user.derniere_recharge)
       : null;
 
-    if (!lastRecharge || (today.getTime() - lastRecharge.getTime()) / (1000 * 60 * 60 * 24) >= 30) {
-      // ✅ Ok, on peut créditer
-    } else {
-      continue; // ⏳ Trop tôt, on skip
+    const daysSinceRecharge = lastRecharge
+      ? (today.getTime() - lastRecharge.getTime()) / (1000 * 60 * 60 * 24)
+      : null;
+
+    if (daysSinceRecharge !== null && daysSinceRecharge < 30) {
+      console.log(`⏩ ${user.id} → Seulement ${Math.floor(daysSinceRecharge)} jours depuis la dernière recharge`);
+      continue;
     }
 
     if (!user.stripe_customer_id) {
