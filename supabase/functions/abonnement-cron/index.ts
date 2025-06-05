@@ -5,6 +5,8 @@ import Stripe from "https://esm.sh/stripe@12.6.0";
 console.log("🟢 Lancement de la fonction abonnement-cron");
 
 serve(async (_req) => {
+  console.log("🚀 Cron démarré");
+
   const supabase = createClient(
     Deno.env.get("PROJECT_URL")!,
     Deno.env.get("SERVICE_ROLE_KEY")!
@@ -23,15 +25,6 @@ serve(async (_req) => {
   if (abonError) {
     console.error("❌ Erreur en récupérant les profils abonnés :", abonError);
     return new Response("Erreur abonnés", { status: 500 });
-  }
-
-  console.log(`📦 ${abonnés.length} profil(s) avec abonnement_id détectés.`);
-
-  console.log(`📦 Résultat brut des abonnés :`, abonnés); // 👈 NEW
-
-  if (!abonnés || abonnés.length === 0) {
-    console.warn("⚠️ Aucun abonné trouvé !");
-    return new Response("Aucun abonné à traiter", { status: 200 });
   }
 
   console.log(`✅ ${abonnés.length} abonnés trouvés.`);
@@ -56,22 +49,11 @@ serve(async (_req) => {
       ? new Date(user.derniere_recharge)
       : null;
 
-    if (!lastRecharge || isNaN(lastRecharge.getTime())) {
-      console.log(`⏩ ${user.id} → Pas de date de recharge valide, on skip`);
-      continue;
+    if (!lastRecharge || (today.getTime() - lastRecharge.getTime()) / (1000 * 60 * 60 * 24) >= 30) {
+      // ✅ Ok, on peut créditer
+    } else {
+      continue; // ⏳ Trop tôt, on skip
     }
-
-    const daysSinceRecharge =
-      (today.getTime() - lastRecharge.getTime()) / (1000 * 60 * 60 * 24);
-
-    if (daysSinceRecharge < 30) {
-      console.log(`⏩ ${user.id} → Seulement ${Math.floor(daysSinceRecharge)} jours depuis la dernière recharge`);
-      continue;
-    }
-
-    // ✅ Ici seulement on passe à la suite
-    console.log(`🔥 ${user.id} → Crédit autorisé : ${Math.floor(daysSinceRecharge)} jours écoulés`);
-
 
     if (!user.stripe_customer_id) {
       console.warn(`⚠️ Pas de stripe_customer_id pour ${user.id}`);
