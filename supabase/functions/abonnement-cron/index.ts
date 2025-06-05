@@ -17,11 +17,21 @@ serve(async (_req) => {
   const { data: abonnés, error: abonError } = await supabase
     .from("profiles")
     .select("*")
-    .not("abonnement_id", "is", null);
+    .not("abonnement_id", "is", null)
+    .is("stripe_customer_id", null, { negate: true }); // pour être sûr d’avoir des clients stripe
 
   if (abonError) {
     console.error("❌ Erreur en récupérant les profils abonnés :", abonError);
     return new Response("Erreur abonnés", { status: 500 });
+  }
+
+  console.log(`📦 ${abonnés.length} profil(s) avec abonnement_id détectés.`);
+
+  console.log(`📦 Résultat brut des abonnés :`, abonnés); // 👈 NEW
+
+  if (!abonnés || abonnés.length === 0) {
+    console.warn("⚠️ Aucun abonné trouvé !");
+    return new Response("Aucun abonné à traiter", { status: 200 });
   }
 
   console.log(`✅ ${abonnés.length} abonnés trouvés.`);
