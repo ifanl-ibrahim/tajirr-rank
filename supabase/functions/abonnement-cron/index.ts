@@ -42,28 +42,26 @@ serve(async (_req) => {
   const today = new Date();
 
   for (const user of abonnés) {
-    console.log(`➡️ Traitement de l'utilisateur ${user.id}`);
-    console.log(`   abonnement_id: ${user.abonnement_id}`);
-    console.log(`   dernière recharge: ${user.derniere_recharge}`);
-
     const lastRecharge = user.derniere_recharge
       ? new Date(user.derniere_recharge)
       : null;
 
-    const daysSinceRecharge = lastRecharge
-      ? (today.getTime() - lastRecharge.getTime()) / (1000 * 60 * 60 * 24)
-      : null;
+    if (!lastRecharge || isNaN(lastRecharge.getTime())) {
+      console.log(`⏩ ${user.id} → Pas de date de recharge valide, on skip`);
+      continue;
+    }
 
-    console.log(`   Jours écoulés depuis recharge: ${daysSinceRecharge}`);
+    const daysSinceRecharge =
+      (today.getTime() - lastRecharge.getTime()) / (1000 * 60 * 60 * 24);
 
-    if (daysSinceRecharge !== null && daysSinceRecharge < 30) {
+    if (daysSinceRecharge < 30) {
       console.log(`⏩ ${user.id} → Seulement ${Math.floor(daysSinceRecharge)} jours depuis la dernière recharge`);
       continue;
     }
 
-    if (isNaN(lastRecharge?.getTime?.())) {
-      console.error("⚠️ Date de recharge invalide pour", user.id, user.derniere_recharge);
-    }
+    // ✅ Ici seulement on passe à la suite
+    console.log(`🔥 ${user.id} → Crédit autorisé : ${Math.floor(daysSinceRecharge)} jours écoulés`);
+
 
     if (!user.stripe_customer_id) {
       console.warn(`⚠️ Pas de stripe_customer_id pour ${user.id}`);
