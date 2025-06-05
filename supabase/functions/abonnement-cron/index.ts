@@ -5,8 +5,6 @@ import Stripe from "https://esm.sh/stripe@12.6.0";
 console.log("🟢 Lancement de la fonction abonnement-cron");
 
 serve(async (_req) => {
-  console.log("🚀 Cron démarré");
-
   const supabase = createClient(
     Deno.env.get("PROJECT_URL")!,
     Deno.env.get("SERVICE_ROLE_KEY")!
