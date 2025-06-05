@@ -49,6 +49,7 @@ serve(async (_req) => {
 
     if (!lastRecharge || (today.getTime() - lastRecharge.getTime()) / (1000 * 60 * 60 * 24) >= 30) {
       // ✅ Ok, on peut créditer
+      console.log(`🔁 Mise à jour de l'abonnement pour ${user.id}`);
     } else {
       continue; // ⏳ Trop tôt, on skip
     }
