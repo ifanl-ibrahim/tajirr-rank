@@ -18,7 +18,6 @@ serve(async (_req) => {
     .from("profiles")
     .select("*")
     .not("abonnement_id", "is", null)
-    .is("stripe_customer_id", null, { negate: true }); // pour être sûr d’avoir des clients stripe
 
   if (abonError) {
     console.error("❌ Erreur en récupérant les profils abonnés :", abonError);
