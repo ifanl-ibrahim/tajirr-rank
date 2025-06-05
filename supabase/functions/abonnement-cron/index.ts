@@ -42,15 +42,27 @@ serve(async (_req) => {
   const today = new Date();
 
   for (const user of abonnés) {
+    console.log(`➡️ Traitement de l'utilisateur ${user.id}`);
+    console.log(`   abonnement_id: ${user.abonnement_id}`);
+    console.log(`   dernière recharge: ${user.derniere_recharge}`);
+
     const lastRecharge = user.derniere_recharge
       ? new Date(user.derniere_recharge)
       : null;
 
-    if (!lastRecharge || (today.getTime() - lastRecharge.getTime()) / (1000 * 60 * 60 * 24) >= 30) {
-      // ✅ Ok, on peut créditer
-      console.log(`🔁 Mise à jour de l'abonnement pour ${user.id}`);
-    } else {
-      continue; // ⏳ Trop tôt, on skip
+    const daysSinceRecharge = lastRecharge
+      ? (today.getTime() - lastRecharge.getTime()) / (1000 * 60 * 60 * 24)
+      : null;
+
+    console.log(`   Jours écoulés depuis recharge: ${daysSinceRecharge}`);
+
+    if (daysSinceRecharge !== null && daysSinceRecharge < 30) {
+      console.log(`⏭️  Skipped: recharge trop récente (${Math.floor(daysSinceRecharge)} jours)`);
+      continue;
+    }
+
+    if (isNaN(lastRecharge?.getTime?.())) {
+      console.error("⚠️ Date de recharge invalide pour", user.id, user.derniere_recharge);
     }
 
     if (!user.stripe_customer_id) {
