@@ -4,7 +4,8 @@ import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 import ProfileModal from './ProfileModal'
 import { useTheme } from 'styled-components'
-import { Container, Header, Brand, Button, Card, Avatar, FlexRow, ProgressBar, ProgressInner, RightText, ButtonGroup } from '../styles/dashboardStyles'
+import HeaderBar from './components/HeaderBar'
+import { Container, Header, Brand, Button, Card, Avatar, FlexRow, ProgressBar, ProgressInner, RightText, ButtonGroup, Backdrop } from '../styles/dashboardStyles'
 
 export default function Dashboard() {
   const theme = useTheme()
@@ -21,7 +22,7 @@ export default function Dashboard() {
 
   const openModal = () => setIsModalOpen(true)
   const closeModal = () => setIsModalOpen(false)
-  
+
   const [isBadgeModalOpen, setIsBadgeModalOpen] = useState(false)
   const [isBadgeModalVisible, setIsBadgeModalVisible] = useState(false) // contrôle l'affichage réel
 
@@ -50,6 +51,7 @@ export default function Dashboard() {
 
       const currentRank = ranks.find((r) => r.id === userProfile.rank_id)
       const currentIndex = ranks.findIndex((r) => r.id === currentRank.id)
+      if (!currentRank) return console.warn('Rang introuvable pour cet utilisateur.')
       const upcomingRank = ranks[currentIndex + 1] || null
 
       setRankInfo(currentRank)
@@ -95,18 +97,7 @@ export default function Dashboard() {
 
   return (
     <Container>
-      <Header>
-        <Brand>🌙 TAJIRR</Brand>
-        <Button
-          onClick={async () => {
-            await supabase.auth.signOut()
-            window.location.href = '/'
-          }}
-        >
-          Déconnexion
-        </Button>
-      </Header>
-
+      <HeaderBar />
       <Card>
         <FlexRow>
           <Avatar>
@@ -133,56 +124,54 @@ export default function Dashboard() {
           </div>
         </FlexRow>
         {isBadgeModalVisible && (
-        <div
-          onClick={closeBadgeModal}
-          className={`backdrop ${isBadgeModalOpen ? 'fade-in' : 'fade-out'}`}
-          aria-modal="true"
-          role="dialog"
-          tabIndex={-1}
-        >
-          <div
-            onClick={(e) => e.stopPropagation()}
-            style={{ position: 'relative' }}
-          >
-            <button
-              onClick={closeBadgeModal}
-              style={{
-                position: 'absolute',
-                top: -20,
-                right: -20,
-                backgroundColor: 'rgba(0,0,0,0.7)',
-                border: 'none',
-                borderRadius: '50%',
-                color: 'white',
-                width: 30,
-                height: 30,
-                fontSize: 20,
-                cursor: 'pointer',
-                zIndex: 10000,
-                lineHeight: 1,
-              }}
-              aria-label="Fermer la modale"
+          <Backdrop isOpen={isBadgeModalOpen} onClick={closeBadgeModal}>
+            <div
+              onClick={(e) => e.stopPropagation()}
+              style={{ position: 'relative' }}
             >
-              &times;
-            </button>
-            <img
-              src={badgeUrl}
-              alt={rankInfo?.nom}
-              style={{
-                borderRadius: '50%',
-                maxWidth: '80vw',
-                maxHeight: '80vh',
-                boxShadow: '0 0 20px rgba(255, 215, 0, 0.7)',
-                cursor: 'default',
-                display: 'block',
-              }}
-            />
-          </div>
-        </div>
-      )}
+              <button
+                onClick={closeBadgeModal}
+                style={{
+                  position: 'absolute',
+                  top: -20,
+                  right: -20,
+                  backgroundColor: 'rgba(0,0,0,0.7)',
+                  border: 'none',
+                  borderRadius: '50%',
+                  color: 'white',
+                  width: 30,
+                  height: 30,
+                  fontSize: 20,
+                  cursor: 'pointer',
+                  zIndex: 10000,
+                  lineHeight: 1,
+                }}
+                aria-label="Fermer la modale"
+              >
+                &times;
+              </button>
+              <img
+                src={badgeUrl}
+                alt={rankInfo?.nom}
+                style={{
+                  borderRadius: '50%',
+                  maxWidth: '80vw',
+                  maxHeight: '80vh',
+                  boxShadow: '0 0 20px rgba(255, 215, 0, 0.7)',
+                  cursor: 'default',
+                  display: 'block',
+                }}
+              />
+            </div>
+          </Backdrop>
+        )}
 
         <div style={{ marginTop: 24 }}>
-          <div>{localProfile.total_depot} / {nextRank?.seuil || rankInfo?.seuil} points</div>
+          <div>
+            {nextRank
+              ? `${localProfile.total_depot} / ${nextRank.seuil} points`
+              : `Rang maximum atteint`}
+          </div>
           <ProgressBar>
             <ProgressInner percent={rankProgress} />
           </ProgressBar>

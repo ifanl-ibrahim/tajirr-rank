@@ -70,7 +70,7 @@ export default function Abonnements() {
     return (
         <Container>
             <TopBar>
-                <Title>🌟 Abonnements</Title>
+                <Title>Abonnements</Title>
                 <ReturnButton onClick={() => router.push('/dashboard')}>
                     Retour
                 </ReturnButton>

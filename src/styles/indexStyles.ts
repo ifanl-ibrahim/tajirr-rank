@@ -36,7 +36,7 @@ export const Subtitle = styled.p`
 export const ButtonsWrapper = styled.div`
   display: flex;
   justify-content: center;
-  gap: 1.5rem;
+  gap: 2.5rem;
   flex-wrap: wrap;
 `
 

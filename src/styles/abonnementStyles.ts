@@ -16,7 +16,7 @@ export const TopBar = styled.div`
 `
 
 export const Title = styled.h1`
-    font-size: 2rem;
+    font-size: 1.3rem;
     font-weight: bold;
     color: ${({ theme }) => theme.colors.gold};
 `
