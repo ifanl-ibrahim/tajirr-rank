@@ -7,9 +7,11 @@ export const Container = styled.div`
   padding: 48px;
   font-family: var(--font-main);
   color: ${({ theme }) => theme.colors.gold};
+  padding-top: 100px;
 
   @media (max-width: 767px) {
     padding: 20px;
+    padding-top: 100px;
   }
 `
 

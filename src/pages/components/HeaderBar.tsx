@@ -4,21 +4,32 @@ import { useRouter } from 'next/router'
 import { supabase } from '../../lib/supabase'
 
 const HeaderContainer = styled.header`
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  background-color: ${({ theme }) => theme.colors.night};
+  height: 70px;
+  background-color: ${({ theme }) => theme.colors.black};
   color: ${({ theme }) => theme.colors.gold};
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
+  padding: 0 2rem;
   border-bottom: 1px solid ${({ theme }) => theme.colors.gold};
+  z-index: 1000;
   font-family: var(--font-main);
 `
 
 const Logo = styled.div`
-  font-size: 1.5rem;
-  font-weight: bold;
-  letter-spacing: 2px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+
+  img {
+    height: 100px; // adapte si tu veux plus ou moins grand
+    object-fit: contain;
+    cursor: pointer;
+  }
 `
 
 const LogoutButton = styled.button`
@@ -47,7 +58,13 @@ export default function HeaderBar() {
 
   return (
     <HeaderContainer>
-      <Logo>TonLogo</Logo> {/* Remplace par <img src="/logo.svg" /> plus tard */}
+      <Logo>
+        <img
+            src="https://rdsxttvdekzinhdpfkoh.supabase.co/storage/v1/object/public/badges//logo.png"
+            alt="Tajirr Rank Logo"
+            onClick={() => router.push('/dashboard')}
+        />
+      </Logo>
       <LogoutButton onClick={handleLogout}>Se déconnecter</LogoutButton>
     </HeaderContainer>
   )
