@@ -4,6 +4,8 @@ import '../styles/globals.css'
 import GlobalStyle from '../styles/GlobalStyle'
 import { ThemeProvider } from 'styled-components'
 import { luxuryTheme } from '../styles/theme'
+import { ThemeProvider2 } from '../lib/ThemeContext'
+import HeaderBar from './components/HeaderBar'
 
 function MyApp({ Component, pageProps }) {
 
@@ -24,8 +26,11 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <ThemeProvider theme={luxuryTheme}>
-      <GlobalStyle />
-      <Component {...pageProps} />
+      <ThemeProvider2>
+        <GlobalStyle />
+        <HeaderBar />
+        <Component {...pageProps} />
+      </ThemeProvider2>
     </ThemeProvider>
   )
 }

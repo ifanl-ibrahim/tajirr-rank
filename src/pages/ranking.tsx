@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from 'react'
 import { supabase } from '../lib/supabase'
 import { useRouter } from 'next/router'
 import useOptionalAuth from '../hooks/useOptionalAuth'
-import { Container, Header, Title, Button, Controls, SearchInput, ButtonGroup, UserList, UserItem, UserInfo, Username, Rank, Points, Pagination, PageButton, LoadingText } from '../styles/rankingStyles'
+import { Container, HeaderRanking, Title, Button, Controls, SearchInput, ButtonGroup, UserList, UserItem, UserInfo, Username, Rank, Points, Pagination, PageButton, LoadingText } from '../styles/rankingStyles'
 
 type RankedUser = {
   id: string
@@ -91,12 +91,12 @@ export default function Ranking() {
 
   return (
     <Container>
-      <Header>
+      <HeaderRanking>
         <Title>Classement Général</Title>
         <Button variant="primary" onClick={() => router.push('/dashboard')}>
           Retour au dashboard
         </Button>
-      </Header>
+      </HeaderRanking>
 
       <Controls>
         <SearchInput

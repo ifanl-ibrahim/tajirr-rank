@@ -2,9 +2,8 @@ import useRequireAuth from '../hooks/useRequireAuth'
 import { supabase } from '../lib/supabase'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
-import ProfileModal from './ProfileModal'
+import ProfileModal from './components/ProfileModal'
 import { useTheme } from 'styled-components'
-import HeaderBar from './components/HeaderBar'
 import { Container, Header, Brand, Button, Card, Avatar, FlexRow, ProgressBar, ProgressInner, RightText, ButtonGroup, Backdrop } from '../styles/dashboardStyles'
 
 export default function Dashboard() {
@@ -91,13 +90,12 @@ export default function Dashboard() {
     closeModal()
   }
 
-  if (loading) return <div>Chargement du profil...</div>
-  if (isError) return <div>Erreur lors du chargement</div>
-  if (!user || !userProfile || !localProfile) return <div>Utilisateur non trouvé</div>
+  if (loading) return <div style={{ margin: '5em' }}>Chargement du profil...</div>
+  if (isError) return <div style={{ margin: '5em' }}>Erreur lors du chargement</div>
+  if (!user || !userProfile || !localProfile) return <div style={{ margin: '5em' }}>Utilisateur non trouvé</div>
 
   return (
     <Container>
-      <HeaderBar />
       <Card>
         <FlexRow>
           <Avatar>

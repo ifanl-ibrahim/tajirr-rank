@@ -1,13 +1,12 @@
 import styled from 'styled-components'
 
 export const LoginWrapper = styled.div`
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 2rem;
-  background-color: ${({ theme }) => theme.colors.background};
+  background-color: ${({ theme }) => theme.colors.night};
 `
 
 export const Title = styled.h1`
@@ -20,7 +19,7 @@ export const Title = styled.h1`
 `
 
 export const Form = styled.form`
-  background: #1a1a1a; /* couleur sombre pour contraste, pas dans le thème */
+  background: ${({ theme }) => theme.colors.degrader}; /* dégradé sombre */
   padding: 2rem;
   border-radius: 1rem;
   box-shadow: 0 0 15px rgba(212, 175, 55, 0.7); /* glow doré */
@@ -34,11 +33,11 @@ export const Form = styled.form`
 export const Input = styled.input`
   padding: 0.75rem 1rem;
   border-radius: 0.75rem; /* borderRadius fixe, non défini dans le thème */
-  border: none;
+  border: 1px solid #333;
   font-size: 1rem;
   font-weight: 500;
   color: ${({ theme }) => theme.colors.ivory};
-  background: #222; /* inputBackground sombre */
+  background: ${({ theme }) => theme.colors.lightTheme}; /* couleur de fond fixe */
   transition: box-shadow 0.3s ease;
   font-family: ${({ theme }) => theme.fonts.sans};
 

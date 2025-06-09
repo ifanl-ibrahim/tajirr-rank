@@ -1,9 +1,8 @@
 import styled from 'styled-components'
 
 export const SignUpWrapper = styled.div`
-  min-height: 100vh;
-  background: #121212; /* très sombre */
-  color: #f5f1e9; /* crème clair */
+  background: ${({ theme }) => theme.colors.night};
+  color: ${({ theme }) => theme.colors.text};
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -17,15 +16,15 @@ export const Title = styled.h1`
   font-weight: 700;
   text-align: center;
   margin-bottom: 2rem;
-  color: #d4af37; /* or doré */
+  color: ${({ theme }) => theme.colors.gold};
   text-shadow: 0 0 8px #d4af37;
 `
 
 export const Form = styled.form`
-  background: #1c1c1c;
+  background: ${({ theme }) => theme.colors.degrader};
   padding: 2rem;
   border-radius: 1rem;
-  box-shadow: 0 0 20px rgba(212, 175, 55, 0.7);
+  box-shadow: 0 0 20px ${({ theme }) => theme.colors.gold};
   width: 100%;
   max-width: 400px;
   display: flex;
@@ -36,16 +35,16 @@ export const Form = styled.form`
 export const Input = styled.input`
   padding: 0.75rem 1rem;
   border-radius: 0.5rem;
-  border: none;
+  border: 1px solid #333;
   font-size: 1rem;
   font-weight: 500;
-  color: #121212;
-  background: #f5f1e9;
+  color: ${({ theme }) => theme.colors.text};
+  background: ${({ theme }) => theme.colors.lightTheme};
   transition: box-shadow 0.3s ease;
 
   &:focus {
     outline: none;
-    box-shadow: 0 0 8px #d4af37;
+    box-shadow: 0 0 8px ${({ theme }) => theme.colors.gold};
   }
 `
 

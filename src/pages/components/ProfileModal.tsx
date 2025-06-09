@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
-import { supabase } from '../lib/supabase'
-import { ModalOverlay, ModalContent, ModalTitle, ErrorText, Form, Input, ButtonRow, ButtonPrimary, ButtonSecondary } from '../styles/modalStyles'
+import { supabase } from '../../lib/supabase'
+import { ModalOverlay, ModalContent, ModalTitle, ErrorText, Form, Input, ButtonRow, ButtonPrimary, ButtonSecondary } from '../../styles/modalStyles'
 
 type ProfileModalProps = {
   isOpen: boolean

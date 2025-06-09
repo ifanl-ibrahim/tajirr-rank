@@ -7,11 +7,9 @@ export const Container = styled.div`
   padding: 48px;
   font-family: var(--font-main);
   color: ${({ theme }) => theme.colors.gold};
-  padding-top: 100px;
 
   @media (max-width: 767px) {
     padding: 20px;
-    padding-top: 100px;
   }
 `
 
@@ -53,7 +51,7 @@ export const Button = styled.button`
 `
 
 export const Card = styled.div`
-  background: linear-gradient(135deg, #1a1a1a, #2b2b2b);
+  background: ${({ theme }) => theme.colors.degrader};
   border: 1px solid ${({ theme }) => theme.colors.gold};
   border-radius: 16px;
   box-shadow: 0 0 20px rgba(255, 215, 0, 0.1);
@@ -61,7 +59,7 @@ export const Card = styled.div`
   padding: 32px;
 
   p {
-    color: ${({ theme }) => theme.colors.ivory};
+    color: ${({ theme }) => theme.colors.text};
   }
   
   @media (max-width: 767px) {
@@ -109,7 +107,7 @@ export const FlexRow = styled.div`
 
 export const ProgressBar = styled.div`
   height: 16px;
-  background-color: #333;
+  background-color: ${({ theme }) => theme.colors.night};
   border-radius: 9999px;
   overflow: hidden;
   margin-top: 8px;

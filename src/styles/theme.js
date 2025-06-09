@@ -1,12 +1,5 @@
 export const luxuryTheme = {
   colors: {
-    background: '#0C0C0C',
-    gold: '#D4AF37',
-    ivory: '#F5E9DC',
-    black: '#000000',
-    white: '#FFFFFF',
-    text: '#F5E9DC',
-
     // Valeurs secondaires ajoutées pour styled-components
     primary: '#D4AF37',            // Même que gold (pour cohérence)
     formBackground: '#1a1a1a',    // Fond des formulaires, sombre et contrasté

@@ -43,7 +43,7 @@ export const Grid = styled.div`
 `
 
 export const Card = styled.div`
-    background: ${({ theme }) => theme.colors.cardBackground};
+    background: ${({ theme }) => theme.colors.degrader};
     padding: 1.5rem;
     border-radius: 16px;
     box-shadow: 0 0 20px rgba(212, 175, 55, 0.1);
@@ -57,11 +57,11 @@ export const Card = styled.div`
 export const CardTitle = styled.h2`
     font-size: 1.2rem;
     margin-bottom: 0.5rem;
-    color: #ffffff;
+    color: ${({ theme }) => theme.colors.ivory};
 `
 
 export const Text = styled.p`
-    color: #b3b3b3;
+    color: ${({ theme }) => theme.colors.text};
     margin: 0.25rem 0;
 `
 

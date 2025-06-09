@@ -1,7 +1,6 @@
 import styled from 'styled-components'
 
 export const HomeWrapper = styled.div`
-  min-height: 100vh;
   background-color: ${({ theme }) => theme.colors.background};
   color: ${({ theme }) => theme.colors.text};
   display: flex;
@@ -44,7 +43,7 @@ export const ButtonsWrapper = styled.div`
 
 export const Button = styled.button`
   background-color: ${({ theme }) => theme.colors.gold};
-  color: ${({ theme }) => theme.colors.black};
+  color: ${({ theme }) => theme.colors.lightTheme};
   font-weight: 700;
   font-size: 1.2rem;
   padding: 0.75rem 2.5rem;
@@ -56,7 +55,6 @@ export const Button = styled.button`
   transition: background-color 0.3s ease, box-shadow 0.3s ease;
 
   &:hover {
-    background-color: ${({ theme }) => theme.colors.ivory};
     box-shadow: 0 0 15px ${({ theme }) => theme.colors.ivory};
   }
 `

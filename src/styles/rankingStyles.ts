@@ -2,13 +2,13 @@ import styled, { keyframes, css } from 'styled-components'
 
 export const Container = styled.div`
   min-height: 100vh;
-  background-color: #121212; /* sombre */
-  color: #f5d061; /* doré clair */
+  background-color: ${({ theme }) => theme.colors.night};
+  color: ${({ theme }) => theme.colors.gold};
   padding: 24px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 `;
 
-export const Header = styled.div`
+export const HeaderRanking = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -89,8 +89,8 @@ export const UserItem = styled.li<{ highlight?: boolean; topRank?: number }>`
   border: ${({ highlight }) => (highlight ? '2px solid #f5d061' : 'none')};
   box-shadow: ${({ highlight }) => (highlight ? '0 0 10px #f5d061cc' : 'none')};
   transition: box-shadow 0.3s ease, border 0.3s ease;
-  background-color: ${({ topRank }) =>
-    topRank === 1 ? '#ffd700' : topRank === 2 ? '#c0c0c0' : topRank === 3 ? '#cd7f32' : '#1e1e1e'};
+  background-color: ${({ topRank, theme }) =>
+    topRank === 1 ? '#ffd700' : topRank === 2 ? '#c0c0c0' : topRank === 3 ? '#cd7f32' : theme.colors.lightTheme};
   color: white;
   ${({ highlight }) =>
     highlight &&
@@ -112,11 +112,12 @@ export const UserInfo = styled.div`
 export const Username = styled.p`
   font-weight: 700;
   font-size: 1.1rem;
+  color: ${({ theme }) => theme.colors.ivory};
 `;
 
 export const Rank = styled.p`
   font-size: 0.9rem;
-  color: #bfae5d;
+  color: ${({ theme }) => theme.colors.ivory};
 `;
 
 export const Points = styled.div`
@@ -124,6 +125,7 @@ export const Points = styled.div`
   text-align: right;
   font-weight: 600;
   font-size: 1.1rem;
+  color: ${({ theme }) => theme.colors.ivory};
 `;
 
 export const Pagination = styled.div`

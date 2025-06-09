@@ -9,13 +9,12 @@ const GlobalStyle = createGlobalStyle`
   body, html, #__next {
     margin: 0;
     padding: 0;
-    height: 100%;
     background-color: ${({ theme }) => theme.colors.background};
     color: ${({ theme }) => theme.colors.text};
     font-family: ${({ theme }) => theme.fonts.sans};
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    overflow-y: scroll; /* Toujours afficher la scrollbar verticale pour éviter le saut de page */
+    margin-top: 4rem;
   }
 
   a {

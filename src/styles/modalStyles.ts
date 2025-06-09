@@ -27,7 +27,7 @@ export const ModalOverlay = styled.div`
 `
 
 export const ModalContent = styled.div`
-  background: #1b1b1b;
+  background: ${({ theme }) => theme.colors.night};
   border: 1px solid #3a3a3a;
   border-radius: 16px;
   padding: 2rem;
@@ -45,7 +45,7 @@ export const ModalTitle = styled.h2`
   font-size: 1.75rem;
   font-weight: bold;
   margin-bottom: 1.5rem;
-  color: #ffd700;
+  color: ${({ theme }) => theme.colors.gold};
   text-align: center;
 `
 
@@ -66,12 +66,12 @@ export const Input = styled.input`
   padding: 0.75rem 1rem;
   border-radius: 12px;
   border: 1px solid #333;
-  background-color: #121212;
-  color: #fff;
+  background-color: ${({ theme }) => theme.colors.night};
+  color: ${({ theme }) => theme.colors.text};
   font-size: 1rem;
   &:focus {
     outline: none;
-    border-color: #ffd700;
+    border-color: ${({ theme }) => theme.colors.gold};
   }
 `
 
@@ -84,7 +84,7 @@ export const ButtonRow = styled.div`
 
 export const ButtonPrimary = styled.button`
   flex: 1;
-  background-color: #ffd700;
+  background-color: ${({ theme }) => theme.colors.gold};
   color: #000;
   padding: 0.75rem;
   border-radius: 12px;
