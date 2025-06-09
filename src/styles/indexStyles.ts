@@ -16,6 +16,8 @@ export const Content = styled.div`
   flex-direction: column;
   gap: 1.5rem;
   max-width: 500px;
+  justify-content: center;
+  align-items: center;
 `
 
 export const Title = styled.h1`

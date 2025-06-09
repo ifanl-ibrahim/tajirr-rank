@@ -35,7 +35,13 @@ export default function Home() {
   return (
     <HomeWrapper>
       <Content>
-        <Title>Tajirr Rank</Title>
+        <img
+            src="https://rdsxttvdekzinhdpfkoh.supabase.co/storage/v1/object/public/badges/logo.png"
+            alt="Tajirr Rank Logo"
+            style={{
+              width: '20rem',
+            }}
+        />
         <Subtitle>Prove your success. Join the elite.</Subtitle>
 
         <ButtonsWrapper>
