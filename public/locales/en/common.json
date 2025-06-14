@@ -1,12 +1,13 @@
 {
     "header": {
         "login": "log in",
-        "disconnect": "disconnect"
+        "disconnect": "log out"
     },
     "index": {
         "loading": "Loading profile...",
         "subtitle": "Prove your success. Join the elite.",
-        "signup": "Create an account",
+        "subtitle2": "Success isn't given. It's ranked.",
+        "signup": "Sign up",
         "login": "Log in",
         "ranking": "Ranking"
     },
@@ -32,7 +33,7 @@
     "login": {
         "errorMessage1": "Username not found.",
         "errorMessage2": "Incorrect credentials.",
-        "title": "Login",
+        "title": "Log-in",
         "id": "Email or username",
         "password": "Password",
         "loading": "Loading profile...",
@@ -67,7 +68,8 @@
         "save": "Save",
         "cancel": "Cancel",
         "errorMessageEmail": "This email is already in use.",
-        "errorMessageUsername": "This username is already taken."
+        "errorMessageUsername": "This username is already taken.",
+        "success": "Profile updated successfully !"
     },
     "abonnements": {
         "errorMessage1": "Error: Unsubscription failed.",
@@ -100,19 +102,17 @@
         "price": "Price",
         "points": "Points",
         "buy": "Buy",
-        "massage": "Do you prefer to move at your own pace ?",
+        "message": "Do you prefer to move at your own pace ?",
         "link": "Take a look at the monthly subscriptions"
     },
     "ranking": {
         "title": "Ranking",
         "back": "Return to dashboard",
         "search": "Search for a user",
-        "Descending": "Descending order",
-        "Ascending": "Ascending order",
-        "Locate": "Locate me",
+        "descending": "Descending order",
+        "ascending": "Ascending order",
+        "locate": "Locate me",
         "load": "Loading...",
-        "buy": "RanK",
-        "badge": "Badge of",
-        "totalPoint": "points"
+        "rank": "Rank"
     }
 }

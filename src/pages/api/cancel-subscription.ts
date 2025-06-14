@@ -37,7 +37,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     limit: 1,
   });
 
-  const subscription = subscriptions[0];
+  const subscription = subscriptions?.[0];
 
   if (!subscription) {
     return res.status(400).json({ error: 'Aucun abonnement actif trouvé.' });
@@ -57,7 +57,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   // 🧹 Supprime l’abonnement côté Supabase
   const { error: updateError } = await supabase
     .from('profiles')
-    .update({ abonnement_id: null })
+    .update({ abonnement_id: null, derniere_recharge: null })
     .eq('id', userId);
 
   if (updateError) {

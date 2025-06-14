@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase'
-import { ModalOverlay, ModalContent, ModalTitle, ErrorText, Form, Input, ButtonRow, ButtonPrimary, ButtonSecondary } from '../../styles/modalStyles'
+import { ModalOverlay, ModalContent, ModalTitle, ErrorText, SuccesText, Form, Input, ButtonRow, ButtonPrimary, ButtonSecondary } from '../../styles/modalStyles'
+import { useTranslation } from 'react-i18next'
 
 type ProfileModalProps = {
   isOpen: boolean
@@ -16,10 +17,12 @@ const ProfileModal = ({ isOpen, closeModal, userProfile, onProfileUpdated }: Pro
   const [username, setUsername] = useState(userProfile.username || '')
   const [password, setPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
+  const [succesMessage, setSuccesMessage] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
 
   const [visible, setVisible] = useState(false)
   const [shouldRender, setShouldRender] = useState(isOpen)
+  const { t } = useTranslation('en', { useSuspense: false })
 
   useEffect(() => {
     if (isOpen) {
@@ -62,7 +65,7 @@ const ProfileModal = ({ isOpen, closeModal, userProfile, onProfileUpdated }: Pro
       .neq('id', userProfile.id) // Ne pas comparer avec l'ID de l'utilisateur actuel
 
     if (emailCheck?.length > 0) {
-      setErrorMessage('Cet email est déjà utilisé.')
+      setErrorMessage(t('modal.errorMessageEmail'))
       setIsSubmitting(false)
       return
     }
@@ -75,7 +78,7 @@ const ProfileModal = ({ isOpen, closeModal, userProfile, onProfileUpdated }: Pro
       .neq('id', userProfile.id)
 
     if (usernameCheck?.length > 0) {
-      setErrorMessage('Ce nom d\'utilisateur est déjà pris.')
+      setErrorMessage(t('modal.errorMessageUsername'))
       setIsSubmitting(false)
       return
     }
@@ -91,8 +94,8 @@ const ProfileModal = ({ isOpen, closeModal, userProfile, onProfileUpdated }: Pro
       setIsSubmitting(false)
     } else {
       // Si un mot de passe a été changé, on le met à jour dans Supabase Auth
-      if (password) {
-        const { data, error: passwordError } = await supabase.auth.updateUser({ password })
+      if (password.trim().length > 0) {
+        const {error: passwordError } = await supabase.auth.updateUser({ password })
         if (passwordError) {
           setErrorMessage(passwordError.message)
           setIsSubmitting(false)
@@ -102,9 +105,14 @@ const ProfileModal = ({ isOpen, closeModal, userProfile, onProfileUpdated }: Pro
 
       // Appel la fonction `onProfileUpdated` pour propager les données mises à jour
       onProfileUpdated({ ...userProfile, email, nom, prenom, username })
+      setSuccesMessage(t('modal.success'))
 
-      // Si tout est OK, fermer la modal
+      setTimeout(() => {
+        setSuccesMessage('')
+      }, 3000) // Fermer la modal après 1 seconde pour laisser le temps à l'utilisateur de lire le message de succès
+      
       closeModal()
+      setPassword('')
       setIsSubmitting(false)
     }
   }
@@ -114,23 +122,24 @@ const ProfileModal = ({ isOpen, closeModal, userProfile, onProfileUpdated }: Pro
   return (
     <ModalOverlay onClick={handleOverlayClick} className={visible ? 'visible' : 'hidden'}>
       <ModalContent className={visible ? 'visible' : 'hidden'}>
-        <ModalTitle>Modifier le Profil</ModalTitle>
+        <ModalTitle>{t('modal.title')}</ModalTitle>
 
         {errorMessage && <ErrorText>{errorMessage}</ErrorText>}
+        {succesMessage && <SuccesText>{succesMessage}</SuccesText>}
 
         <Form onSubmit={handleProfileUpdate}>
-          <Input value={nom} onChange={(e) => setNom(e.target.value)} placeholder="Nom" required />
-          <Input value={prenom} onChange={(e) => setPrenom(e.target.value)} placeholder="Prénom" required />
-          <Input value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Nom d'utilisateur" required />
-          <Input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" required type="email" />
-          <Input value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Nouveau mot de passe (si vous souhaitez le modifier)" type="password" />
+          <Input value={nom} onChange={(e) => setNom(e.target.value)} placeholder={t('modal.firstname')} required />
+          <Input value={prenom} onChange={(e) => setPrenom(e.target.value)} placeholder={t('modal.lastname')} required />
+          <Input value={username} onChange={(e) => setUsername(e.target.value)} placeholder={t('modal.username')} required />
+          <Input value={email} onChange={(e) => setEmail(e.target.value)} placeholder={t('modal.email')} required type="email" />
+          <Input value={password} onChange={(e) => setPassword(e.target.value)} placeholder={t('modal.password')} type="password" />
 
           <ButtonRow>
             <ButtonPrimary type="submit" disabled={isSubmitting}>
-              {isSubmitting ? 'Enregistrement...' : 'Sauvegarder'}
+              {isSubmitting ? t('modal.load') : t('modal.save')}
             </ButtonPrimary>
             <ButtonSecondary type="button" onClick={closeModal}>
-              Annuler
+              {t('modal.cancel')}
             </ButtonSecondary>
           </ButtonRow>
         </Form>

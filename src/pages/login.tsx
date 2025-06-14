@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { supabase } from '../lib/supabase'
 import { LoginWrapper, Title, Form, Input, ErrorMessage, Button, FooterText } from '../styles/loginStyles'
+import { useTranslation } from 'react-i18next'
 
 export default function Login() {
   const [emailOrUsername, setEmailOrUsername] = useState('')
@@ -9,6 +10,7 @@ export default function Login() {
   const [loading, setLoading] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
   const router = useRouter()
+  const { t } = useTranslation('en', { useSuspense: false })
 
   useEffect(() => {
     const checkSession = async () => {
@@ -35,7 +37,7 @@ export default function Login() {
         .single()
 
       if (error || !data?.email) {
-        setErrorMessage("Nom d'utilisateur introuvable.")
+        setErrorMessage(t('login.errorMessage1'))
         setLoading(false)
         return
       }
@@ -49,7 +51,7 @@ export default function Login() {
     })
 
     if (error) {
-      setErrorMessage("Identifiants incorrects.")
+      setErrorMessage(t('login.errorMessage2'))
     } else {
       router.push('/')
     }
@@ -59,19 +61,19 @@ export default function Login() {
 
   return (
     <LoginWrapper>
-      <Title>Connexion</Title>
+      <Title>{ t('login.title') }</Title>
 
       <Form onSubmit={handleLogin}>
         <Input
           type="text"
-          placeholder="Email ou nom d'utilisateur"
+          placeholder={ t('login.id') }
           value={emailOrUsername}
           onChange={(e) => setEmailOrUsername(e.target.value)}
           required
         />
         <Input
           type="password"
-          placeholder="Mot de passe"
+          placeholder={ t('login.password') }
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
@@ -80,14 +82,14 @@ export default function Login() {
         {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
 
         <Button type="submit" disabled={loading}>
-          {loading ? 'Connexion...' : 'Se connecter'}
+          {loading ? t('login.loading') : t('login.login')}
         </Button>
       </Form>
 
       <FooterText>
-        Pas encore de compte ?{' '}
+        { t('login.message') }{' '}
         <span onClick={() => router.push('/signup')}>
-          Inscris-toi ici
+          { t('login.link') }
         </span>
       </FooterText>
     </LoginWrapper>

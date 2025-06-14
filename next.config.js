@@ -1,7 +1,9 @@
 // next.config.js
-const { i18n } = require('./next-i18next.config')
 
 module.exports = {
-  i18n,
-  reactStrictMode: true,
+  i18n: {
+    locales: ['en', 'fr'],
+    defaultLocale: 'en',       // Définit 'en' comme langue par défaut
+    localeDetection: false     // Empêche le redirect automatique basé sur le navigateur
+  },
 }

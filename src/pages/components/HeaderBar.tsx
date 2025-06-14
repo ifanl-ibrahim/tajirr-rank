@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { supabase } from '../../lib/supabase'
 import { useThemeToggle } from '../../lib/ThemeContext'
 import { Moon, Sun } from 'lucide-react' // facultatif : icônes
+import { useTranslation } from 'react-i18next'
 
 const HeaderContainer = styled.header`
   position: fixed;
@@ -65,10 +66,29 @@ const ThemeToggle = styled.button`
   }
 `
 
+const LanguageButton = styled.button`
+  background: none;
+  border: 2px solid ${({ theme }) => theme.colors.gold};
+  color: ${({ theme }) => theme.colors.gold};
+  padding: 0.4rem 0.8rem;
+  margin-left: 1rem;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: ${({ theme }) => theme.colors.gold};
+    color: black;
+  }
+`
+
 export default function HeaderBar() {
   const router = useRouter()
+  const { locale, pathname, query, asPath } = router
   const [user, setUser] = useState(null)
   const { theme, toggleTheme } = useThemeToggle()
+  const { t, i18n } = useTranslation('en', { useSuspense: false })
 
   useEffect(() => {
     const getSession = async () => {
@@ -96,6 +116,12 @@ export default function HeaderBar() {
     router.push('/login')
   }
 
+  const toggleLanguage = () => {
+    console.log('Current locale:', locale)
+    i18n.changeLanguage(locale === 'en' ? 'fr' : 'en')
+    router.push({ pathname, query }, asPath, { locale: locale === 'en' ? 'fr' : 'en' })
+  }
+
   return (
     <HeaderContainer>
       <Logo>
@@ -105,14 +131,17 @@ export default function HeaderBar() {
           onClick={() => router.push('/')}
         />
       </Logo>
-      <div style={{ display: 'flex', alignItems: 'center' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
         <ThemeToggle onClick={toggleTheme}>
           {theme === 'dark' ? <Sun size={24} /> : <Moon size={24} />}
         </ThemeToggle>
+        <LanguageButton onClick={toggleLanguage}>
+          {locale === 'en' ? 'EN' : 'FR'}
+        </LanguageButton>
         {user ? (
-          <LogoutButton onClick={handleLogout}>Se déconnecter</LogoutButton>
+          <LogoutButton onClick={handleLogout}>{ t('header.disconnect') }</LogoutButton>
         ) : (
-          <LogoutButton onClick={handleLogin}>Se connecter</LogoutButton>
+          <LogoutButton onClick={handleLogin}>{ t('header.login') }</LogoutButton>
         )}
       </div>
     </HeaderContainer>

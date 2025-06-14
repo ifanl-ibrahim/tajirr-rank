@@ -4,12 +4,14 @@ import { supabase } from '../lib/supabase'
 import { useRouter } from 'next/router'
 import useRequireAuth from '../hooks/useRequireAuth'
 import { PageContainer, Header, Title, BackButton, PacksGrid, PackCard, PackTitle, PackInfo, BuyButton, FooterText, LinkText } from '../styles/packsStyles'
+import { useTranslation } from 'react-i18next'
 
 export default function Packs() {
     const { userProfile, loading: authLoading } = useRequireAuth()
     const [packs, setPacks] = useState<any[]>([])
     const [loading, setLoading] = useState(true)
     const router = useRouter()
+    const { t } = useTranslation('en', { useSuspense: false })
 
     useEffect(() => {
         const fetchPacks = async () => {
@@ -34,7 +36,7 @@ export default function Packs() {
         const userId = user.data.user?.id
 
         if (!userId) {
-            alert("Veuillez vous connecter.")
+            alert(t('packs.errorLogin'))
             return
         }
 
@@ -54,36 +56,36 @@ export default function Packs() {
         if (data.url) {
             window.location.href = data.url
         } else {
-            alert("Une erreur est survenue.")
+            alert(t('packs.errorMessage'))
         }
     }
 
     return (
         <PageContainer>
             <Header>
-                <Title>Packs de points</Title>
-                <BackButton onClick={() => router.push('/dashboard')}>Retour</BackButton>
+                <Title>{ t('packs.title') }</Title>
+                <BackButton onClick={() => router.push('/dashboard')}>{ t('packs.back') }</BackButton>
             </Header>
 
             {loading ? (
-                <p>Chargement...</p>
+                <p>{ t('packs.load') }</p>
             ) : (
                 <PacksGrid>
                     {packs.map((pack) => (
                         <PackCard key={pack.id}>
                             <PackTitle>{pack.nom}</PackTitle>
-                            <PackInfo>Prix : {pack.prix} €</PackInfo>
-                            <PackInfo>Points offerts : {pack.points}</PackInfo>
-                            <BuyButton onClick={() => handlePurchase(pack)}>Acheter</BuyButton>
+                            <PackInfo>{ t('packs.price') } : {pack.prix} €</PackInfo>
+                            <PackInfo>{ t('packs.points') } : {pack.points}</PackInfo>
+                            <BuyButton onClick={() => handlePurchase(pack)}>{ t('packs.buy') }</BuyButton>
                         </PackCard>
                     ))}
                 </PacksGrid>
             )}
 
             <FooterText>
-                Tu préfères avancer à ton rythme ?
+                { t('packs.message') }
                 <LinkText onClick={() => router.push('/abonnements')}>
-                    Jette un œil aux abonnements mensuels →
+                    { t('packs.link') } →
                 </LinkText>
             </FooterText>
         </PageContainer>

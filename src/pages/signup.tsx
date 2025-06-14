@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 import { supabase } from '../lib/supabase'
 import useRedirectIfAuthenticated from '../hooks/useRedirectIfAuthenticated'
-
 import { SignUpWrapper, Title, Form, Input, ErrorMessage, Button, FooterText } from '../styles/signupStyles'
+import { useTranslation } from 'react-i18next'
 
 export default function SignUp() {
   useRedirectIfAuthenticated()
@@ -17,6 +17,7 @@ export default function SignUp() {
   const [loading, setLoading] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
   const router = useRouter()
+  const { t } = useTranslation('en', { useSuspense: false })
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -24,13 +25,13 @@ export default function SignUp() {
     setLoading(true)
 
     if (password.length < 6) {
-      setErrorMessage("Le mot de passe doit contenir au moins 6 caractères.")
+      setErrorMessage(t('signup.errorMessagePassword'))
       setLoading(false)
       return
     }
 
     if (password !== confirmPassword) {
-      setErrorMessage("Les mots de passe ne correspondent pas.")
+      setErrorMessage(t('signup.errorMessagePassword2'))
       setLoading(false)
       return
     }
@@ -42,7 +43,7 @@ export default function SignUp() {
 
     if (error) {
       if (error.message.includes("already registered")) {
-        setErrorMessage("Cet email est déjà utilisé.")
+        setErrorMessage(t('signup.errorMessageEmail'))
       } else {
         setErrorMessage(error.message)
       }
@@ -67,15 +68,15 @@ export default function SignUp() {
 
       if (profileError) {
         if (profileError.message.includes("duplicate key")) {
-          setErrorMessage("Ce nom d'utilisateur ou cet email existe déjà.")
+          setErrorMessage(t('signup.errorMessageEmail2'))
         } else {
-          setErrorMessage("Erreur lors de la création du profil : " + profileError.message)
+          setErrorMessage(`t('signup.errorMessage') : ` + profileError.message)
         }
         setLoading(false)
         return
       }
 
-      alert('Compte créé avec succès !')
+      alert(t('signup.success'))
       router.push('/login')
     }
 
@@ -84,26 +85,26 @@ export default function SignUp() {
 
   return (
     <SignUpWrapper>
-      <Title>Créer un compte</Title>
+      <Title>{ t('signup.title') }</Title>
       <Form onSubmit={handleSignUp}>
-        <Input type="text" placeholder="Nom" value={nom} onChange={(e) => setNom(e.target.value)} required />
-        <Input type="text" placeholder="Prénom" value={prenom} onChange={(e) => setPrenom(e.target.value)} required />
-        <Input type="text" placeholder="Nom d'utilisateur" value={username} onChange={(e) => setUsername(e.target.value)} />
-        <Input type="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-        <Input type="password" placeholder="Mot de passe (min. 6 caractères)" value={password} onChange={(e) => setPassword(e.target.value)} required />
-        <Input type="password" placeholder="Confirmer le mot de passe" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
+        <Input type="text" placeholder={ t('signup.firstname') } value={nom} onChange={(e) => setNom(e.target.value)} required />
+        <Input type="text" placeholder={ t('signup.lastname') } value={prenom} onChange={(e) => setPrenom(e.target.value)} required />
+        <Input type="text" placeholder={ t('signup.username') } value={username} onChange={(e) => setUsername(e.target.value)} />
+        <Input type="email" placeholder={ t('signup.email') } value={email} onChange={(e) => setEmail(e.target.value)} required />
+        <Input type="password" placeholder={ t('signup.password') } value={password} onChange={(e) => setPassword(e.target.value)} required />
+        <Input type="password" placeholder={ t('signup.confirmPassword') } value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
 
         {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
 
         <Button type="submit" disabled={loading}>
-          {loading ? 'Création...' : 'Créer le compte'}
+          {loading ? t('signup.loading')  : t('signup.signup') }
         </Button>
       </Form>
 
       <FooterText>
-        Déjà inscrit ?{' '}
+        { t('signup.message') }{' '}
         <span onClick={() => router.push('/login')}>
-          Connecte-toi ici
+          { t('signup.link') }
         </span>
       </FooterText>
     </SignUpWrapper>

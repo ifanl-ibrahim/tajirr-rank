@@ -56,6 +56,13 @@ export const ErrorText = styled.div`
   text-align: center;
 `
 
+export const SuccesText = styled.div`
+  color:rgb(77, 255, 110);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+  text-align: center;
+`
+
 export const Form = styled.form`
   display: flex;
   flex-direction: column;

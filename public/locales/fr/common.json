@@ -1,11 +1,12 @@
 {
     "header": {
         "login": "Se connecter",
-        "disconnect": "Se déconnecter"
+        "disconnect": "Déconnexion"
     },
     "index": {
         "loading": "Chargement du profil...",
         "subtitle": "Prove your success. Join the elite.",
+        "subtitle2": "Success isn't given. It's ranked.",
         "signup": "Créer un compte",
         "login": "Se connecter",
         "ranking": "Voir le classement"
@@ -67,7 +68,8 @@
         "save": "Sauvegarder",
         "cancel": "Annuler",
         "errorMessageEmail": "Cet email est déjà utilisé.",
-        "errorMessageUsername": "Ce nom d'utilisateur est déjà pris."
+        "errorMessageUsername": "Ce nom d'utilisateur est déjà pris.",
+        "success": "Profil mis à jour avec succès !"
     },
     "abonnements": {
         "errorMessage1": "Erreur : désinscription échouée.",
@@ -77,19 +79,19 @@
         "loading": "Chargement...",
         "price": "Prix",
         "month": "mois",
-        "Points per month": "Points par mois",
-        "Current subscription": "Abonnement actuel",
-        "Unsubscribe first": "Désabonnez-vous d'abord",
+        "points": "Points par mois",
+        "currentSubscription": "Abonnement en cours",
+        "unsubscribeFirst": "Désabonnez-vous d'abord",
         "subscribe": "S'abonner",
-        "Unsubscribe": "Se désabonner",
-        "Cancellation in progress, please wait...": "Annulation en cours, veuillez patienter...",
-        "Do you really want to unsubscribe?": "Souhaitez-vous vraiment vous désabonner ?",
-        "You will lose all your subscription benefits. Continue?": "Vous perdrez tous vos avantages liés à l'abonnement. Continuer ?",
-        "Unsubscription successfully completed": "Désabonnement effectué avec succès.",
-        "Yes": "Oui",
-        "Cancel": "Annuler",
-        "Want to climb faster?": "Envie de grimper plus vite ?",
-        "Discover the exclusive packs": "Découvre les packs exclusifs"
+        "unsubscribe": "Se désabonner",
+        "unsubscribeLoading": "Annulation en cours, veuillez patienter...",
+        "verifUnsubscribe1": "Souhaitez-vous vraiment vous désabonner ?",
+        "verifUnsubscribe2": "Vous perdrez tous vos avantages liés à l'abonnement. Continuer ?",
+        "unsubscriptionCompleted": "Désabonnement effectué avec succès.",
+        "yes": "Oui",
+        "cancel": "Annuler",
+        "faster": "Envie de grimper plus vite ?",
+        "discoverPacks": "Découvre les packs exclusifs"
     },
     "packs": {
         "errorLogin": "Veuillez vous connecter.",
@@ -100,19 +102,17 @@
         "price": "Prix",
         "points": "Points offerts",
         "buy": "Acheter",
-        "massage": "Tu préfères avancer à ton rythme ?",
+        "message": "Tu préfères avancer à ton rythme ?",
         "link": "Jette un œil aux abonnements mensuels"
     },
     "ranking": {
         "title": "Classement Général",
         "back": "Retour au dashboard",
         "search": "Rechercher un utilisateur",
-        "Descending": "Ordre décroissant",
-        "Ascending ": "Ordre croissant",
-        "Locate": "Me localiser",
+        "descending": "Ordre décroissant",
+        "ascending ": "Ordre croissant",
+        "locate": "Me localiser",
         "load": "Chargement...",
-        "buy": "Rang",
-        "badge": "Badge de",
-        "totalPoint": "points"
+        "rank": "Rang"
     }
 }

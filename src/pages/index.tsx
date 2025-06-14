@@ -2,13 +2,14 @@ import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { supabase } from '../lib/supabase'
 import Link from 'next/link'
-
 import { HomeWrapper, Content, Subtitle, ButtonsWrapper, Button } from '../styles/indexStyles'
+import { useTranslation } from 'react-i18next'
 
 export default function Home() {
   const router = useRouter()
-
   const [checkingSession, setCheckingSession] = useState(true)
+  const [randomSubtitle, setRandomSubtitle] = useState('')
+  const { t } = useTranslation('en', { useSuspense: false })
 
   useEffect(() => {
     const checkSession = async () => {
@@ -18,16 +19,18 @@ export default function Home() {
         router.replace('/dashboard')
       } else {
         setCheckingSession(false)
+        const randomIndex = Math.floor(Math.random() * 2)
+        setRandomSubtitle([t('index.subtitle'), t('index.subtitle2')][randomIndex])
       }
     }
 
     checkSession()
-  }, [router])
+  }, [router, t])
 
   if (checkingSession) {
     return (
       <HomeWrapper>
-        Chargement du profil...
+        {t('index.loading')}
       </HomeWrapper>
     )
   }
@@ -36,25 +39,25 @@ export default function Home() {
     <HomeWrapper>
       <Content>
         <img
-            src="https://rdsxttvdekzinhdpfkoh.supabase.co/storage/v1/object/public/badges/logo.png"
-            alt="Tajirr Rank Logo"
-            style={{
-              width: '20rem',
-            }}
+          src="https://rdsxttvdekzinhdpfkoh.supabase.co/storage/v1/object/public/badges/logo.png"
+          alt="Tajirr Rank Logo"
+          style={{
+            width: '20rem',
+          }}
         />
-        <Subtitle>Prove your success. Join the elite.</Subtitle>
+        <Subtitle>{randomSubtitle}</Subtitle>
 
         <ButtonsWrapper>
           <Link href="/signup" passHref>
-            <Button as="a">Créer un compte</Button>
+            <Button as="a">{t('index.signup')}</Button>
           </Link>
 
           <Link href="/login" passHref>
-            <Button as="a">Se connecter</Button>
+            <Button as="a">{t('index.login')}</Button>
           </Link>
 
           <Link href="/ranking" passHref>
-            <Button as="a">Voir le classement</Button>
+            <Button as="a">{t('index.ranking')}</Button>
           </Link>
         </ButtonsWrapper>
       </Content>

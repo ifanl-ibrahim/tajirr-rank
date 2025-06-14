@@ -4,7 +4,8 @@ import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 import ProfileModal from './components/ProfileModal'
 import { useTheme } from 'styled-components'
-import { Container, Header, Brand, Button, Card, Avatar, FlexRow, ProgressBar, ProgressInner, RightText, ButtonGroup, Backdrop } from '../styles/dashboardStyles'
+import { Container, Button, Card, Avatar, FlexRow, ProgressBar, ProgressInner, RightText, ButtonGroup, Backdrop } from '../styles/dashboardStyles'
+import { useTranslation } from 'react-i18next'
 
 export default function Dashboard() {
   const theme = useTheme()
@@ -24,6 +25,7 @@ export default function Dashboard() {
 
   const [isBadgeModalOpen, setIsBadgeModalOpen] = useState(false)
   const [isBadgeModalVisible, setIsBadgeModalVisible] = useState(false) // contrôle l'affichage réel
+  const { t } = useTranslation('en', { useSuspense: false })
 
   const openBadgeModal = () => {
     setIsBadgeModalVisible(true)
@@ -50,7 +52,7 @@ export default function Dashboard() {
 
       const currentRank = ranks.find((r) => r.id === userProfile.rank_id)
       const currentIndex = ranks.findIndex((r) => r.id === currentRank.id)
-      if (!currentRank) return console.warn('Rang introuvable pour cet utilisateur.')
+      if (!currentRank) return console.warn(t('dashboard.errorMessage'))
       const upcomingRank = ranks[currentIndex + 1] || null
 
       setRankInfo(currentRank)
@@ -90,9 +92,9 @@ export default function Dashboard() {
     closeModal()
   }
 
-  if (loading) return <div style={{ margin: '5em' }}>Chargement du profil...</div>
-  if (isError) return <div style={{ margin: '5em' }}>Erreur lors du chargement</div>
-  if (!user || !userProfile || !localProfile) return <div style={{ margin: '5em' }}>Utilisateur non trouvé</div>
+  if (loading) return <div style={{ margin: '5em' }}>{ t('dashboard.loading') }</div>
+  if (isError) return <div style={{ margin: '5em' }}>{ t('dashboard.loadingError') }</div>
+  if (!user || !userProfile || !localProfile) return <div style={{ margin: '5em' }}>{ t('dashboard.loadingValid') }</div>
 
   return (
     <Container>
@@ -118,7 +120,7 @@ export default function Dashboard() {
           <div>
             <h2 style={{ fontSize: '1.5rem', margin: 0 }}>{localProfile.prenom} {localProfile.nom}</h2>
             <p style={{ margin: 0, opacity: 0.8 }}>@{localProfile.username}</p>
-            <p style={{ marginTop: 8 }}>Rang : <strong>{rankInfo?.nom}</strong></p>
+            <p style={{ marginTop: 8 }}>{ t('dashboard.rank') } : <strong>{rankInfo?.nom}</strong></p>
           </div>
         </FlexRow>
         {isBadgeModalVisible && (
@@ -144,7 +146,7 @@ export default function Dashboard() {
                   zIndex: 10000,
                   lineHeight: 1,
                 }}
-                aria-label="Fermer la modale"
+                aria-label={ t('dashboard.closeModal') }
               >
                 &times;
               </button>
@@ -168,7 +170,7 @@ export default function Dashboard() {
           <div>
             {nextRank
               ? `${localProfile.total_depot} / ${nextRank.seuil} points`
-              : `Rang maximum atteint`}
+              : t('dashboard.maxRank')}
           </div>
           <ProgressBar>
             <ProgressInner percent={rankProgress} />
@@ -176,7 +178,7 @@ export default function Dashboard() {
           <RightText>{rankProgress}%</RightText>
         </div>
 
-        <Button onClick={openModal} style={{ marginTop: 24 }}>Modifier le profil</Button>
+        <Button onClick={openModal} style={{ marginTop: 24 }}>{ t('dashboard.editProfile') }</Button>
         <ProfileModal
           isOpen={isModalOpen}
           closeModal={closeModal}
@@ -186,22 +188,22 @@ export default function Dashboard() {
       </Card>
 
       <Card>
-        <h2 style={{ marginBottom: 16 }}>💰 Total de points</h2>
+        <h2 style={{ marginBottom: 16 }}>💰 { t('dashboard.totalPoints') }</h2>
         <p style={{ fontSize: '2rem', fontWeight: 'bold' }}>{localProfile.total_depot} pts</p>
         <ButtonGroup>
-          <Button onClick={() => router.push('/packs')}>➕ Acheter un Pack</Button>
-          <Button onClick={() => router.push('/abonnements')}>🔁 S’abonner</Button>
+          <Button onClick={() => router.push('/packs')}>➕ { t('dashboard.buyPacks') }</Button>
+          <Button onClick={() => router.push('/abonnements')}>🔁 { t('dashboard.buySubscription') }</Button>
         </ButtonGroup>
       </Card>
 
       <Card>
-        <h2>🏆 Classement</h2>
-        <p>Tu es <strong style={{ color: theme.colors.gold }}>#{position}</strong></p>
+        <h2>🏆  { t('dashboard.ranking') }</h2>
+        <p> { t('dashboard.youRank') } <strong style={{ color: theme.colors.gold }}>#{position}</strong></p>
         <Button
           style={{ marginTop: 16 }}
           onClick={() => router.push('/ranking')}
         >
-          Voir le classement global
+          { t('dashboard.viewRanking') }
         </Button>
       </Card>
     </Container>

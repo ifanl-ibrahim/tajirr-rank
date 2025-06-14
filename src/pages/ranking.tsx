@@ -3,6 +3,7 @@ import { supabase } from '../lib/supabase'
 import { useRouter } from 'next/router'
 import useOptionalAuth from '../hooks/useOptionalAuth'
 import { Container, HeaderRanking, Title, Button, Controls, SearchInput, ButtonGroup, UserList, UserItem, UserInfo, Username, Rank, Points, Pagination, PageButton, LoadingText } from '../styles/rankingStyles'
+import { useTranslation } from 'react-i18next'
 
 type RankedUser = {
   id: string
@@ -26,6 +27,7 @@ export default function Ranking() {
   const [perPage] = useState(10)
   const [loading, setLoading] = useState(true)
   const userRef = useRef<HTMLLIElement | null>(null)
+  const { t } = useTranslation('en', { useSuspense: false })
 
   useEffect(() => {
     fetchClassement()
@@ -92,34 +94,34 @@ export default function Ranking() {
   return (
     <Container>
       <HeaderRanking>
-        <Title>Classement Général</Title>
+        <Title>{ t('ranking.title') }</Title>
         <Button variant="primary" onClick={() => router.push('/dashboard')}>
-          Retour au dashboard
+          { t('ranking.back') }
         </Button>
       </HeaderRanking>
 
       <Controls>
         <SearchInput
           type="text"
-          placeholder="Rechercher un utilisateur"
+          placeholder={ t('ranking.search') }
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
 
         <ButtonGroup>
           <Button onClick={() => setOrderAsc(!orderAsc)}>
-            {orderAsc ? 'Ordre décroissant' : 'Ordre croissant'}
+            {orderAsc ? t('ranking.descending') : t('ranking.ascending')}
           </Button>
           {user && (
             <Button variant="primary" onClick={goToUser}>
-              Me localiser
+              { t('ranking.locate') }
             </Button>
           )}
         </ButtonGroup>
       </Controls>
 
       {loading ? (
-        <LoadingText>Chargement...</LoadingText>
+        <LoadingText>{ t('ranking.load') }</LoadingText>
       ) : (
         <UserList>
           {displayedUsers.map((u, i) => {
@@ -139,7 +141,7 @@ export default function Ranking() {
                   <Username>
                     {getMedal(u.place)} — {u.username || `${u.prenom} ${u.nom}`}
                   </Username>
-                  <Rank>#{u.place} — Rang : {u.rank_id?.nom || 'N/A'}</Rank>
+                  <Rank>#{u.place} — { t('ranking.rank') } : {u.rank_id?.nom || 'N/A'}</Rank>
                 </UserInfo>
                 {u.rank_id?.badge_path && (
                   <img

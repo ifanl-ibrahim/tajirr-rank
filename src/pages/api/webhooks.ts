@@ -51,7 +51,7 @@ export default async function handler(req: any, res: any) {
 
     const { error: updateError } = await supabase
       .from('profiles')
-      .update({ abonnement_id: null })
+      .update({ abonnement_id: null, derniere_recharge: null })
       .eq('id', userId);
 
     if (updateError) {
