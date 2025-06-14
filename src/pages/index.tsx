@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { supabase } from '../lib/supabase'
 import Link from 'next/link'
 
-import { HomeWrapper, Content, Title, Subtitle, ButtonsWrapper, Button } from '../styles/indexStyles'
+import { HomeWrapper, Content, Subtitle, ButtonsWrapper, Button } from '../styles/indexStyles'
 
 export default function Home() {
   const router = useRouter()

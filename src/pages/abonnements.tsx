@@ -49,7 +49,7 @@ export default function Abonnements() {
 
                 const result = await res.json()
                 if (result.success) {
-                    await supabase.from('profiles').update({ abonnement_id: null }).eq('id', user?.id)
+                    await supabase.from('profiles').update({ abonnement_id: null, derniere_recharge: null }).eq('id', user?.id)
                     setConfirmStep(3)
                     setTimeout(() => {
                         window.location.reload()
