@@ -9,6 +9,15 @@ export const darkTheme = {
     degrader: 'linear-gradient(135deg, #1a1a1a, #2b2b2b)',
     lightTheme: ' #2b2b2b',
   },
+  fonts: {
+    serif: `'Playfair Display', serif`,
+    sans: `'Poppins', sans-serif`,
+  },
+  borderRadius: '0.75rem',
+  shadows: {
+    glow: '0 0 10px #D4AF37',
+    boxShadow: '0 0 15px rgba(212, 175, 55, 0.7)',
+  }
 }
 
 export const lightTheme = {
@@ -21,6 +30,15 @@ export const lightTheme = {
     degrader: 'linear-gradient(135deg, #efefef, #e9e9e9)',
     lightTheme: ' #e9e9e9',
   },
+  fonts: {
+    serif: `'Playfair Display', serif`,
+    sans: `'Poppins', sans-serif`,
+  },
+  borderRadius: '0.75rem',
+  shadows: {
+    glow: '0 0 10px #D4AF37',
+    boxShadow: '0 0 15px rgba(212, 175, 55, 0.7)',
+  }
 }
 
 export const luxuryTheme = {
@@ -34,17 +52,5 @@ export const luxuryTheme = {
     buttonHover: '#bfa341',       // Or un peu plus foncé au hover
     footerText: '#F5E9DC',        // Texte du footer (même que ivory)
     error: '#ff4d4f',             // Rouge pour les erreurs (ajout personnalisé)
-  },
-  fonts: {
-    serif: `'Playfair Display', serif`,
-    sans: `'Poppins', sans-serif`,
-  },
-  // Ajout borderRadius global
-  borderRadius: '0.75rem',
-
-  // Ajout shadows
-  shadows: {
-    glow: '0 0 10px #D4AF37',
-    boxShadow: '0 0 15px rgba(212, 175, 55, 0.7)',
   }
 }
