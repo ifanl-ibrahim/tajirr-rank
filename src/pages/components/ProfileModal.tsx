@@ -11,6 +11,7 @@ type ProfileModalProps = {
 }
 
 const ProfileModal = ({ isOpen, closeModal, userProfile, onProfileUpdated }: ProfileModalProps) => {
+  if (!userProfile) return null
   const [email, setEmail] = useState(userProfile.email || '')
   const [nom, setNom] = useState(userProfile.nom || '')
   const [prenom, setPrenom] = useState(userProfile.prenom || '')
