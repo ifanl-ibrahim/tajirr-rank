@@ -14,7 +14,7 @@ const GlobalStyle = createGlobalStyle`
     font-family: ${({ theme }) => theme.fonts.sans};
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    margin-top: 4rem;
+    margin-bottom: 4rem;
   }
 
   a {

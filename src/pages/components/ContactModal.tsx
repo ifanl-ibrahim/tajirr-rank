@@ -14,13 +14,13 @@ const Backdrop = styled.div`
 `;
 
 const Modal = styled.div`
-    background: #111;
+    background: ${({ theme }) => theme.colors.night};
     padding: 2rem;
     border-radius: 1rem;
     width: 90%;
     max-width: 500px;
     box-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
-    color: white;
+    color: ${({ theme }) => theme.colors.text};
 
     h2 {
         margin-bottom: 1rem;
@@ -33,8 +33,8 @@ const Input = styled.input`
     margin-bottom: 1rem;
     border-radius: 0.5rem;
     border: none;
-    background: #222;
-    color: white;
+    background: ${({ theme }) => theme.colors.degrader};
+    color: ${({ theme }) => theme.colors.text};
 `;
 
 const Select = styled.select`
@@ -42,8 +42,8 @@ const Select = styled.select`
     padding: 0.7rem;
     margin-bottom: 1rem;
     border-radius: 0.5rem;
-    background: #222;
-    color: white;
+    background: ${({ theme }) => theme.colors.degrader};
+    color: ${({ theme }) => theme.colors.text};
     border: none;
 `;
 
@@ -53,12 +53,15 @@ const Textarea = styled.textarea`
     padding: 0.7rem;
     border-radius: 0.5rem;
     border: none;
-    background: #222;
-    color: white;
+    background: ${({ theme }) => theme.colors.degrader};
+    color: ${({ theme }) => theme.colors.text};
     margin-bottom: 1rem;
 `;
 
 const Button = styled.button`
+    display: flex;
+    margin: auto;
+    margin-bottom: 1rem;
     background: gold;
     color: black;
     font-weight: bold;
@@ -66,7 +69,6 @@ const Button = styled.button`
     border: none;
     border-radius: 0.5rem;
     cursor: pointer;
-    margin-bottom: 1rem;
 `;
 
 export default function ContactModal({ onClose }: { onClose: () => void }) {

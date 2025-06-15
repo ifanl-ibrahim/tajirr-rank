@@ -9,7 +9,7 @@ import { useTranslation } from 'react-i18next'
 
 const HeaderContainer = styled.header`
   position: fixed;
-  top: 0;
+  bottom: 0;
   left: 0;
   right: 0;
   width: 100%;
@@ -20,7 +20,7 @@ const HeaderContainer = styled.header`
   justify-content: space-between;
   align-items: center;
   padding: 3.5rem 2rem;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.gold};
+  border-top: 1px solid ${({ theme }) => theme.colors.gold};
   z-index: 1000;
   font-family: var(--font-main);
 `

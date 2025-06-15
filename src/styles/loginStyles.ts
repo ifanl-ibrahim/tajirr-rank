@@ -7,6 +7,7 @@ export const LoginWrapper = styled.div`
   align-items: center;
   padding: 2rem;
   background-color: ${({ theme }) => theme.colors.night};
+  margin: 7rem auto auto auto;
 `
 
 export const Title = styled.h1`

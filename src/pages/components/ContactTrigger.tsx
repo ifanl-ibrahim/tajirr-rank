@@ -8,7 +8,7 @@ const TextButton = styled.button`
     display: flex;
     background: none;
     border: none;
-    color: #ccc;
+    color: ${({ theme }) => theme.colors.ivory};
     font-size: 0.9rem;
     cursor: pointer;
     text-decoration: underline;
