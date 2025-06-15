@@ -10,9 +10,7 @@ serve(async (_req) => {
     Deno.env.get("SERVICE_ROLE_KEY")!
   );
 
-  const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY")!, {
-    apiVersion: "2022-11-15",
-  });
+  const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY")!);
 
   const { data: abonnés, error: abonError } = await supabase
     .from("profiles")
