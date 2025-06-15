@@ -114,5 +114,13 @@
         "locate": "Me localiser",
         "load": "Chargement...",
         "rank": "Rang"
+    },
+    "contact": {
+        "contactButton": "Une erreur ? Une suggestion ? Contacte-nous ici",
+        "title": "Contact",
+        "others ": "Autres",
+        "send": "Envoyer",
+        "valid": "Message envoyé ! Merci",
+        "error": "Erreur lors de l’envoi, veuillez réessayer."
     }
 }

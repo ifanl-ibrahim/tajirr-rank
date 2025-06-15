@@ -114,5 +114,13 @@
         "locate": "Locate me",
         "load": "Loading...",
         "rank": "Rank"
+    },
+    "contact": {
+        "contactButton": "An error? A suggestion? Contact us here",
+        "title": "Contact",
+        "others ": "Others",
+        "send": "Send",
+        "valid": "Message sent! Thanks",
+        "error": "Error sending, please try again."
     }
 }

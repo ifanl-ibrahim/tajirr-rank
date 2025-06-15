@@ -6,6 +6,7 @@ import ProfileModal from './components/ProfileModal'
 import { useTheme } from 'styled-components'
 import { Container, Button, Card, Avatar, FlexRow, ProgressBar, ProgressInner, RightText, ButtonGroup, Backdrop } from '../styles/dashboardStyles'
 import { useTranslation } from 'react-i18next'
+import ContactTrigger from './components/ContactTrigger'
 
 export default function Dashboard() {
   const theme = useTheme()
@@ -206,6 +207,7 @@ export default function Dashboard() {
           { t('dashboard.viewRanking') }
         </Button>
       </Card>
+      <ContactTrigger />
     </Container>
   )
 }

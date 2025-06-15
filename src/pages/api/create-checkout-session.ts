@@ -15,7 +15,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       mode: isSubscription ? 'subscription' : 'payment',
       line_items: [{ price: priceId, quantity: 1 }],
       success_url: `${process.env.NEXT_PUBLIC_API_HOST}/dashboard`,
-      cancel_url: `${process.env.NEXT_PUBLIC_API_HOST}/abonnements`,
+      cancel_url: `${process.env.NEXT_PUBLIC_API_HOST}/${isSubscription ? 'abonnements' : 'packs'}`,
       metadata: {
         userId,
         priceId,

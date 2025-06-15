@@ -4,6 +4,7 @@ import { supabase } from '../lib/supabase'
 import Link from 'next/link'
 import { HomeWrapper, Content, Subtitle, ButtonsWrapper, Button } from '../styles/indexStyles'
 import { useTranslation } from 'react-i18next'
+import ContactTrigger from './components/ContactTrigger'
 
 export default function Home() {
   const router = useRouter()
@@ -60,6 +61,7 @@ export default function Home() {
             <Button as="a">{t('index.ranking')}</Button>
           </Link>
         </ButtonsWrapper>
+        <ContactTrigger />
       </Content>
     </HomeWrapper>
   )
