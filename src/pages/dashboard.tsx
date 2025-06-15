@@ -64,7 +64,7 @@ export default function Dashboard() {
           ((userProfile.total_depot - currentRank.seuil) / (upcomingRank.seuil - currentRank.seuil)) * 100,
           100
         )
-        setRankProgress(percent.toFixed(1))
+        setRankProgress(parseFloat(percent.toFixed(1)))
       } else {
         setRankProgress(100)
       }

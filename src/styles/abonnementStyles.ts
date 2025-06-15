@@ -5,7 +5,7 @@ export const Container = styled.div`
     background: ${({ theme }) => theme.colors.background};
     color: ${({ theme }) => theme.colors.text};
     padding: 3rem;
-    font-family: ${({ theme }) => theme.fonts.main};
+    font-family: ${({ theme }) => theme.fonts.sans};
 `
 
 export const TopBar = styled.div`
