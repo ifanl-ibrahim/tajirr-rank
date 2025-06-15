@@ -46,7 +46,7 @@ const ProfileModal = ({ isOpen, closeModal, userProfile, onProfileUpdated }: Pro
     return () => {
       window.removeEventListener('keydown', handleKeyDown)
     }
-  }, [shouldRender])
+  }, [shouldRender, closeModal])
 
   const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) closeModal()

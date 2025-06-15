@@ -79,7 +79,7 @@ export default function Dashboard() {
     }
 
     fetchData()
-  }, [userProfile])
+  }, [userProfile, t])
 
   useEffect(() => {
     if (!rankInfo?.badge_path) return
