@@ -9,7 +9,9 @@ export const config = {
   },
 };
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
+  apiVersion: '2025-04-30.basil',
+});
 
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET!;
 
