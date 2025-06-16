@@ -12,10 +12,10 @@ type ProfileModalProps = {
 }
 
 const ProfileModal = ({ isOpen, closeModal, userProfile, onProfileUpdated }: ProfileModalProps) => {
-  const [email, setEmail] = useState(userProfile.email || '')
-  const [nom, setNom] = useState(userProfile.nom || '')
-  const [prenom, setPrenom] = useState(userProfile.prenom || '')
-  const [username, setUsername] = useState(userProfile.username || '')
+  const [email, setEmail] = useState(userProfile?.email || '')
+  const [nom, setNom] = useState(userProfile?.nom || '')
+  const [prenom, setPrenom] = useState(userProfile?.prenom || '')
+  const [username, setUsername] = useState(userProfile?.username || '')
   const [password, setPassword] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
   const [succesMessage, setSuccesMessage] = useState('')
