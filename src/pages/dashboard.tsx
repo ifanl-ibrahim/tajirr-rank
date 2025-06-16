@@ -53,7 +53,7 @@ export default function Dashboard() {
         .select('*')
         .order('seuil', { ascending: true })
 
-      const currentRank = ranks.find((r) => r.id === userProfile.rank_id)
+      const currentRank = ranks.find((r) => r.id === userProfile?.rank_id)
       const currentIndex = ranks.findIndex((r) => r.id === currentRank.id)
       if (!currentRank) return console.warn(t('dashboard.errorMessage'))
       const upcomingRank = ranks[currentIndex + 1] || null
@@ -63,7 +63,7 @@ export default function Dashboard() {
 
       if (upcomingRank) {
         const percent = Math.min(
-          ((userProfile.total_depot - currentRank.seuil) / (upcomingRank.seuil - currentRank.seuil)) * 100,
+          ((userProfile?.total_depot - currentRank.seuil) / (upcomingRank.seuil - currentRank.seuil)) * 100,
           100
         )
         setRankProgress(parseFloat(percent.toFixed(1)))
@@ -76,7 +76,7 @@ export default function Dashboard() {
         .select('id, total_depot')
 
       const sorted = allUsers.sort((a, b) => b.total_depot - a.total_depot)
-      const rankIndex = sorted.findIndex((u) => u.id === userProfile.id) + 1
+      const rankIndex = sorted.findIndex((u) => u.id === userProfile?.id) + 1
       setPosition(rankIndex)
     }
 
