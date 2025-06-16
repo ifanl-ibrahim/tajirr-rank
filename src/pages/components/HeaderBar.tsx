@@ -117,8 +117,10 @@ export default function HeaderBar() {
         src="https://rdsxttvdekzinhdpfkoh.supabase.co/storage/v1/object/public/badges/logo.png"
         alt="Tajirr Rank Logo"
         width={100} height={100}
-        cursor="pointer"
-        objectFit="contain"
+        style={{
+          cursor="pointer"
+          objectFit="contain"
+        }}
         onClick={() => router.push('/')}
       />
       <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
