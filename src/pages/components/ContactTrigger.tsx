@@ -13,7 +13,7 @@ const TextButton = styled.button`
     cursor: pointer;
     text-decoration: underline;
     padding: 0;
-    margin: 1.5rem auto auto auto;
+    margin: 1.5rem auto 3rem auto;
     
     &:hover {
         color: gold;
