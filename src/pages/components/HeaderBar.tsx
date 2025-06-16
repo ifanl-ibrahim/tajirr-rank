@@ -6,6 +6,7 @@ import { supabase } from '../../lib/supabase'
 import { useThemeToggle } from '../../lib/ThemeContext'
 import { Moon, Sun } from 'lucide-react' // facultatif : icônes
 import { useTranslation } from 'react-i18next'
+import Image from 'next/image'
 
 const HeaderContainer = styled.header`
   position: fixed;
@@ -23,18 +24,6 @@ const HeaderContainer = styled.header`
   border-top: 1px solid ${({ theme }) => theme.colors.gold};
   z-index: 1000;
   font-family: var(--font-main);
-`
-
-const Logo = styled.div`
-  height: 100%;
-  display: flex;
-  align-items: center;
-
-  img {
-    height: 100px; // adapte si tu veux plus ou moins grand
-    object-fit: contain;
-    cursor: pointer;
-  }
 `
 
 const LogoutButton = styled.button`
@@ -124,13 +113,14 @@ export default function HeaderBar() {
 
   return (
     <HeaderContainer>
-      <Logo>
-        <img
-          src="https://rdsxttvdekzinhdpfkoh.supabase.co/storage/v1/object/public/badges//logo.png"
-          alt="Tajirr Rank Logo"
-          onClick={() => router.push('/')}
-        />
-      </Logo>
+      <Image
+        src="https://rdsxttvdekzinhdpfkoh.supabase.co/storage/v1/object/public/badges/logo.png"
+        alt="Tajirr Rank Logo"
+        width={100} height={100}
+        cursor="pointer"
+        objectFit="contain"
+        onClick={() => router.push('/')}
+      />
       <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
         <ThemeToggle onClick={toggleTheme}>
           {theme === 'dark' ? <Sun size={24} /> : <Moon size={24} />}
@@ -139,9 +129,9 @@ export default function HeaderBar() {
           {locale === 'en' ? 'EN' : 'FR'}
         </LanguageButton>
         {user ? (
-          <LogoutButton onClick={handleLogout}>{ t('header.disconnect') }</LogoutButton>
+          <LogoutButton onClick={handleLogout}>{t('header.disconnect')}</LogoutButton>
         ) : (
-          <LogoutButton onClick={handleLogin}>{ t('header.login') }</LogoutButton>
+          <LogoutButton onClick={handleLogin}>{t('header.login')}</LogoutButton>
         )}
       </div>
     </HeaderContainer>

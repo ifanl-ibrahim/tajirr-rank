@@ -5,6 +5,8 @@ import Link from 'next/link'
 import { HomeWrapper, Content, Subtitle, ButtonsWrapper, Button } from '../styles/indexStyles'
 import { useTranslation } from 'react-i18next'
 import ContactTrigger from './components/ContactTrigger'
+import Head from 'next/head'
+import Image from 'next/image'
 
 export default function Home() {
   const router = useRouter()
@@ -38,13 +40,12 @@ export default function Home() {
 
   return (
     <HomeWrapper>
+      <Head> <title>Tajirr</title> </Head>
       <Content>
-        <img
+        <Image
           src="https://rdsxttvdekzinhdpfkoh.supabase.co/storage/v1/object/public/badges/logo.png"
           alt="Tajirr Rank Logo"
-          style={{
-            width: '20rem',
-          }}
+          width={300} height={300}
         />
         <Subtitle>{randomSubtitle}</Subtitle>
 

@@ -6,4 +6,7 @@ module.exports = {
     defaultLocale: 'en',       // Définit 'en' comme langue par défaut
     localeDetection: false     // Empêche le redirect automatique basé sur le navigateur
   },
+  images: {
+    domains: ['rdsxttvdekzinhdpfkoh.supabase.co'], // ← ici ton domaine Supabase
+  },
 }

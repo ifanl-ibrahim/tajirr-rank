@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Spinner from './Spinner';
 import { useTranslation } from 'react-i18next'
+import Head from 'next/head'
 
 const Backdrop = styled.div`
     position: fixed;
@@ -113,6 +114,7 @@ export default function ContactModal({ onClose }: { onClose: () => void }) {
 
     return (
         <Backdrop onClick={onClose}>
+            <Head> <title>Tajirr | {t('contact.title')}</title> </Head>
             <Modal onClick={(e) => e.stopPropagation()}>
                 <h2>{t('contact.title')}</h2>
                 <Input

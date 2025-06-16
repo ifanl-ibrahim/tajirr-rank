@@ -73,7 +73,7 @@ export const Card = styled.div`
     gap: 0.75rem;
 
     h2 {
-      font-size: 1.5rem;
+      font-size: 1rem;
       font-weight: bold;
       white-space: nowrap;
       text-align: center;
@@ -84,8 +84,8 @@ export const Card = styled.div`
 export const Avatar = styled.div`
   background-color: #222;
   border-radius: 50%;
-  width: 72px;
-  height: 72px;
+  width: 104px;
+  height: 104px;
   display: flex;
   align-items: center;
   justify-content: center;

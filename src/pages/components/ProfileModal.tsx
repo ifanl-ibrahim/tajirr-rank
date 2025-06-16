@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { supabase } from '../../lib/supabase'
 import { ModalOverlay, ModalContent, ModalTitle, ErrorText, SuccesText, Form, Input, ButtonRow, ButtonPrimary, ButtonSecondary } from '../../styles/modalStyles'
 import { useTranslation } from 'react-i18next'
+import Head from 'next/head'
 
 type ProfileModalProps = {
   isOpen: boolean
@@ -11,7 +12,6 @@ type ProfileModalProps = {
 }
 
 const ProfileModal = ({ isOpen, closeModal, userProfile, onProfileUpdated }: ProfileModalProps) => {
-  if (!userProfile) return null
   const [email, setEmail] = useState(userProfile.email || '')
   const [nom, setNom] = useState(userProfile.nom || '')
   const [prenom, setPrenom] = useState(userProfile.prenom || '')
@@ -49,6 +49,8 @@ const ProfileModal = ({ isOpen, closeModal, userProfile, onProfileUpdated }: Pro
     }
   }, [shouldRender, closeModal])
 
+  if (!userProfile) return null
+
   const handleOverlayClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) closeModal()
   }
@@ -72,22 +74,25 @@ const ProfileModal = ({ isOpen, closeModal, userProfile, onProfileUpdated }: Pro
     }
 
     // Vérification si le nom d'utilisateur existe déjà
-    const { data: usernameCheck } = await supabase
-      .from('profiles')
-      .select('id')
-      .eq('username', username)
-      .neq('id', userProfile.id)
+    if (username.trim() !== '') {
+      const { data: usernameCheck } = await supabase
+        .from('profiles')
+        .select('id')
+        .eq('username', username)
+        .neq('id', userProfile.id)
 
-    if (usernameCheck?.length > 0) {
-      setErrorMessage(t('modal.errorMessageUsername'))
-      setIsSubmitting(false)
-      return
+      if (usernameCheck?.length > 0) {
+        setErrorMessage(t('modal.errorMessageUsername'))
+        setIsSubmitting(false)
+        return
+      }
     }
 
     // Mise à jour dans la base de données
+    const cleanedUsername = username.trim() === '' ? null : username
     const { error } = await supabase
       .from('profiles')
-      .update({ email, nom, prenom, username })
+      .update({ email, nom, prenom, username: cleanedUsername })
       .eq('id', userProfile.id)
 
     if (error) {
@@ -96,7 +101,7 @@ const ProfileModal = ({ isOpen, closeModal, userProfile, onProfileUpdated }: Pro
     } else {
       // Si un mot de passe a été changé, on le met à jour dans Supabase Auth
       if (password.trim().length > 0) {
-        const {error: passwordError } = await supabase.auth.updateUser({ password })
+        const { error: passwordError } = await supabase.auth.updateUser({ password })
         if (passwordError) {
           setErrorMessage(passwordError.message)
           setIsSubmitting(false)
@@ -111,7 +116,7 @@ const ProfileModal = ({ isOpen, closeModal, userProfile, onProfileUpdated }: Pro
       setTimeout(() => {
         setSuccesMessage('')
       }, 3000) // Fermer la modal après 1 seconde pour laisser le temps à l'utilisateur de lire le message de succès
-      
+
       closeModal()
       setPassword('')
       setIsSubmitting(false)
@@ -122,6 +127,7 @@ const ProfileModal = ({ isOpen, closeModal, userProfile, onProfileUpdated }: Pro
 
   return (
     <ModalOverlay onClick={handleOverlayClick} className={visible ? 'visible' : 'hidden'}>
+      <Head> <title>Tajirr | {t('modal.title')}</title> </Head>
       <ModalContent className={visible ? 'visible' : 'hidden'}>
         <ModalTitle>{t('modal.title')}</ModalTitle>
 
@@ -131,7 +137,12 @@ const ProfileModal = ({ isOpen, closeModal, userProfile, onProfileUpdated }: Pro
         <Form onSubmit={handleProfileUpdate}>
           <Input value={nom} onChange={(e) => setNom(e.target.value)} placeholder={t('modal.firstname')} required />
           <Input value={prenom} onChange={(e) => setPrenom(e.target.value)} placeholder={t('modal.lastname')} required />
-          <Input value={username} onChange={(e) => setUsername(e.target.value)} placeholder={t('modal.username')} required />
+          <Input value={username} onChange={(e) => {
+            const inputSansEspace = e.target.value.replace(/\s/g, '')
+            if (inputSansEspace.length <= 15) {
+              setUsername(inputSansEspace)
+            }
+          }} placeholder={t('modal.username')} />
           <Input value={email} onChange={(e) => setEmail(e.target.value)} placeholder={t('modal.email')} required type="email" />
           <Input value={password} onChange={(e) => setPassword(e.target.value)} placeholder={t('modal.password')} type="password" />
 

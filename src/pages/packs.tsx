@@ -5,6 +5,7 @@ import { useRouter } from 'next/router'
 import useRequireAuth from '../hooks/useRequireAuth'
 import { PageContainer, Header, Title, BackButton, PacksGrid, PackCard, PackTitle, PackInfo, BuyButton, FooterText, LinkText } from '../styles/packsStyles'
 import { useTranslation } from 'react-i18next'
+import Head from 'next/head'
 
 export default function Packs() {
     const { userProfile, loading: authLoading } = useRequireAuth()
@@ -62,30 +63,31 @@ export default function Packs() {
 
     return (
         <PageContainer>
+            <Head> <title>Tajirr | {t('packs.title')}</title> </Head>
             <Header>
-                <Title>{ t('packs.title') }</Title>
-                <BackButton onClick={() => router.push('/dashboard')}>{ t('packs.back') }</BackButton>
+                <Title>{t('packs.title')}</Title>
+                <BackButton onClick={() => router.push('/dashboard')}>{t('packs.back')}</BackButton>
             </Header>
 
             {loading ? (
-                <p>{ t('packs.load') }</p>
+                <p>{t('packs.load')}</p>
             ) : (
                 <PacksGrid>
                     {packs.map((pack) => (
                         <PackCard key={pack.id}>
                             <PackTitle>{pack.nom}</PackTitle>
-                            <PackInfo>{ t('packs.price') } : {pack.prix} €</PackInfo>
-                            <PackInfo>{ t('packs.points') } : {pack.points}</PackInfo>
-                            <BuyButton onClick={() => handlePurchase(pack)}>{ t('packs.buy') }</BuyButton>
+                            <PackInfo>{t('packs.price')} : {pack.prix} €</PackInfo>
+                            <PackInfo>{t('packs.points')} : {pack.points}</PackInfo>
+                            <BuyButton onClick={() => handlePurchase(pack)}>{t('packs.buy')}</BuyButton>
                         </PackCard>
                     ))}
                 </PacksGrid>
             )}
 
             <FooterText>
-                { t('packs.message') }
+                {t('packs.message')}
                 <LinkText onClick={() => router.push('/abonnements')}>
-                    { t('packs.link') } →
+                    {t('packs.link')} →
                 </LinkText>
             </FooterText>
         </PageContainer>

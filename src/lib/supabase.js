@@ -7,8 +7,4 @@ if (!supabaseUrl || !supabaseKey) {
   throw new Error('Missing Supabase service role environment variables')
 }
 
-export const supabase = createClient(supabaseUrl, supabaseKey, {
-  auth: {
-    persistSession: false,
-  }
-})
+export const supabase = createClient(supabaseUrl, supabaseKey)

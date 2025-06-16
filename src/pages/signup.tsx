@@ -4,6 +4,7 @@ import { supabase } from '../lib/supabase'
 import useRedirectIfAuthenticated from '../hooks/useRedirectIfAuthenticated'
 import { SignUpWrapper, Title, Form, Input, ErrorMessage, Button, FooterText } from '../styles/signupStyles'
 import { useTranslation } from 'react-i18next'
+import Head from 'next/head'
 
 export default function SignUp() {
   useRedirectIfAuthenticated()
@@ -85,26 +86,29 @@ export default function SignUp() {
 
   return (
     <SignUpWrapper>
-      <Title>{ t('signup.title') }</Title>
+      <Head> <title>Tajirr | {t('signup.title')}</title> </Head>
+      <Title>{t('signup.title')}</Title>
       <Form onSubmit={handleSignUp}>
-        <Input type="text" placeholder={ t('signup.firstname') } value={nom} onChange={(e) => setNom(e.target.value)} required />
-        <Input type="text" placeholder={ t('signup.lastname') } value={prenom} onChange={(e) => setPrenom(e.target.value)} required />
-        <Input type="text" placeholder={ t('signup.username') } value={username} onChange={(e) => setUsername(e.target.value)} />
-        <Input type="email" placeholder={ t('signup.email') } value={email} onChange={(e) => setEmail(e.target.value)} required />
-        <Input type="password" placeholder={ t('signup.password') } value={password} onChange={(e) => setPassword(e.target.value)} required />
-        <Input type="password" placeholder={ t('signup.confirmPassword') } value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
+        <Input type="text" placeholder={t('signup.firstname')} value={nom} onChange={(e) => setNom(e.target.value)} required />
+        <Input type="text" placeholder={t('signup.lastname')} value={prenom} onChange={(e) => setPrenom(e.target.value)} required />
+        <Input type="text" placeholder={t('signup.username')} value={username} onChange={(e) => {
+          const inputSansEspace = e.target.value.replace(/\s/g, '')
+          if (inputSansEspace.length <= 15) {setUsername(inputSansEspace)}}} />
+        <Input type="email" placeholder={t('signup.email')} value={email} onChange={(e) => setEmail(e.target.value)} required />
+        <Input type="password" placeholder={t('signup.password')} value={password} onChange={(e) => setPassword(e.target.value)} required />
+        <Input type="password" placeholder={t('signup.confirmPassword')} value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
 
         {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
 
         <Button type="submit" disabled={loading}>
-          {loading ? t('signup.loading')  : t('signup.signup') }
+          {loading ? t('signup.loading') : t('signup.signup')}
         </Button>
       </Form>
 
       <FooterText>
-        { t('signup.message') }{' '}
+        {t('signup.message')}{' '}
         <span onClick={() => router.push('/login')}>
-          { t('signup.link') }
+          {t('signup.link')}
         </span>
       </FooterText>
     </SignUpWrapper>

@@ -3,6 +3,7 @@ import { useRouter } from 'next/router'
 import { supabase } from '../lib/supabase'
 import { LoginWrapper, Title, Form, Input, ErrorMessage, Button, FooterText } from '../styles/loginStyles'
 import { useTranslation } from 'react-i18next'
+import Head from 'next/head'
 
 export default function Login() {
   const [emailOrUsername, setEmailOrUsername] = useState('')
@@ -61,19 +62,19 @@ export default function Login() {
 
   return (
     <LoginWrapper>
-      <Title>{ t('login.title') }</Title>
-
+      <Head> <title>Tajirr | {t('login.title')}</title> </Head>
+      <Title>{t('login.title')}</Title>
       <Form onSubmit={handleLogin}>
         <Input
           type="text"
-          placeholder={ t('login.id') }
+          placeholder={t('login.id')}
           value={emailOrUsername}
           onChange={(e) => setEmailOrUsername(e.target.value)}
           required
         />
         <Input
           type="password"
-          placeholder={ t('login.password') }
+          placeholder={t('login.password')}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
@@ -87,9 +88,9 @@ export default function Login() {
       </Form>
 
       <FooterText>
-        { t('login.message') }{' '}
+        {t('login.message')}{' '}
         <span onClick={() => router.push('/signup')}>
-          { t('login.link') }
+          {t('login.link')}
         </span>
       </FooterText>
     </LoginWrapper>

@@ -4,6 +4,8 @@ import { useRouter } from 'next/router'
 import useOptionalAuth from '../hooks/useOptionalAuth'
 import { Container, HeaderRanking, Title, Button, Controls, SearchInput, ButtonGroup, UserList, UserItem, UserInfo, Username, Rank, Points, Pagination, PageButton, LoadingText } from '../styles/rankingStyles'
 import { useTranslation } from 'react-i18next'
+import Head from 'next/head'
+import Image from 'next/image'
 
 type SupabaseUser = {
   id: string
@@ -110,6 +112,7 @@ export default function Ranking() {
 
   return (
     <Container>
+      <Head> <title>Tajirr | {t('ranking.title')}</title> </Head>
       <HeaderRanking>
         <Title>{t('ranking.title')}</Title>
         <Button variant="primary" onClick={() => router.push('/dashboard')}>
@@ -156,25 +159,21 @@ export default function Ranking() {
               <UserItem key={u.id} highlight={user?.id === u.id} ref={u.id === user?.id ? userRef : null} topRank={u.place}>
                 <UserInfo>
                   <Username>
-                    {getMedal(u.place)} — {u.username || `${u.prenom} ${u.nom}`}
+                    {getMedal(u.place)} - {u.username ? `@${u.username}` : `${u.prenom} ${u.nom}`}
                   </Username>
-                  <Rank>#{u.place} — {t('ranking.rank')} : {u.rank_id?.nom || 'N/A'}</Rank>
+                  <Rank>#{u.place} - {t('ranking.rank')} : {u.rank_id?.nom || 'N/A'}</Rank>
                 </UserInfo>
                 {u.rank_id?.badge_path && (
-                  <img
+                  <Image
                     src={`https://rdsxttvdekzinhdpfkoh.supabase.co/storage/v1/object/public/badges/${u.rank_id.badge_path}`}
                     alt={`Badge de ${u.username}`}
+                    width={100}
+                    height={100}
                     style={{
-                      width: 100,
-                      height: 100,
                       borderRadius: '50%',
                       objectFit: 'cover',
-                      marginRight: 10,
                       border: '2px solid gold',
                       marginLeft: 'auto',
-                      textAlign: 'right',
-                      fontWeight: 600,
-                      fontSize: '1.1rem',
                     }}
                   />
                 )}

@@ -33,7 +33,6 @@ export default class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
-          <title>Tajirr</title>
           <meta charSet="utf-8" />
           <meta name="description" content="Prove your success. Join the elite." />
           <meta name="description" content="Success isn't given. It's ranked." />

@@ -7,6 +7,8 @@ import { useTheme } from 'styled-components'
 import { Container, Button, Card, Avatar, FlexRow, ProgressBar, ProgressInner, RightText, ButtonGroup, Backdrop } from '../styles/dashboardStyles'
 import { useTranslation } from 'react-i18next'
 import ContactTrigger from './components/ContactTrigger'
+import Head from 'next/head'
+import Image from 'next/image'
 
 export default function Dashboard() {
   const theme = useTheme()
@@ -93,22 +95,23 @@ export default function Dashboard() {
     closeModal()
   }
 
-  if (loading) return <div style={{ margin: '5em' }}>{ t('dashboard.loading') }</div>
-  if (isError) return <div style={{ margin: '5em' }}>{ t('dashboard.loadingError') }</div>
-  if (!user || !userProfile || !localProfile) return <div style={{ margin: '5em' }}>{ t('dashboard.loadingValid') }</div>
+  if (loading) return <div style={{ margin: '5em' }}>{t('dashboard.loading')}</div>
+  if (isError) return <div style={{ margin: '5em' }}>{t('dashboard.loadingError')}</div>
+  if (!user || !userProfile || !localProfile) return <div style={{ margin: '5em' }}>{t('dashboard.loadingValid')}</div>
 
   return (
     <Container>
+      <Head> <title>Tajirr</title> </Head>
       <Card>
         <FlexRow>
           <Avatar>
             {badgeUrl ? (
-              <img
+              <Image
                 src={badgeUrl}
                 alt={rankInfo?.nom}
+                width={100}
+                height={100}
                 style={{
-                  width: '100%',
-                  height: '100%',
                   objectFit: 'cover',
                   borderRadius: '50%',
                 }}
@@ -119,9 +122,9 @@ export default function Dashboard() {
             )}
           </Avatar>
           <div>
-            <h2 style={{ fontSize: '1.5rem', margin: 0 }}>{localProfile.prenom} {localProfile.nom}</h2>
+            <h2 style={{ margin: 0 }}>{localProfile.prenom} {localProfile.nom}</h2>
             <p style={{ margin: 0, opacity: 0.8 }}>@{localProfile.username}</p>
-            <p style={{ marginTop: 8 }}>{ t('dashboard.rank') } : <strong>{rankInfo?.nom}</strong></p>
+            <p style={{ marginTop: 8 }}>{t('dashboard.rank')} : <strong>{rankInfo?.nom}</strong></p>
           </div>
         </FlexRow>
         {isBadgeModalVisible && (
@@ -147,20 +150,18 @@ export default function Dashboard() {
                   zIndex: 10000,
                   lineHeight: 1,
                 }}
-                aria-label={ t('dashboard.closeModal') }
+                aria-label={t('dashboard.closeModal')}
               >
                 &times;
               </button>
-              <img
+              <Image
                 src={badgeUrl}
                 alt={rankInfo?.nom}
+                width={350}
+                height={350}
                 style={{
                   borderRadius: '50%',
-                  maxWidth: '80vw',
-                  maxHeight: '80vh',
                   boxShadow: '0 0 20px rgba(255, 215, 0, 0.7)',
-                  cursor: 'default',
-                  display: 'block',
                 }}
               />
             </div>
@@ -179,7 +180,7 @@ export default function Dashboard() {
           <RightText>{rankProgress}%</RightText>
         </div>
 
-        <Button onClick={openModal} style={{ marginTop: 24 }}>{ t('dashboard.editProfile') }</Button>
+        <Button onClick={openModal} style={{ marginTop: 24 }}>{t('dashboard.editProfile')}</Button>
         <ProfileModal
           isOpen={isModalOpen}
           closeModal={closeModal}
@@ -189,22 +190,22 @@ export default function Dashboard() {
       </Card>
 
       <Card>
-        <h2 style={{ marginBottom: 16 }}>💰 { t('dashboard.totalPoints') }</h2>
+        <h2 style={{ marginBottom: 16 }}>💰 {t('dashboard.totalPoints')}</h2>
         <p style={{ fontSize: '2rem', fontWeight: 'bold' }}>{localProfile.total_depot} pts</p>
         <ButtonGroup>
-          <Button onClick={() => router.push('/packs')}>➕ { t('dashboard.buyPacks') }</Button>
-          <Button onClick={() => router.push('/abonnements')}>🔁 { t('dashboard.buySubscription') }</Button>
+          <Button onClick={() => router.push('/packs')}>➕ {t('dashboard.buyPacks')}</Button>
+          <Button onClick={() => router.push('/abonnements')}>🔁 {t('dashboard.buySubscription')}</Button>
         </ButtonGroup>
       </Card>
 
       <Card>
-        <h2>🏆  { t('dashboard.ranking') }</h2>
-        <p> { t('dashboard.youRank') } <strong style={{ color: theme.colors.gold }}>#{position}</strong></p>
+        <h2>🏆  {t('dashboard.ranking')}</h2>
+        <p> {t('dashboard.youRank')} <strong style={{ color: theme.colors.gold }}>#{position}</strong></p>
         <Button
           style={{ marginTop: 16 }}
           onClick={() => router.push('/ranking')}
         >
-          { t('dashboard.viewRanking') }
+          {t('dashboard.viewRanking')}
         </Button>
       </Card>
       <ContactTrigger />

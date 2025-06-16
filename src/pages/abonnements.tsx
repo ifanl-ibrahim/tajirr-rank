@@ -4,6 +4,7 @@ import { useRouter } from 'next/router'
 import useRequireAuth from '../hooks/useRequireAuth'
 import { Container, TopBar, Title, ReturnButton, Grid, Card, CardTitle, Text, SubscribeButton, BottomText, Highlight, NoticeText, UnsubscribeButton, Spinner, ConfirmationOverlay, ConfirmationBox, ConfirmationText, ConfirmationButton, CancelButton } from '../styles/abonnementStyles'
 import { useTranslation } from 'react-i18next'
+import Head from 'next/head'
 
 export default function Abonnements() {
     const { user, loading: loadingAuth } = useRequireAuth()
@@ -69,15 +70,16 @@ export default function Abonnements() {
 
     return (
         <Container>
+            <Head> <title>Tajirr | {t('abonnements.title')}</title> </Head>
             <TopBar>
-                <Title>{ t('abonnements.title') }</Title>
+                <Title>{t('abonnements.title')}</Title>
                 <ReturnButton onClick={() => router.push('/dashboard')}>
-                    { t('abonnements.back') }
+                    {t('abonnements.back')}
                 </ReturnButton>
             </TopBar>
 
             {loading ? (
-                <p>{ t('abonnements.loading') }</p>
+                <p>{t('abonnements.loading')}</p>
             ) : (
                 <>
                     <Grid>
@@ -88,13 +90,13 @@ export default function Abonnements() {
                             return (
                                 <Card key={abonnement.id}>
                                     <CardTitle>{abonnement.nom}</CardTitle>
-                                    <Text>{ t('abonnements.price') } : {abonnement.prix} € / { t('abonnements.month') }</Text>
-                                    <Text>{ t('abonnements.points') } : {abonnement.points_mensuels}</Text>
+                                    <Text>{t('abonnements.price')} : {abonnement.prix} € / {t('abonnements.month')}</Text>
+                                    <Text>{t('abonnements.points')} : {abonnement.points_mensuels}</Text>
                                     {hasAbonnement ? (
                                         isCurrent ? (
-                                            <NoticeText>⏳ { t('abonnements.currentSubscription') }</NoticeText>
+                                            <NoticeText>⏳ {t('abonnements.currentSubscription')}</NoticeText>
                                         ) : (
-                                            <NoticeText>🔒 { t('abonnements.unsubscribeFirst') }</NoticeText>
+                                            <NoticeText>🔒 {t('abonnements.unsubscribeFirst')}</NoticeText>
                                         )
                                     ) : (
                                         <SubscribeButton
@@ -118,7 +120,7 @@ export default function Abonnements() {
                                             }}
                                             disabled={hasAbonnement}
                                         >
-                                            { t('abonnements.subscribe') }
+                                            {t('abonnements.subscribe')}
                                         </SubscribeButton>
                                     )}
                                 </Card>
@@ -127,7 +129,7 @@ export default function Abonnements() {
                     </Grid>
                     {userProfile?.abonnement_id && (
                         <UnsubscribeButton onClick={handleUnsubscribe}>
-                            { t('abonnements.unsubscribe') }
+                            {t('abonnements.unsubscribe')}
                         </UnsubscribeButton>
                     )}
                 </>
@@ -139,7 +141,7 @@ export default function Abonnements() {
                         {loadingUnsub ? (
                             <>
                                 <Spinner />
-                                <ConfirmationText>{ t('abonnements.unsubscribeLoading') }</ConfirmationText>
+                                <ConfirmationText>{t('abonnements.unsubscribeLoading')}</ConfirmationText>
                             </>
                         ) : (
                             <>
@@ -152,8 +154,8 @@ export default function Abonnements() {
                                 </ConfirmationText>
                                 {confirmStep < 3 && (
                                     <>
-                                        <ConfirmationButton onClick={confirmUnsubscribe}>{ t('abonnements.yes') }</ConfirmationButton>
-                                        <CancelButton onClick={() => setConfirmStep(0)}>{ t('abonnements.cancel') }</CancelButton>
+                                        <ConfirmationButton onClick={confirmUnsubscribe}>{t('abonnements.yes')}</ConfirmationButton>
+                                        <CancelButton onClick={() => setConfirmStep(0)}>{t('abonnements.cancel')}</CancelButton>
                                     </>
                                 )}
                             </>
@@ -163,9 +165,9 @@ export default function Abonnements() {
             )}
 
             <BottomText>
-                { t('abonnements.faster') }{' '}
+                {t('abonnements.faster')}{' '}
                 <Highlight onClick={() => router.push('/packs')}>
-                    { t('abonnements.discoverPacks') } →
+                    {t('abonnements.discoverPacks')} →
                 </Highlight>
             </BottomText>
         </Container>
