@@ -118,7 +118,7 @@ export default function HeaderBar() {
         alt="Tajirr Rank Logo"
         width={100} height={100}
         style={{
-          cursor="pointer"
+          cursor="pointer",
           objectFit="contain"
         }}
         onClick={() => router.push('/')}
