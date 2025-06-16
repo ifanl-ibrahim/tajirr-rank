@@ -12,6 +12,7 @@ export default function Packs() {
     const [packs, setPacks] = useState<any[]>([])
     const [loading, setLoading] = useState(true)
     const router = useRouter()
+    const [quantities, setQuantities] = useState<{ [key: string]: number }>({});
     const { t } = useTranslation('en', { useSuspense: false })
 
     useEffect(() => {
@@ -32,7 +33,7 @@ export default function Packs() {
         fetchPacks()
     }, [])
 
-    const handlePurchase = async (pack: any) => {
+    const handlePurchase = async (pack: any, quantity: number) => {
         const user = await supabase.auth.getUser()
         const userId = user.data.user?.id
 
@@ -49,7 +50,8 @@ export default function Packs() {
                 packId: pack.id,
                 isSubscription: false,
                 userId,
-                abonnementId: ""
+                quantity,
+                abonnementId: "",
             }),
         })
 
@@ -78,7 +80,20 @@ export default function Packs() {
                             <PackTitle>{pack.nom}</PackTitle>
                             <PackInfo>{t('packs.price')} : {pack.prix} €</PackInfo>
                             <PackInfo>{t('packs.points')} : {pack.points}</PackInfo>
-                            <BuyButton onClick={() => handlePurchase(pack)}>{t('packs.buy')}</BuyButton>
+                            <div>
+                                <input
+                                    type="number"
+                                    min="1"
+                                    max="49999"
+                                    value={quantities[pack.id] || 1}
+                                    onChange={(e) =>
+                                        setQuantities((prev) => ({ ...prev, [pack.id]: parseInt(e.target.value) }))
+                                    }
+                                />
+                            </div>
+                            <BuyButton onClick={() => handlePurchase(pack, quantities[pack.id] || 1)}>
+                                {t('packs.buy')}
+                            </BuyButton>
                         </PackCard>
                     ))}
                 </PacksGrid>

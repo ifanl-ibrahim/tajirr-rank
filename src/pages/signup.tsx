@@ -62,8 +62,8 @@ export default function SignUp() {
           nom,
           prenom,
           username,
-          rank_id: 1,
-          abonnement_id: 1,
+          rank_id: 'dfbb93c0-e6d4-4da9-9471-230ac384a67d',
+          abonnement_id: null,
           total_depot: 0
         }])
 
@@ -71,7 +71,7 @@ export default function SignUp() {
         if (profileError.message.includes("duplicate key")) {
           setErrorMessage(t('signup.errorMessageEmail2'))
         } else {
-          setErrorMessage(`t('signup.errorMessage') : ` + profileError.message)
+          setErrorMessage(`${t('signup.errorMessage')} : ${profileError.message}`)
         }
         setLoading(false)
         return

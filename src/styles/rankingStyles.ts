@@ -112,12 +112,12 @@ export const UserInfo = styled.div`
 export const Username = styled.p`
   font-weight: 700;
   font-size: 1.1rem;
-  color: ${({ theme }) => theme.colors.ivory};
+  color: black;
 `;
 
 export const Rank = styled.p`
   font-size: 0.9rem;
-  color: ${({ theme }) => theme.colors.ivory};
+  color: black;
 `;
 
 export const Points = styled.div`
@@ -125,7 +125,7 @@ export const Points = styled.div`
   text-align: right;
   font-weight: 600;
   font-size: 1.1rem;
-  color: ${({ theme }) => theme.colors.ivory};
+  color: black;
 `;
 
 export const Pagination = styled.div`

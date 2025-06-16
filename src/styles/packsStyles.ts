@@ -52,6 +52,10 @@ export const PackCard = styled.div`
   &:hover {
     transform: scale(1.04);
   }
+
+  input {
+    color: black
+  }
 `
 
 export const PackTitle = styled.h2`

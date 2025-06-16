@@ -66,7 +66,8 @@ export default async function handler(req: any, res: any) {
   // 🎯 Gestion de l’événement achat (abonnement ou pack)
   if (event.type === 'checkout.session.completed') {
     const session = event.data.object as Stripe.Checkout.Session;
-    const { userId, priceId, abonnementId, isSubscription, packId } = session.metadata || {};
+    const { userId, priceId, abonnementId, isSubscription, packId, quantity } = session.metadata || {};
+    const qty = parseInt(quantity || '1');
 
     // Mise à jour stripe_customer_id si absent
     if (session.customer && typeof session.customer === 'string') {
@@ -163,7 +164,7 @@ export default async function handler(req: any, res: any) {
 
         const { error: rpcError } = await supabase.rpc('crediter_points_et_mettre_a_jour_rank', {
           p_user_id: userId,
-          p_points: pack.points,
+          p_points: pack.points * qty,
         });
 
         if (rpcError) {
@@ -171,17 +172,20 @@ export default async function handler(req: any, res: any) {
           return res.status(500).end();
         }
 
-        await supabase
+        const { error: txError } = await supabase
           .from('transactions')
           .insert({
             user_id: userId,
             type: 'pack',
             montant: session.amount_total! / 100,
             pack_id: packId,
-            points: pack.points,
+            points: pack.points * qty,
             stripe_checkout_id: session.id,
           });
 
+        if (txError) {
+          console.error('❌ Erreur insertion transaction :', txError);
+        }
         console.log('✅ Pack acheté et points crédités pour user:', userId);
       }
 

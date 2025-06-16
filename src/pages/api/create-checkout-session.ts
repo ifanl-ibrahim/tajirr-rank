@@ -8,12 +8,12 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') return res.status(405).end('Méthode non autorisée');
 
-  const { priceId, isSubscription, userId, abonnementId, packId } = req.body;
+  const { priceId, isSubscription, userId, abonnementId, packId, quantity } = req.body;
 
   try {
     const session = await stripe.checkout.sessions.create({
       mode: isSubscription ? 'subscription' : 'payment',
-      line_items: [{ price: priceId, quantity: 1 }],
+      line_items: [{ price: priceId, quantity: quantity || 1 }],
       success_url: `${process.env.NEXT_PUBLIC_API_HOST}/dashboard`,
       cancel_url: `${process.env.NEXT_PUBLIC_API_HOST}/${isSubscription ? 'abonnements' : 'packs'}`,
       metadata: {
@@ -22,6 +22,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         abonnementId,
         packId,
         isSubscription: isSubscription.toString(),
+        quantity: quantity || 1,
       },
       ...(isSubscription && {
         subscription_data: {
