@@ -68,7 +68,7 @@ export default function PublicProfilePage() {
         const fetchData = async () => {
             const { data: profileData } = await supabase
                 .from('profiles')
-                .select('id, nom, prenom, username, rank_id, ranks(nom, badge_path), total_depot')
+                .select('username, rank_id, ranks(nom, badge_path), total_depot')
                 .eq('username', username)
                 .single()
 
@@ -79,10 +79,10 @@ export default function PublicProfilePage() {
             // Récupérer la position dans le classement
             const { data: classement } = await supabase
                 .from('profiles')
-                .select('id, total_depot')
+                .select('username, total_depot')
                 .order('total_depot', { ascending: false })
 
-            const index = classement?.findIndex(p => p.id === profileData.id)
+            const index = classement?.findIndex(p => p.username === profileData.username)
             setPosition(index !== -1 ? index + 1 : null)
         }
 
@@ -91,7 +91,7 @@ export default function PublicProfilePage() {
 
     if (!profile) return null
 
-    const displayName = `@${profile.username}` || `${profile.prenom} ${profile.nom}`
+    const displayName = profile?.username
     const rank = profile.ranks?.nom || 'No rank'
 
     return (
@@ -107,7 +107,7 @@ export default function PublicProfilePage() {
                     width={300} height={300}
                 />
                 <Rank>{rank}</Rank>
-                <Pseudo>{displayName}</Pseudo>
+                <Pseudo>@{displayName}</Pseudo>
                 <Position>
                     {position ? `#${position} ${t('ranking.inRank')}` : '???'}
                 </Position>

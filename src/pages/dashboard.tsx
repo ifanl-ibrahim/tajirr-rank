@@ -73,10 +73,10 @@ export default function Dashboard() {
 
       const { data: allUsers } = await supabase
         .from('profiles')
-        .select('id, total_depot')
+        .select('username, total_depot')
 
       const sorted = allUsers.sort((a, b) => b.total_depot - a.total_depot)
-      const rankIndex = sorted.findIndex((u) => u.id === userProfile.id) + 1
+      const rankIndex = sorted.findIndex((u) => u.username === userProfile.username) + 1
       setPosition(rankIndex)
     }
 

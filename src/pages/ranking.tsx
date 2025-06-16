@@ -44,9 +44,7 @@ export default function Ranking() {
 
     const { data, error } = await supabase
       .from('profiles')
-      .select(`
-        id, 
-        username, 
+      .select(`username, 
         nom, 
         prenom, 
         total_depot, 
@@ -109,6 +107,8 @@ export default function Ranking() {
       }, 300)
     }
   }
+
+  console.log('test', displayedUsers)
 
   return (
     <Container>
