@@ -55,34 +55,13 @@ function MyApp({ Component, pageProps }) {
   }, [router.events])
 
   return (
-    <>
-      {/* 🔥 Google Analytics Script */}
-      {GA_ID && (
-        <>
-          <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} />
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-                gtag('config', '${GA_ID}', {
-                  page_path: window.location.pathname,
-                });
-              `,
-            }}
-          />
-        </>
-      )}
-
-      <ThemeProvider theme={luxuryTheme}>
-        <ThemeProvider2>
-          <GlobalStyle />
-          <HeaderBar />
-          <Component {...pageProps} />
-        </ThemeProvider2>
-      </ThemeProvider>
-    </>
+    <ThemeProvider theme={luxuryTheme}>
+      <ThemeProvider2>
+        <GlobalStyle />
+        <HeaderBar />
+        <Component {...pageProps} />
+      </ThemeProvider2>
+    </ThemeProvider>
   )
 }
 
