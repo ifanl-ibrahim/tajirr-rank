@@ -89,7 +89,7 @@ export const BuyButton = styled.button`
 `
 
 export const FooterText = styled.p`
-  margin-top: 3rem;
+  margin: 1.5rem 0 3rem 0;
   text-align: center;
   color: #999;
   font-size: 0.9rem;

@@ -55,7 +55,10 @@
         "buySubscription": "S'abonner",
         "ranking": "Classement",
         "youRank": "Tu es",
-        "viewRanking": "Voir le classement global"
+        "viewRanking": "Voir le classement global",
+        "linkCopied": "Copié ! ajoute le à ta bio",
+        "copyError": "Impossible de copier le lien.",
+        "copyLink": "Partager"
     },
     "modal": {
         "title": "Modifier le Profil",
@@ -113,7 +116,8 @@
         "ascending ": "Ordre croissant",
         "locate": "Me localiser",
         "load": "Chargement...",
-        "rank": "Rang"
+        "rank": "Rang",
+        "inRank": "au classement"
     },
     "contact": {
         "contactButton": "Une erreur ? Une suggestion ? Contacte-nous ici",

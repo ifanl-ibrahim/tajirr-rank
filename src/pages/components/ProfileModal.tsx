@@ -142,7 +142,7 @@ const ProfileModal = ({ isOpen, closeModal, userProfile, onProfileUpdated }: Pro
             if (inputSansEspace.length <= 15) {
               setUsername(inputSansEspace)
             }
-          }} placeholder={t('modal.username')} />
+          }} placeholder={t('modal.username')} required />
           <Input value={email} onChange={(e) => setEmail(e.target.value)} placeholder={t('modal.email')} required type="email" />
           <Input value={password} onChange={(e) => setPassword(e.target.value)} placeholder={t('modal.password')} type="password" />
 

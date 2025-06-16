@@ -55,7 +55,10 @@
         "buySubscription": "Subscribe",
         "ranking": "Ranking",
         "youRank": "You are",
-        "viewRanking": "See the overall ranking"
+        "viewRanking": "See the overall ranking",
+        "linkCopied": "Copied ! add it to your bio",
+        "copyError": "Unable to copy the link.",
+        "copyLink": "Share"
     },
     "modal": {
         "title": "Edit profile",
@@ -113,7 +116,8 @@
         "ascending": "Ascending order",
         "locate": "Locate me",
         "load": "Loading...",
-        "rank": "Rank"
+        "rank": "Rank",
+        "inRank": "in the ranking"
     },
     "contact": {
         "contactButton": "An error? A suggestion? Contact us here",

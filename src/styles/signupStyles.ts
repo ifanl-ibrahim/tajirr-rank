@@ -77,7 +77,7 @@ export const Button = styled.button`
 `
 
 export const FooterText = styled.p`
-  margin-top: 1.5rem;
+  margin: 1.5rem 0 3rem 0;
   font-size: 0.9rem;
   color: #bfbfbf;
   text-align: center;

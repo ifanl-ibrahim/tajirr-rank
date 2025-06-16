@@ -93,7 +93,7 @@ export default function SignUp() {
         <Input type="text" placeholder={t('signup.lastname')} value={prenom} onChange={(e) => setPrenom(e.target.value)} required />
         <Input type="text" placeholder={t('signup.username')} value={username} onChange={(e) => {
           const inputSansEspace = e.target.value.replace(/\s/g, '')
-          if (inputSansEspace.length <= 15) {setUsername(inputSansEspace)}}} />
+          if (inputSansEspace.length <= 15) {setUsername(inputSansEspace)}}} required />
         <Input type="email" placeholder={t('signup.email')} value={email} onChange={(e) => setEmail(e.target.value)} required />
         <Input type="password" placeholder={t('signup.password')} value={password} onChange={(e) => setPassword(e.target.value)} required />
         <Input type="password" placeholder={t('signup.confirmPassword')} value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />

@@ -99,6 +99,14 @@ export default function Dashboard() {
   if (isError) return <div style={{ margin: '5em' }}>{t('dashboard.loadingError')}</div>
   if (!user || !userProfile || !localProfile) return <div style={{ margin: '5em' }}>{t('dashboard.loadingValid')}</div>
 
+  const handleCopyProfileLink = () => {
+    if (!localProfile?.username) return
+    const publicUrl = `${process.env.NEXT_PUBLIC_API_HOST}/u/${localProfile.username}`
+    navigator.clipboard.writeText(publicUrl)
+      .then(() => alert(t('dashboard.linkCopied')))
+      .catch(() => alert(t('dashboard.copyError')))
+  }
+
   return (
     <Container>
       <Head> <title>Tajirr</title> </Head>
@@ -181,6 +189,9 @@ export default function Dashboard() {
         </div>
 
         <Button onClick={openModal} style={{ marginTop: 24 }}>{t('dashboard.editProfile')}</Button>
+        <Button onClick={handleCopyProfileLink}>
+          🔗 {t('dashboard.copyLink')}
+        </Button>
         <ProfileModal
           isOpen={isModalOpen}
           closeModal={closeModal}
