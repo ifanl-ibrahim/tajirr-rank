@@ -1,7 +1,0 @@
-<?xml version='1.0' encoding='utf-8'?>
-<resources>
-    <string name="app_name">tajirr</string>
-    <string name="title_activity_main">tajirr</string>
-    <string name="package_name">com.tajirr.app</string>
-    <string name="custom_url_scheme">com.tajirr.app</string>
-</resources>

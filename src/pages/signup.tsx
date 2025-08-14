@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 import { supabase } from '../lib/supabase'
 import useRedirectIfAuthenticated from '../hooks/useRedirectIfAuthenticated'
@@ -19,14 +19,6 @@ export default function SignUp() {
   const [errorMessage, setErrorMessage] = useState('')
   const router = useRouter()
   const { t } = useTranslation('en', { useSuspense: false })
-
-  useEffect(() => {
-    if (router.query.ref) {
-      console.log('Inscription via le parrain :', router.query.ref)
-    }
-  }, [router.query.ref])
-
-  console.log('ici')
 
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -72,8 +64,7 @@ export default function SignUp() {
           username,
           rank_id: 'dfbb93c0-e6d4-4da9-9471-230ac384a67d',
           abonnement_id: null,
-          total_depot: 0,
-          parrain: router.query.ref || null
+          total_depot: 0
         }])
 
       if (profileError) {
@@ -84,21 +75,6 @@ export default function SignUp() {
         }
         setLoading(false)
         return
-      }
-
-      if (router.query.ref) {
-        const { data: parrain } = await supabase
-          .from('profiles')
-          .select('id')
-          .eq('username', router.query.ref)
-          .single()
-
-        if (parrain) {
-          await supabase.rpc('crediter_points_et_mettre_a_jour_rank', {
-            p_user_id: parrain.id,
-            p_points: 1000,
-          })
-        }
       }
 
       alert(t('signup.success'))
@@ -117,8 +93,7 @@ export default function SignUp() {
         <Input type="text" placeholder={t('signup.lastname')} value={prenom} onChange={(e) => setPrenom(e.target.value)} required />
         <Input type="text" placeholder={t('signup.username')} value={username} onChange={(e) => {
           const inputSansEspace = e.target.value.replace(/\s/g, '')
-          if (inputSansEspace.length <= 15) { setUsername(inputSansEspace) }
-        }} required />
+          if (inputSansEspace.length <= 15) {setUsername(inputSansEspace)}}} required />
         <Input type="email" placeholder={t('signup.email')} value={email} onChange={(e) => setEmail(e.target.value)} required />
         <Input type="password" placeholder={t('signup.password')} value={password} onChange={(e) => setPassword(e.target.value)} required />
         <Input type="password" placeholder={t('signup.confirmPassword')} value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />

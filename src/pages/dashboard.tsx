@@ -107,16 +107,6 @@ export default function Dashboard() {
       .catch(() => alert(t('dashboard.copyError')))
   }
 
-  const handleParrainLink = () => {
-    if (!localProfile?.username) return
-    const username = userProfile.username
-    const publicLink = `https://tajirr.club/signup?ref=${username}`
-
-    navigator.clipboard.writeText(publicLink)
-      .then(() => alert(t('dashboard.linkCopied')))
-      .catch(() => alert(t('dashboard.copyError')))
-  }
-
   return (
     <Container>
       <Head> <title>Tajirr</title> </Head>
@@ -200,9 +190,6 @@ export default function Dashboard() {
 
         <Button onClick={openModal} style={{ marginTop: 24 }}>{t('dashboard.editProfile')}</Button>
         <Button onClick={handleCopyProfileLink}>
-          🔗 {t('dashboard.copyLink')}
-        </Button>
-        <Button onClick={handleParrainLink}>
           🔗 {t('dashboard.copyLink')}
         </Button>
         <ProfileModal
