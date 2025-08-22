@@ -59,7 +59,7 @@ export default async function handler(req: any, res: any) {
       return res.status(500).end();
     }
 
-    console.log('✅ abonnement_id supprimé automatiquement pour user:', userId);
+    // console.log('✅ abonnement_id supprimé automatiquement pour user:', userId);
     return res.status(200).end();
   }
 
@@ -79,7 +79,7 @@ export default async function handler(req: any, res: any) {
       if (customerUpdateError) {
         console.error('❌ Erreur lors de la mise à jour de stripe_customer_id :', customerUpdateError);
       } else {
-        console.log('✅ stripe_customer_id mis à jour pour user:', userId);
+        // console.log('✅ stripe_customer_id mis à jour pour user:', userId);
       }
     }
 
@@ -143,7 +143,7 @@ export default async function handler(req: any, res: any) {
             stripe_checkout_id: session.id,
           });
 
-        console.log('✅ Abonnement enregistré pour user:', userId);
+        // console.log('✅ Abonnement enregistré pour user:', userId);
       } else {
         // 🧃 Achat de pack
         if (!packId) {
@@ -186,7 +186,7 @@ export default async function handler(req: any, res: any) {
         if (txError) {
           console.error('❌ Erreur insertion transaction :', txError);
         }
-        console.log('✅ Pack acheté et points crédités pour user:', userId);
+        // console.log('✅ Pack acheté et points crédités pour user:', userId);
       }
 
       return res.status(200).end();

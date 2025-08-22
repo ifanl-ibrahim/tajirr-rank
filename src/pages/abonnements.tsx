@@ -20,7 +20,7 @@ export default function Abonnements() {
         const fetchData = async () => {
             const [abRes, profileRes] = await Promise.all([
                 supabase.from('abonnements').select('*').order('prix', { ascending: true }),
-                supabase.from('profiles').select('*').eq('id', user?.id).single(),
+                supabase.from('profiles').select('username, abonnement_id').eq('id', user?.id).single(),
             ])
 
             if (!abRes.error) setAbonnements(abRes.data || [])

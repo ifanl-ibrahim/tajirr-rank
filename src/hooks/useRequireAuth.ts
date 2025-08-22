@@ -28,7 +28,7 @@ export default function useRequireAuth() {
 
       const { data: profile, error: profileError } = await supabase
         .from('profiles')
-        .select('*')
+        .select('id, username, abonnement_id, email, nom, prenom, total_depot')
         .eq('id', currentUser.id)
         .maybeSingle()
 

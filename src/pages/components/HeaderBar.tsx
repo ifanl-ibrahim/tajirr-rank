@@ -106,7 +106,6 @@ export default function HeaderBar() {
   }
 
   const toggleLanguage = () => {
-    console.log('Current locale:', locale)
     i18n.changeLanguage(locale === 'en' ? 'fr' : 'en')
     router.push({ pathname, query }, asPath, { locale: locale === 'en' ? 'fr' : 'en' })
   }

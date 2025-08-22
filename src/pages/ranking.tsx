@@ -108,8 +108,6 @@ export default function Ranking() {
     }
   }
 
-  console.log('test', displayedUsers)
-
   return (
     <Container>
       <Head> <title>Tajirr | {t('ranking.title')}</title> </Head>

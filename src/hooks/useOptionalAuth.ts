@@ -15,7 +15,7 @@ export default function useOptionalAuth() {
       if (currentUser) {
         const { data: profile } = await supabase
           .from('profiles')
-          .select('*')
+          .select('id, username, abonnement_id, email, nom, prenom, total_depot')
           .eq('id', currentUser.id)
           .maybeSingle()
         setUserProfile(profile)
