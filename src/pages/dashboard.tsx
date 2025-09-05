@@ -12,7 +12,7 @@ import Image from 'next/image'
 
 export default function Dashboard() {
   const theme = useTheme()
-  const { user, userProfile, loading, isError } = useRequireAuth()
+  const { user, userProfile, loading, isError } = useRequireAuth()  
   const router = useRouter()
 
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -45,18 +45,23 @@ export default function Dashboard() {
   useEffect(() => {
     const fetchData = async () => {
       if (!userProfile) return
-
       setLocalProfile(userProfile)
 
-      const { data: ranks } = await supabase
+      const { data: ranks, error: rankError } = await supabase
         .from('ranks')
         .select('*')
         .order('seuil', { ascending: true })
+        
+      if (rankError) throw rankError;
+      const currentRank = ranks?.find((r) => r.id === userProfile.rank_id);      
 
-      const currentRank = ranks.find((r) => r.id === userProfile.rank_id)
-      const currentIndex = ranks.findIndex((r) => r.id === currentRank.id)
-      if (!currentRank) return console.warn(t('dashboard.errorMessage'))
-      const upcomingRank = ranks[currentIndex + 1] || null
+      if (!currentRank) {
+        console.warn(t("dashboard.errorMessage"));
+        return;
+      }
+
+      const currentIndex = ranks.findIndex((r) => r.id === currentRank.id);
+      const upcomingRank = ranks[currentIndex + 1] || null;
 
       setRankInfo(currentRank)
       setNextRank(upcomingRank)
@@ -71,10 +76,20 @@ export default function Dashboard() {
         setRankProgress(100)
       }
 
-      const { data: allUsers } = await supabase
+      const { data: allUsers, error: usersError } = await supabase
         .from('profiles')
         .select('username, total_depot')
 
+      if (usersError) throw usersError;
+
+      if (allUsers && allUsers.length > 0) {
+        const sorted = [...allUsers].sort(
+          (a, b) => (b.total_depot ?? 0) - (a.total_depot ?? 0)
+        );
+        const rankIndex =
+          sorted.findIndex((u) => u.username === userProfile?.username) + 1;
+        setPosition(rankIndex > 0 ? rankIndex : null);
+      }
       const sorted = allUsers.sort((a, b) => b.total_depot - a.total_depot)
       const rankIndex = sorted.findIndex((u) => u.username === userProfile.username) + 1
       setPosition(rankIndex)
@@ -85,8 +100,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (!rankInfo?.badge_path) return
-
-    const publicUrl = `https://rdsxttvdekzinhdpfkoh.supabase.co/storage/v1/object/public/badges/${rankInfo.badge_path}`
+    const publicUrl = `https://rdsxttvdekzinhdpfkoh.supabase.co/storage/v1/object/public/badges/${rankInfo?.badge_path}`
     setBadgeUrl(publicUrl)
   }, [rankInfo])
 

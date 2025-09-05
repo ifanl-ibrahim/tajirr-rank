@@ -1,8 +1,9 @@
 // components/ContactModal.tsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Spinner from './Spinner';
 import { useTranslation } from 'react-i18next'
+import { supabase } from '../../lib/supabase';
 import Head from 'next/head'
 
 const Backdrop = styled.div`
@@ -74,32 +75,64 @@ const Button = styled.button`
 
 export default function ContactModal({ onClose }: { onClose: () => void }) {
     const [email, setEmail] = useState('');
+    const [isEmailDisabled, setIsEmailDisabled] = useState(false);
     const [objet, setObjet] = useState('Bug');
     const [message, setMessage] = useState('');
     const [status, setStatus] = useState<'idle' | 'sent' | 'error'>('idle');
     const [isLoading, setIsLoading] = useState(false);
+    const maxMessageLength = 1000;
+    const allowedObjet = ['Bug', 'Suggestion', 'Question', 'Autres'];
     const { t } = useTranslation('en', { useSuspense: false })
 
+    useEffect(() => {
+        const fetchUser = async () => {
+            const {
+                data: { user },
+            } = await supabase.auth.getUser();
+
+            if (user?.email) {
+                setEmail(user.email);
+                setIsEmailDisabled(true);
+            } else {
+                setEmail("");
+                setIsEmailDisabled(false);
+            }
+        };
+
+        fetchUser();
+    }, []);
+
+    const validateEmail = (email: string) => {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    };
+
     const handleSubmit = async () => {
-        // Validation simple
-        if (!email.trim() || !message.trim()) {
-            setStatus('error');
+        // Nettoyage
+        const cleanEmail = email.trim();
+        const cleanObjet = allowedObjet.includes(objet) ? objet : "Bug";
+        let cleanMessage = message.trim();
+        if (cleanMessage.length > maxMessageLength) {
+            cleanMessage = cleanMessage.slice(0, maxMessageLength);
+        }
+
+        if (!cleanEmail || !cleanMessage || !validateEmail(cleanEmail)) {
+            setStatus("error");
             return;
         }
-        
+
         setIsLoading(true);
-        setStatus('idle');
+        setStatus("idle");
 
         try {
             const res = await fetch('/api/send-feedback', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email, objet, message }),
+                body: JSON.stringify({ email: cleanEmail, objet: cleanObjet, message: cleanMessage }),
             });
 
             if (res.ok) {
                 setStatus('sent');
-                setEmail('');
+                setEmail(cleanEmail || '');
                 setObjet('Bug');
                 setMessage('');
             } else {
@@ -122,6 +155,7 @@ export default function ContactModal({ onClose }: { onClose: () => void }) {
                     placeholder="E-mail"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    disabled={isEmailDisabled}
                 />
                 <Select value={objet} onChange={(e) => setObjet(e.target.value)}>
                     <option value="Bug">🐞 Bug</option>

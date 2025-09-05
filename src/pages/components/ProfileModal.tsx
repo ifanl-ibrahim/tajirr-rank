@@ -33,7 +33,14 @@ const ProfileModal = ({ isOpen, closeModal, userProfile, onProfileUpdated }: Pro
       setVisible(false)
       setTimeout(() => setShouldRender(false), 250) // correspond à l'animation CSS
     }
-  }, [isOpen])
+
+    if (userProfile) {
+      setEmail(userProfile.email || "");
+      setNom(userProfile.nom || "");
+      setPrenom(userProfile.prenom || "");
+      setUsername(userProfile.username || "");
+    }
+  }, [isOpen, userProfile])
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -61,67 +68,86 @@ const ProfileModal = ({ isOpen, closeModal, userProfile, onProfileUpdated }: Pro
     setErrorMessage('')
 
     // Vérification si l'email existe déjà
-    const { data: emailCheck } = await supabase
-      .from('profiles')
-      .select('id')
-      .eq('email', email)
-      .neq('id', userProfile.id) // Ne pas comparer avec l'ID de l'utilisateur actuel
+    const { data: emailCheck, error: emailError } = await supabase
+      .from("profiles")
+      .select("id")
+      .eq("email", email)
+      .neq("id", userProfile.id);
 
-    if (emailCheck?.length > 0) {
-      setErrorMessage(t('modal.errorMessageEmail'))
-      setIsSubmitting(false)
-      return
+    if (emailError) {
+      setErrorMessage(emailError.message);
+      setIsSubmitting(false);
+      return;
     }
 
-    // Vérification si le nom d'utilisateur existe déjà
-    if (username.trim() !== '') {
-      const { data: usernameCheck } = await supabase
-        .from('profiles')
-        .select('id')
-        .eq('username', username)
-        .neq('id', userProfile.id)
+    if (emailCheck && emailCheck?.length > 0) {
+      setErrorMessage(t("modal.errorMessageEmail"));
+      setIsSubmitting(false);
+      return;
+    }
 
-      if (usernameCheck?.length > 0) {
-        setErrorMessage(t('modal.errorMessageUsername'))
-        setIsSubmitting(false)
-        return
-      }
+    // Vérification username obligatoire
+    if (!username.trim()) {
+      setErrorMessage(t("modal.errorMessageUsernameRequired"));
+      setIsSubmitting(false);
+      return;
+    }
+
+    // Vérification username déjà utilisé
+    const { data: usernameCheck, error: usernameError } = await supabase
+      .from("profiles")
+      .select("id")
+      .eq("username", username)
+      .neq("id", userProfile.id);
+
+    if (usernameError) {
+      setErrorMessage(usernameError.message);
+      setIsSubmitting(false);
+      return;
+    }
+
+    if (usernameCheck && usernameCheck?.length > 0) {
+      setErrorMessage(t("modal.errorMessageUsername"));
+      setIsSubmitting(false);
+      return;
     }
 
     // Mise à jour dans la base de données
-    const cleanedUsername = username.trim() === '' ? null : username
     const { error } = await supabase
-      .from('profiles')
-      .update({ email, nom, prenom, username: cleanedUsername })
-      .eq('id', userProfile.id)
+      .from("profiles")
+      .update({ email, nom, prenom, username: username.trim() })
+      .eq("id", userProfile.id);
 
     if (error) {
-      setErrorMessage(error.message)
-      setIsSubmitting(false)
-    } else {
-      // Si un mot de passe a été changé, on le met à jour dans Supabase Auth
-      if (password.trim().length > 0) {
-        const { error: passwordError } = await supabase.auth.updateUser({ password })
-        if (passwordError) {
-          setErrorMessage(passwordError.message)
-          setIsSubmitting(false)
-          return
-        }
-      }
-
-      // Appel la fonction `onProfileUpdated` pour propager les données mises à jour
-      onProfileUpdated({ ...userProfile, email, nom, prenom, username })
-      setSuccesMessage(t('modal.success'))
-
-      setTimeout(() => {
-        setSuccesMessage('')
-      }, 3000) // Fermer la modal après 1 seconde pour laisser le temps à l'utilisateur de lire le message de succès
-
-      closeModal()
-      setPassword('')
-      setIsSubmitting(false)
+      setErrorMessage(error.message);
+      setIsSubmitting(false);
+      return;
     }
+
+    // Mise à jour du mot de passe si nécessaire
+    if (password.trim().length > 0) {
+      const { error: passwordError } = await supabase.auth.updateUser({
+        password,
+      });
+      if (passwordError) {
+        setErrorMessage(passwordError.message);
+        setIsSubmitting(false);
+        return;
+      }
+    }
+
+    // Appel la fonction `onProfileUpdated` pour propager les données mises à jour
+    onProfileUpdated({ ...userProfile, email, nom, prenom, username: username.trim() })
+    setSuccesMessage(t('modal.success'))
+    setPassword('')
+    setIsSubmitting(false)
+
+    setTimeout(() => {
+      setSuccesMessage('')
+      closeModal()
+    }, 3000) // Fermer la modal après 1 seconde pour laisser le temps à l'utilisateur de lire le message de succès
   }
+
 
   if (!shouldRender) return null
 

@@ -72,6 +72,7 @@
         "cancel": "Annuler",
         "errorMessageEmail": "Cet email est déjà utilisé.",
         "errorMessageUsername": "Ce nom d'utilisateur est déjà pris.",
+        "errorMessageUsernameRequired": "Le nom d'utilisateur est requis.",
         "success": "Profil mis à jour avec succès !"
     },
     "abonnements": {

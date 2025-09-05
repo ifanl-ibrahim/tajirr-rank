@@ -8,7 +8,6 @@ import Head from 'next/head'
 import Image from 'next/image'
 
 type SupabaseUser = {
-  id: string
   username: string
   nom: string
   prenom: string
@@ -24,7 +23,9 @@ type RankedUser = SupabaseUser & {
 }
 
 export default function Ranking() {
-  const { user } = useOptionalAuth()
+  const { userProfile } = useOptionalAuth()
+  console.log("localUser", userProfile);
+  
   const router = useRouter()
   const [users, setUsers] = useState<RankedUser[]>([])
   const [orderAsc, setOrderAsc] = useState(true)
@@ -35,21 +36,18 @@ export default function Ranking() {
   const userRef = useRef<HTMLLIElement | null>(null)
   const { t } = useTranslation('en', { useSuspense: false })
 
-  useEffect(() => {
-    fetchClassement()
-  }, [orderAsc])
-
   const fetchClassement = async () => {
     setLoading(true)
 
     const { data, error } = await supabase
       .from('profiles')
-      .select(`username, 
+      .select(`
+        username, 
         nom, 
         prenom, 
         total_depot, 
         rank_id (
-          nom, 
+          nom,
           badge_path
         )
       `)
@@ -78,6 +76,10 @@ export default function Ranking() {
     setLoading(false)
   }
 
+  useEffect(() => {
+    fetchClassement()
+  }, [orderAsc])
+
   const filteredUsers = users.filter((u) => {
     const fullName = `${u.prenom} ${u.nom}`.toLowerCase()
     return (
@@ -95,8 +97,9 @@ export default function Ranking() {
 
 
   const goToUser = () => {
-    if (!user) return
-    const index = filteredUsers.findIndex((u) => u.id === user.id)
+    if (!userProfile) return
+    const index = filteredUsers.findIndex((u) => u.username === userProfile?.username)
+    
     if (index !== -1) {
       const page = Math.floor(index / perPage) + 1
       setCurrentPage(page)
@@ -130,7 +133,7 @@ export default function Ranking() {
           <Button onClick={() => setOrderAsc(!orderAsc)}>
             {orderAsc ? t('ranking.descending') : t('ranking.ascending')}
           </Button>
-          {user && (
+          {userProfile && (
             <Button variant="primary" onClick={goToUser}>
               {t('ranking.locate')}
             </Button>
@@ -154,7 +157,7 @@ export default function Ranking() {
             }
 
             return (
-              <UserItem key={u.id} highlight={user?.id === u.id} ref={u.id === user?.id ? userRef : null} topRank={u.place}>
+              <UserItem key={u.username} highlight={userProfile?.username === u.username} ref={u.username === userProfile?.username ? userRef : null} topRank={u.place}>
                 <UserInfo>
                   <Username>
                     {getMedal(u.place)} - {u.username ? `@${u.username}` : `${u.prenom} ${u.nom}`}

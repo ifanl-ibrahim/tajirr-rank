@@ -59,20 +59,20 @@ export default function PublicProfilePage() {
     const { t } = useTranslation('en', { useSuspense: false })
     const router = useRouter()
     const { username } = router.query
-    const [profile, setProfile] = useState(null)
+    const [profile, setProfile] = useState<Profile | null>(null)
     const [position, setPosition] = useState<number | null>(null)
 
     useEffect(() => {
         if (!username) return
 
         const fetchData = async () => {
-            const { data: profileData } = await supabase
+            const { data: profileData, error } = await supabase
                 .from('profiles')
                 .select('username, rank_id, ranks(nom, badge_path), total_depot')
                 .eq('username', username)
                 .single()
 
-            if (!profileData) return
+            if (error !profileData) return
 
             setProfile(profileData)
 
@@ -82,7 +82,7 @@ export default function PublicProfilePage() {
                 .select('username, total_depot')
                 .order('total_depot', { ascending: false })
 
-            const index = classement?.findIndex(p => p.username === profileData.username)
+            const index = classement?.findIndex((p) => p.username === profileData.username) ?? -1;
             setPosition(index !== -1 ? index + 1 : null)
         }
 
