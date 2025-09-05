@@ -59,7 +59,7 @@ export default function PublicProfilePage() {
     const { t } = useTranslation('en', { useSuspense: false })
     const router = useRouter()
     const { username } = router.query
-    const [profile, setProfile] = useState<Profile | null>(null)
+    const [profile, setProfile] = useState(null)
     const [position, setPosition] = useState<number | null>(null)
 
     useEffect(() => {
