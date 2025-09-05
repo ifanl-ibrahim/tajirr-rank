@@ -72,7 +72,7 @@ export default function PublicProfilePage() {
                 .eq('username', username)
                 .single()
 
-            if (error !profileData) return
+            if (error || !profileData) return
 
             setProfile(profileData)
 
