@@ -39,7 +39,9 @@
         "loading": "Connexion...",
         "login": "Se connecter",
         "message": "Pas encore de compte ?",
-        "link": "Inscris-toi ici"
+        "link": "Inscris-toi ici",
+        "resetMessage": "Mot de passe oublié ?",
+        "resetLink": "Réinitialise-le ici"
     },
     "dashboard": {
         "errorMessage": "Rang introuvable pour cet utilisateur.",
@@ -127,5 +129,23 @@
         "send": "Envoyer",
         "valid": "Message envoyé ! Merci",
         "error": "Erreur lors de l’envoi, veuillez réessayer."
+    },
+
+    "reset": {
+        "titleForgot": "Mot de passe oublié",
+        "email": "Ton email",
+        "buttonForgot": "Réinitialiser",
+        "back": "← Retour à la connexion",
+        "errorForgot": "Erreur lors de l’envoi de l’e-mail. Veuillez réessayer.",
+        "successForgot": "📧 E-mail envoyé ! Vérifiez votre boîte de réception.",
+
+        "titleReset": "Nouveau mot de passe",
+        "password": "Nouveau mot de passe (min. 8 caractères)",
+        "confirmPassword": "Confirmer le mot de passe",
+        "buttonReset": "Réinitialiser le mot de passe",
+        "errorReset": "Erreur lors de la réinitialisation du mot de passe. Le lien peut avoir expiré.",
+        "errorPassword": "Le mot de passe doit contenir au moins 8 caractères.",
+        "errorPasswordMatch": "Les mots de passe ne correspondent pas.",
+        "successReset": "✅ Mot de passe réinitialisé avec succès ! Vous pouvez maintenant vous connecter."
     }
 }

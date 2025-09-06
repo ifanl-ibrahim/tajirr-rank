@@ -92,6 +92,11 @@ export default function Login() {
         <span onClick={() => router.push('/signup')}>
           {t('login.link')}
         </span>
+        <br />
+        {t('login.resetMessage')}{' '}
+        <span onClick={() => router.push('/forgot-password')}>
+          {t('login.resetLink')}
+        </span>
       </FooterText>
     </LoginWrapper>
   )

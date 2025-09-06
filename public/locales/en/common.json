@@ -39,7 +39,9 @@
         "loading": "Loading profile...",
         "login": "Loign",
         "message": "No account yet ?",
-        "link": "Sign up here"
+        "link": "Sign up here",
+        "resetMessage": "Forgot your password ?",
+        "resetLink": "Reset it here"
     },
     "dashboard": {
         "errorMessage": "Rank not found for this user.",
@@ -127,5 +129,23 @@
         "send": "Send",
         "valid": "Message sent! Thanks",
         "error": "Error sending, please try again."
+    },
+
+    "reset": {
+        "titleForgot": "Forgot password",
+        "email": "Your email",
+        "buttonForgot": "Reset",
+        "back": "← Back to login",
+        "errorForgot": "Error sending email. Please try again.",
+        "successForgot": "📧 Email sent! Check your inbox.",
+
+        "titleReset": "Reset password",
+        "password": "New password (min. 8 characters)",
+        "confirmPassword": "Confirm password",
+        "buttonReset": "Reset password",
+        "errorReset": "Error resetting password. The link may have expired.",
+        "errorPassword": "Password must be at least 8 characters.",
+        "errorPasswordMatch": "Passwords do not match.",
+        "successReset": "✅ Password reset successfully! You can now log in."
     }
 }
