@@ -1,7 +1,9 @@
 {
     "header": {
         "login": "log in",
-        "disconnect": "log out"
+        "disconnect": "log out",
+        "terms": "Terms of Use",
+        "privacy": "Privacy Policy"
     },
     "index": {
         "loading": "Loading profile...",
@@ -21,7 +23,7 @@
         "title": "Sing up",
         "firstname": "First Name",
         "lastname": "Last Name",
-        "username" : "Username",
+        "username": "Username",
         "email": "Email",
         "password": "Password (min. 6 characters)",
         "confirmPassword": "Confirm password",
@@ -130,7 +132,6 @@
         "valid": "Message sent! Thanks",
         "error": "Error sending, please try again."
     },
-
     "reset": {
         "titleForgot": "Forgot password",
         "email": "Your email",
@@ -138,7 +139,6 @@
         "back": "← Back to login",
         "errorForgot": "Error sending email. Please try again.",
         "successForgot": "📧 Email sent! Check your inbox.",
-
         "titleReset": "Reset password",
         "password": "New password (min. 8 characters)",
         "confirmPassword": "Confirm password",
@@ -147,5 +147,93 @@
         "errorPassword": "Password must be at least 8 characters.",
         "errorPasswordMatch": "Passwords do not match.",
         "successReset": "✅ Password reset successfully! You can now log in."
+    },
+    "terms": {
+        "title": "Terms of Use",
+        "1": {
+            "title": "1. Acceptance of Terms",
+            "content": "By accessing or using the <strong>Tajirr</strong> application (the \"Service\"), you agree to be bound by these Terms of Use. If you do not accept these terms, do not use the Service."
+        },
+        "2": {
+            "title": "2. Purpose of the Service",
+            "content": "Tajirr is a community and gamified platform that allows users to create a profile, earn points (via subscriptions and packs), climb a leaderboard, and share their public profile. The Service is provided for entertainment and gamification purposes."
+        },
+        "3": {
+            "title": "3. Account creation and security",
+            "content": "You must provide accurate and up-to-date information. You are responsible for the confidentiality of your account credentials. Any activity performed using your account is deemed to be performed by you unless proven otherwise."
+        },
+        "4": {
+            "title": "4. Payments, subscriptions and packs",
+            "content": "Payments are processed via third-party providers (e.g., Stripe). Subscriptions are billed according to the displayed frequency and automatically renew until canceled. Packs are one-time purchases. Refund policies are described in the dedicated page; absent any explicit statement, packs and subscriptions are non-refundable."
+        },
+        "5": {
+            "title": "5. Points, leaderboard and integrity",
+            "content": "Points are credited according to the rules displayed in the app. Rankings are based on total points/deposits. Any attempt to manipulate the system (fraud, multiple accounts, exploiting bugs) is prohibited and may result in account suspension or deletion and point cancellation."
+        },
+        "6": {
+            "title": "6. Prohibited content and behavior",
+            "content": "It is forbidden to post illegal, pornographic, defamatory, discriminatory content or any content infringing third-party rights. You agree to comply with applicable laws, privacy and intellectual property rights."
+        },
+        "7": {
+            "title": "7. Liability and warranties",
+            "content": "The Service is provided \"as is\" and without express warranty. Tajirr strives to maintain availability and security but does not guarantee uninterrupted service or error-free operation. Under no circumstances shall Tajirr, its officers or partners be liable for indirect damages, lost profits, or data loss resulting from use of the Service."
+        },
+        "8": {
+            "title": "8. Personal data protection",
+            "content": "Collected data (name, surname, username, email, total_depot, rank, etc.) is processed in accordance with the Privacy Policy. You have the right to access, correct and delete your data; to exercise it, contact support@tajirr.com."
+        },
+        "9": {
+            "title": "9. Termination and remedial actions",
+            "content": "Tajirr may suspend or delete accounts that violate these terms, commit fraud, or engage in abusive behavior. Users may delete their accounts following the procedure described in the application."
+        },
+        "10": {
+            "title": "10. Governing law and jurisdiction",
+            "content": "These terms are governed by French law. In case of dispute, the parties will attempt amicable resolution; failing that, the competent courts will be those of Tajirr's registered office in France, unless mandatory law provides otherwise."
+        },
+        "legalNotice": "Last updated: 2025."
+    },
+    "privacy": {
+        "title": "Privacy Policy",
+        "1": {
+            "title": "1. Introduction",
+            "content": "This Privacy Policy explains how <strong>Tajirr</strong> collects, uses, stores, and protects your personal data when using the Service."
+        },
+        "2": {
+            "title": "2. Data collected",
+            "content": "We collect the data you provide when registering (name, surname, username, email), as well as data related to the use of the Service (subscriptions, packs, points, ranks, technical logs)."
+        },
+        "3": {
+            "title": "3. Purpose of processing",
+            "content": "Data is used to: provide the Service, manage your account, process payments and subscriptions, maintain leaderboards, improve the platform, prevent fraud, and comply with legal obligations."
+        },
+        "4": {
+            "title": "4. Cookies and similar technologies",
+            "content": "The Service may use cookies or similar technologies to facilitate navigation, measure audience, and personalize the user experience. You can manage your preferences in your browser settings."
+        },
+        "5": {
+            "title": "5. Advertising and tracking",
+            "content": "The Service may, in the future, integrate third-party advertising or analytics services (e.g., Google Ads, Meta Ads, etc.). These tools may use cookies or advertising identifiers to measure campaign performance and deliver personalized content. You can limit this tracking by adjusting your device or browser privacy settings."
+        },
+        "6": {
+            "title": "6. Data sharing",
+            "content": "Your data may be shared only with third-party providers necessary for the operation of the Service (e.g., Stripe for payments, Supabase for hosting). It is never sold to third parties."
+        },
+        "7": {
+            "title": "7. Security",
+            "content": "We implement technical and organizational security measures to protect your data against unauthorized access, loss, or disclosure. However, no system is completely invulnerable."
+        },
+        "8": {
+            "title": "8. Data retention",
+            "content": "Your data is retained as long as your account is active, and deleted or anonymized within a reasonable period after account deletion, unless otherwise required by law."
+        },
+        "9": {
+            "title": "9. Your rights",
+            "content": "In accordance with the GDPR, you have the right to access, correct, delete, restrict, object to, and port your data. To exercise your rights, contact: support@tajirr.com."
+        },
+        "10": {
+            "title": "10. Changes",
+            "content": "We may update this Policy to reflect regulatory, technical, or business changes. In case of major updates, you will be informed via an in-app notice or email."
+        },
+        "legalNotice": "Last updated: 2025."
     }
 }

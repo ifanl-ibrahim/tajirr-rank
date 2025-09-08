@@ -7,6 +7,7 @@ import { useThemeToggle } from '../../lib/ThemeContext'
 import { Moon, Sun } from 'lucide-react' // facultatif : icônes
 import { useTranslation } from 'react-i18next'
 import Image from 'next/image'
+import Link from 'next/link'
 
 const HeaderContainer = styled.header`
   position: fixed;
@@ -72,6 +73,17 @@ const LanguageButton = styled.button`
   }
 `
 
+const LegalLink = styled(Link)`
+  color: ${({ theme }) => theme.colors.gold};
+  font-size: 0.9rem;
+  text-decoration: none;
+  margin-right: 1rem;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`
+
 export default function HeaderBar() {
   const router = useRouter()
   const { locale, pathname, query, asPath } = router
@@ -123,6 +135,8 @@ export default function HeaderBar() {
         onClick={() => router.push('/')}
       />
       <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+        <LegalLink href="/terms">{t('header.terms')}</LegalLink>
+        <LegalLink href="/privacy">{t('header.privacy')}</LegalLink>
         <ThemeToggle onClick={toggleTheme}>
           {theme === 'dark' ? <Sun size={24} /> : <Moon size={24} />}
         </ThemeToggle>

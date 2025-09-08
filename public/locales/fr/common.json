@@ -1,7 +1,9 @@
 {
     "header": {
         "login": "Se connecter",
-        "disconnect": "Déconnexion"
+        "disconnect": "Déconnexion",
+        "terms": "Conditions d’utilisation",
+        "privacy": "Politique de confidentialité"
     },
     "index": {
         "loading": "Chargement du profil...",
@@ -21,7 +23,7 @@
         "title": "Créer un compte",
         "firstname": "Nom",
         "lastname": "Prénom",
-        "username" : "Nom d'utilisateur",
+        "username": "Nom d'utilisateur",
         "email": "Email",
         "password": "Mot de passe (min. 6 caractères)",
         "confirmPassword": "Confirmer le mot de passe",
@@ -130,7 +132,6 @@
         "valid": "Message envoyé ! Merci",
         "error": "Erreur lors de l’envoi, veuillez réessayer."
     },
-
     "reset": {
         "titleForgot": "Mot de passe oublié",
         "email": "Ton email",
@@ -138,7 +139,6 @@
         "back": "← Retour à la connexion",
         "errorForgot": "Erreur lors de l’envoi de l’e-mail. Veuillez réessayer.",
         "successForgot": "📧 E-mail envoyé ! Vérifiez votre boîte de réception.",
-
         "titleReset": "Nouveau mot de passe",
         "password": "Nouveau mot de passe (min. 8 caractères)",
         "confirmPassword": "Confirmer le mot de passe",
@@ -147,5 +147,93 @@
         "errorPassword": "Le mot de passe doit contenir au moins 8 caractères.",
         "errorPasswordMatch": "Les mots de passe ne correspondent pas.",
         "successReset": "✅ Mot de passe réinitialisé avec succès ! Vous pouvez maintenant vous connecter."
+    },
+    "terms": {
+        "title": "Conditions d’utilisation",
+        "1": {
+            "title": "1. Acceptation des conditions",
+            "content": "En accédant ou en utilisant l'application <strong>Tajirr</strong> (\"le Service\"), vous acceptez d'être lié par les présentes Conditions d'utilisation. Si vous n'acceptez pas ces conditions, n'utilisez pas le Service."
+        },
+        "2": {
+            "title": "2. Objet du Service",
+            "content": "Tajirr est une plateforme communautaire et ludique permettant aux utilisateurs de créer un profil, d'accumuler des points (via abonnements et packs), de monter dans un classement, et de partager publiquement leur profil. Le Service est fourni à des fins de divertissement et de gamification."
+        },
+        "3": {
+            "title": "3. Création de compte et sécurité",
+            "content": "Vous devez fournir des informations exactes et à jour. Vous êtes responsable de la confidentialité des identifiants de votre compte. Toute activité réalisée à l'aide de votre compte est réputée effectuée par vous, sauf preuve contraire."
+        },
+        "4": {
+            "title": "4. Paiements, abonnements et packs",
+            "content": "Les paiements sont gérés via des prestataires tiers (par ex. Stripe). Les abonnements sont facturés selon la périodicité affichée et se renouvellent automatiquement jusqu'à résiliation. Les packs sont des achats ponctuels. Les politiques de remboursement sont indiquées dans la page dédiée ; en l'absence de mention contraire, les packs et abonnements sont non remboursables."
+        },
+        "5": {
+            "title": "5. Points, classement et intégrité",
+            "content": "Les points sont crédités selon les règles affichées dans l'application. Le classement se base sur le total de points/dépôts. Toute tentative de manipulation (fraude, multi-comptes, exploitation de bugs) est interdite et peut conduire à la suspension ou suppression du compte et à l'annulation des points."
+        },
+        "6": {
+            "title": "6. Contenu et comportement interdit",
+            "content": "Il est interdit de publier du contenu illégal, pornographique, diffamatoire, discriminatoire, ou tout contenu violant les droits de tiers. Vous vous engagez à respecter la loi, la vie privée et les droits de propriété intellectuelle."
+        },
+        "7": {
+            "title": "7. Responsabilités et garanties",
+            "content": "Le Service est fourni « tel quel » et sans garantie expresse. Tajirr s'efforce d'assurer disponibilité et sécurité mais ne garantit pas un service ininterrompu ni l'absence d'erreurs. En aucun cas Tajirr, ses dirigeants ou partenaires ne pourront être tenus responsables des dommages indirects, perte de profits, ou perte de données résultant de l'utilisation du Service."
+        },
+        "8": {
+            "title": "8. Protection des données personnelles",
+            "content": "Les données collectées (nom, prénom, pseudo, email, total_depot, rang, etc.) sont traitées conformément à la Politique de confidentialité. Vous disposez d'un droit d'accès, de rectification et de suppression ; pour l'exercer, contactez support@tajirr.com."
+        },
+        "9": {
+            "title": "9. Résiliation et mesures",
+            "content": "Tajirr peut suspendre ou supprimer un compte en cas de violation des présentes conditions, fraude ou comportement abusif. L'utilisateur peut supprimer son compte selon la procédure indiquée dans l'application."
+        },
+        "10": {
+            "title": "10. Droit applicable et juridiction",
+            "content": "Les présentes conditions sont régies par le droit français. En cas de litige, les parties tenteront une résolution amiable ; à défaut, les tribunaux compétents seront ceux de la juridiction du siège social de Tajirr (France), sauf disposition impérative contraire."
+        },
+        "legalNotice": "Dernière mise à jour : 2025."
+    },
+    "privacy": {
+        "title": "Politique de confidentialité",
+        "1": {
+            "title": "1. Introduction",
+            "content": "La présente Politique de confidentialité décrit comment <strong>Tajirr</strong> collecte, utilise, stocke et protège vos données personnelles lors de l’utilisation du Service."
+        },
+        "2": {
+            "title": "2. Données collectées",
+            "content": "Nous collectons les données que vous fournissez lors de l’inscription (nom, prénom, pseudo, email), ainsi que les données liées à l’utilisation du Service (abonnements, packs, points, rangs, logs techniques)."
+        },
+        "3": {
+            "title": "3. Finalité du traitement",
+            "content": "Les données sont utilisées pour : fournir le Service, gérer votre compte, permettre les paiements et abonnements, assurer le suivi des classements, améliorer la plateforme, prévenir la fraude et respecter nos obligations légales."
+        },
+        "4": {
+            "title": "4. Cookies et technologies similaires",
+            "content": "Le Service peut utiliser des cookies ou technologies similaires afin de faciliter la navigation, mesurer l’audience et personnaliser l’expérience utilisateur. Vous pouvez gérer vos préférences via les paramètres de votre navigateur."
+        },
+        "5": {
+            "title": "5. Publicités et tracking",
+            "content": "Le Service peut, à l’avenir, intégrer des services de publicité ou d’analyse tiers (par ex. Google Ads, Meta Ads, etc.). Ces outils peuvent utiliser des cookies ou identifiants publicitaires afin de mesurer la performance des campagnes et proposer des contenus personnalisés. Vous pouvez limiter ce suivi en configurant vos préférences de confidentialité dans votre appareil ou votre navigateur."
+        },
+        "6": {
+            "title": "6. Partage des données",
+            "content": "Vos données peuvent être partagées uniquement avec des prestataires tiers nécessaires au fonctionnement du Service (par ex. Stripe pour les paiements, hébergement Supabase). Elles ne sont jamais revendues à des tiers."
+        },
+        "7": {
+            "title": "7. Sécurité",
+            "content": "Nous mettons en place des mesures de sécurité techniques et organisationnelles pour protéger vos données contre tout accès non autorisé, perte ou divulgation. Cependant, aucun système n’est totalement inviolable."
+        },
+        "8": {
+            "title": "8. Durée de conservation",
+            "content": "Vos données sont conservées tant que votre compte est actif, et supprimées ou anonymisées dans un délai raisonnable après suppression du compte, sauf obligations légales contraires."
+        },
+        "9": {
+            "title": "9. Vos droits",
+            "content": "Conformément au RGPD, vous disposez d’un droit d’accès, de rectification, d’effacement, de limitation, d’opposition et de portabilité de vos données. Pour exercer vos droits, contactez : support@tajirr.com."
+        },
+        "10": {
+            "title": "10. Modifications",
+            "content": "Nous pouvons mettre à jour cette Politique pour refléter des changements réglementaires, techniques ou commerciaux. En cas de modification majeure, vous serez informé par un avis dans l’application ou par email."
+        },
+        "legalNotice": "Dernière mise à jour : 2025."
     }
 }
