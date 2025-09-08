@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { supabase } from '../lib/supabase'
 import { LoginWrapper, Title, Form, Input, ErrorMessage, Button, FooterText } from '../styles/loginStyles'
+import { useTranslation } from 'react-i18next'
 import Head from 'next/head'
 
 export default function Login() {
