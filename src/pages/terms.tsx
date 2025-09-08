@@ -6,8 +6,6 @@ import Head from 'next/head'
 
 const Page = styled.main`
   min-height: 100vh;
-  background: #070708;
-  color: #eaeaea;
   padding: 3rem 1rem;
   display: flex;
   justify-content: center;
@@ -17,7 +15,6 @@ const Page = styled.main`
 const Container = styled.div`
   width: 100%;
   max-width: 980px;
-  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
   border-radius: 12px;
   padding: 2.25rem;
   box-shadow: 0 10px 40px rgba(0,0,0,0.6);
@@ -25,27 +22,23 @@ const Container = styled.div`
 
 const Title = styled.h1`
   font-size: 1.9rem;
-  color: #d4af37;
   margin-bottom: 1rem;
   text-align: center;
 `;
 
 const SectionTitle = styled.h2`
-  color: #d4af37;
   margin-top: 1.25rem;
   margin-bottom: 0.5rem;
   font-size: 1.05rem;
 `;
 
 const Paragraph = styled.p`
-  color: #dcdcdc;
   margin: 0.45rem 0 0.9rem;
   line-height: 1.6;
   font-size: 0.98rem;
 `;
 
 const Small = styled.p`
-  color: #bfbfbf;
   font-size: 0.88rem;
   margin-top: 0.6rem;
 `;
