@@ -77,7 +77,7 @@ export default function Packs() {
                 <PacksGrid>
                     {packs.map((pack) => (
                         <PackCard key={pack.id}>
-                            <PackTitle>{pack.nom}</PackTitle>
+                            <PackTitle>{pack.nom} <p style={{ font= 'italic' }}>{pack.description}</p></PackTitle>
                             <PackInfo>{t('packs.price')} : {pack.prix} €</PackInfo>
                             <PackInfo>{t('packs.points')} : {pack.points}</PackInfo>
                             <div>

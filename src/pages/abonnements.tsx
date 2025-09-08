@@ -89,7 +89,7 @@ export default function Abonnements() {
 
                             return (
                                 <Card key={abonnement.id}>
-                                    <CardTitle>{abonnement.nom}</CardTitle>
+                                    <CardTitle>{abonnement.nom} <p>{abonnement.description}</p></CardTitle>
                                     <Text>{t('abonnements.price')} : {abonnement.prix} € / {t('abonnements.month')}</Text>
                                     <Text>{t('abonnements.points')} : {abonnement.points_mensuels}</Text>
                                     {hasAbonnement ? (
