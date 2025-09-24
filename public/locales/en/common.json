@@ -235,5 +235,29 @@
             "content": "We may update this Policy to reflect regulatory, technical, or business changes. In case of major updates, you will be informed via an in-app notice or email."
         },
         "legalNotice": "Last updated: 2025."
+    },
+    "childSafety": {
+        "title": "Child Safety Standards",
+        "1": {
+            "title": "1. Commitment against child exploitation",
+            "content": "Tajirr is firmly committed to protecting children and minors from any form of sexual exploitation, abuse, or endangerment. We have zero tolerance for any content or behavior related to child exploitation."
+        },
+        "2": {
+            "title": "2. Reporting and content removal",
+            "content": "Users can report any suspicious content or behavior directly from the app or by contacting us via email. Reported content is reviewed without delay and immediately removed if it violates our standards."
+        },
+        "3": {
+            "title": "3. Cooperation with authorities",
+            "content": "In compliance with applicable laws, Tajirr reports confirmed or suspected cases of child sexual exploitation to the relevant authorities."
+        },
+        "4": {
+            "title": "4. Training and prevention",
+            "content": "Our teams are trained and made aware of the risks related to child exploitation in order to ensure active prevention and a rapid response to any report."
+        },
+        "5": {
+            "title": "5. Contact",
+            "content": "For any questions or to report a child safety issue, please contact us at: <strong>tajirr.rank@gmail.com</strong>."
+        },
+        "legalNotice": "Last updated: 2025."
     }
 }

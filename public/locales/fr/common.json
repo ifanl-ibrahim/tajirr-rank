@@ -235,5 +235,29 @@
             "content": "Nous pouvons mettre à jour cette Politique pour refléter des changements réglementaires, techniques ou commerciaux. En cas de modification majeure, vous serez informé par un avis dans l’application ou par email."
         },
         "legalNotice": "Dernière mise à jour : 2025."
+    },
+    "childSafety": {
+        "title": "Normes de sécurité enfants",
+        "1": {
+            "title": "1. Engagement contre l’exploitation des mineurs",
+            "content": "Tajirr s’engage fermement à protéger les enfants et les mineurs contre toute forme d’exploitation sexuelle, d’abus ou de mise en danger. Nous appliquons une tolérance zéro à l’égard de tout contenu ou comportement lié à l’exploitation des enfants."
+        },
+        "2": {
+            "title": "2. Signalement et suppression de contenu",
+            "content": "Les utilisateurs peuvent signaler tout contenu ou comportement suspect directement depuis l’application ou en nous contactant par e-mail. Tout contenu signalé est examiné sans délai et supprimé immédiatement s’il enfreint nos normes."
+        },
+        "3": {
+            "title": "3. Coopération avec les autorités",
+            "content": "Conformément aux lois applicables, Tajirr signale aux autorités compétentes tout cas confirmé ou suspect d’exploitation sexuelle d’enfants."
+        },
+        "4": {
+            "title": "4. Formation et prévention",
+            "content": "Nos équipes sont sensibilisées aux risques liés à l’exploitation des mineurs afin d’assurer une prévention active et une réponse rapide en cas de signalement."
+        },
+        "5": {
+            "title": "5. Contact",
+            "content": "Pour toute question ou pour signaler un problème lié à la sécurité des enfants, veuillez nous contacter à l’adresse suivante : <strong>tajirr.rank@gmail.com</strong>."
+        },
+        "legalNotice": "Dernière mise à jour : 2025."
     }
 }
